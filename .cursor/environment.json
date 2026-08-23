@@ -1,0 +1,16 @@
+{
+  "name": "hambrickandco-website",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npm run dev"
+    }
+  ],
+  "ports": [
+    {
+      "name": "Website",
+      "port": 3000
+    }
+  ]
+}
