@@ -21,7 +21,7 @@ Read DESIGN.md. If the design plan is still open, do not implement a new homepag
 ## Do
 
 - Static HTML, CSS, vanilla JS. No framework unless Travis asks.
-- Keep the live visual system unless DESIGN.md says otherwise: paper #FCFCF9, ink #12151A, cobalt #2743B8, Instrument Serif, Hanken Grotesk, IBM Plex Mono, cobalt italic "&".
+- Keep the live visual system unless DESIGN.md says otherwise. Approved materials: graphite #121212, pearl #F3EEE4, steel #8A8F98, gold #C4A574, Instrument Serif, Hanken Grotesk, IBM Plex Mono, gold italic "&".
 - Tell the truth. No invented clients, reviews, years, results, or revenue.
 - Stonefield Landscaping on the current live site is a demo mock. Label it as a sample if you keep it.
 - Contact is hello@hambrickco.com. Forms must not fake a send.

@@ -1,19 +1,19 @@
-# Design plan
+# Design
 
-Status: plan. Not approved to build yet.
+Status: **approved to build.** This file is the live direction, not an open plan.
 
-Live site today: [hambrickco.com](https://hambrickco.com/) is a one-page web-design pitch. Keep the bones. Change the story and the materials.
+Live site today: [hambrickco.com](https://hambrickco.com/) is still the old web-design pitch. Keep its **bones**. Change the story and the materials.
 
-This file is the plan for the company site. Client demo sites stay in `painter-site-kit`.
+Client demo sites stay in `painter-site-kit`.
 
 ## Job of the page
 
 A person who lands here should understand, in a few seconds:
 
-1. Hambrick & Co. fixes messy handoffs in small businesses.
-2. The first offer is getting an agency from signed-client to kickoff-ready.
-3. Websites are still available if that is the leak.
-4. They can write hello@hambrickco.com or call.
+1. Hambrick & Co. helps small agencies get a signed client to kickoff without a week of chasing files, access, and approvals.
+2. That stretch — onboarding, done with care — is the work. Write it like a person. Do not decorate the page with SaaS verbs.
+3. Websites are still available if that is the leak. Do not lead with them.
+4. They can write hello@hambrickco.com or call (434) 260-0823.
 
 They should not think this is a software product, an AI staff, or OpsPatch.
 
@@ -21,67 +21,60 @@ They should not think this is a software product, an AI staff, or OpsPatch.
 
 Do not throw out the current layout for a 21st.dev / shadcn card grid. That is how sites start looking AI-made.
 
-Keep: one page, sticky header, hero + two offers + process + about + contact, the editorial type pairing, the "&" as the mark.
-Change: colors, materials, logo, copy, a little physical motion.
+Keep: one page; sticky header; hero + two offers + process + about + contact; a slim work sample if kept; the editorial type pairing; the `&` as the mark.
 
-Banned tells: purple glow, aurora gradients, glassmorphism soup, Inter/Roboto/Space Grotesk, "seamless / elevate / empower / unlock," three icon cards that say Quality / Experience / Value, fake 3D chrome, gold everywhere.
+Change: colors, materials, logo treatment, copy, one physical object in the hero, a little weighty motion.
 
-## Palette (new)
+Banned tells: purple glow, aurora gradients, glassmorphism soup, Inter / Roboto / Space Grotesk / Arial-as-brand, “seamless / elevate / empower / unlock,” three icon cards that say Quality / Experience / Value, fake 3D chrome, jewelry-store gold wash, crypto chrome.
 
-Drop cobalt as the brand color.
+## Materials
 
-| Token | Use |
-| --- | --- |
-| Graphite `#121212` | Page ground, type on light |
-| Steel `#8A8F98` | Hairlines, captions, quiet metal |
-| Paper `#F4F2EC` | Light panels, body on dark |
-| Gold `#C4A574` | Thin accent only: the &, a rule, a hover. Never a fill, never a gradient wash. |
+Graphite ground. Pearl / nacre panels (warm off-white with a quiet sheen, not plastic white). Steel hairlines. One machined pearl-metal sphere in the hero. Thin antique gold only on the `&` and maybe one hairline.
 
-Think brushed steel and warm paper, not jewelry store and not crypto black-and-gold.
+| Token | Hex | Use |
+| --- | --- | --- |
+| Graphite | `#121212` | Page ground, type on pearl |
+| Steel | `#8A8F98` | Hairlines, captions, quiet metal |
+| Pearl | `#F3EEE4` | Light panels, body on dark |
+| Gold | `#C4A574` | The `&`, at most one rule or hover. Never a fill. Never a gradient wash. |
+
+Drop cobalt as the brand color. Think brushed steel and nacre, not a jewelry counter and not a coin app.
+
+## Type
+
+Editorial pairing, already on the live site:
+
+- Headlines: Instrument Serif
+- Body / UI: Hanken Grotesk
+- Labels: IBM Plex Mono
+
+The `&` is italic Instrument Serif in antique gold. No hexagon H. No icon app-tile unless a favicon is needed (then the favicon is the `&`).
 
 ## Motion
 
-Yes, but physical. Weight, a little inertia, scroll that eases. Honor `prefers-reduced-motion`.
+Physical, short, heavy. Weight and a little inertia. GSAP is fine.
 
-When we build: GSAP (Cursor plugin `GSAP`, id 7194) for scroll and the &. No Lottie explosions. No looped hero video.
+- The hero `&` settles into place.
+- The sphere catches light and turns a little on scroll.
+- Section reveals are small and once.
 
-## Logo
-
-Rebrand the mark, not the name.
-
-- Wordmark: **Hambrick & Co.**
-- The `&` is the logo. Metal, not a geometric blob.
-- Gold `&` on graphite, or graphite `&` on paper. One version. No icon app-tile unless we need a favicon later.
-- Do not draw a H-in-a-hexagon.
+Honor `prefers-reduced-motion`: no scroll-tied spin, no entrance motion. No Lottie explosions. No looped hero video.
 
 ## Page map (same bones)
 
-1. **Nav** — Hambrick & Co. / Work / About / Contact
-2. **Hero** — messy kickoff, not "we run the website." Secondary: "We still build websites."
-3. **What we do** — two cards. Ops sprint first. Websites second.
-4. **How it works** — talk, map, hand back a checklist in their tools.
+1. **Nav** — Hambrick & Co. / Offers / Process / Work / About / Contact
+2. **Hero** — signed-to-kickoff, not “we run the website.” Sphere on the right. Secondary: websites still offered.
+3. **What we do** — two offers. Ops sprint first. Websites second. Not a three-card grid.
+4. **How it works** — talk, map the holes, hand back a checklist in their tools.
 5. **Work** — empty or one labeled sample. Stonefield is a demo mock if kept.
-6. **About** — Travis, Charlottesville area.
-7. **Contact** — hello@hambrickco.com, (434) 260-0823. Do not fake a send.
-
-## Tools that actually help
-
-In the Cursor catalog, these exist:
-
-- **GSAP** (not installed) — motion
-- **Mobbin** (not installed) — real site references, not generated ones
-- **Magic Patterns** (not installed) — optional prototypes
-- Already in `painter-site-kit`: `frontend-design` and `avoid-ai-design`. Point at those. Do not reinvent them here.
-
-Not in the Cursor plugin catalog (do not pretend they are): Impeccable, Taste, Google Stitch, 21st.dev MCP. If Travis adds them as local skills later, fine. Do not block the plan on them.
-
-Skip shadcn as the look. Too generic for this brand.
+6. **About** — Travis, Charlottesville / Crozet area. Large `&`, not a portrait we do not have.
+7. **Contact** — hello@hambrickco.com, (434) 260-0823. Do not fake a send. A mailto compose is honest; a success toast is not.
 
 ## Copy rules
 
-- Calm, direct, specific.
+- Calm, direct, specific. If a line could sit on any SaaS homepage, cut it.
 - No prices on the public page until Travis treats a number as a real quote.
-- No OpsPatch. No guaranteed results.
+- No OpsPatch. No guaranteed results. No invented clients, reviews, years, or revenue.
 
 ## Not in this plan
 
@@ -90,7 +83,8 @@ Skip shadcn as the look. Too generic for this brand.
 - A blog, CMS, or React app
 - Stripe on the site
 - Building painter demos in this repo
+- Publishing to Netlify unless Travis asks
 
-## Build trigger
+## Stack
 
-Do not implement until Travis or the Executive Assistant says the plan is good enough. Then: logo wordmark, then the page, then motion. Screenshot and de-slop before calling it done.
+Static `index.html`, `styles.css`, `main.js`. GSAP from a CDN or a local vendor file. No framework unless Travis asks.
