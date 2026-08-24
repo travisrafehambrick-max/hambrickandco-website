@@ -98,9 +98,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(7, 7, 8, 0.72);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: rgba(7, 7, 8, 0.94);
   border-bottom: 1px solid var(--steel-line);
 }
 
@@ -589,7 +587,7 @@ h3 {
 
 .capsule-well a:hover,
 .capsule-well a:focus-visible {
-  color: var(--gold);
+  color: var(--pearl);
 }
 
 .capsule-dot {
@@ -664,7 +662,7 @@ footer.site .wrap {
   gap: 12px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   html {
     scroll-padding-top: 120px;
   }

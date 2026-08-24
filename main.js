@@ -79,8 +79,8 @@
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return null;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-    const cssSize = 240;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+    const cssSize = 200;
     canvas.width = Math.round(cssSize * dpr);
     canvas.height = Math.round(cssSize * dpr);
 
@@ -195,12 +195,14 @@
 
       const title = document.getElementById("hero-title");
       if (title && typeof SplitText !== "undefined") {
+        gsap.set(title, { autoAlpha: 0 });
         SplitText.create(title, {
           type: "words,lines",
           mask: "lines",
           autoSplit: true,
           aria: "auto",
           onSplit: function (self) {
+            gsap.set(title, { autoAlpha: 1 });
             return gsap.from(self.words, {
               yPercent: 120,
               autoAlpha: 0,
@@ -232,12 +234,10 @@
         intro.from(amp, { rotation: -10, duration: 1, ease: "power3.out" }, 0.22);
       }
 
-      if (sphere && typeof ScrollTrigger !== "undefined") {
-        const proxy = {
-          rot: sphere.state.rot,
-          light: sphere.state.light,
-          tilt: sphere.state.tilt,
-        };
+      if (typeof ScrollTrigger !== "undefined") {
+        const proxy = sphere
+          ? { rot: sphere.state.rot, light: sphere.state.light, tilt: sphere.state.tilt }
+          : { rot: 0.12, light: 0.48, tilt: 0.01 };
         const pinHero = context.conditions.isDesktop;
 
         const film = gsap.timeline({
@@ -251,6 +251,7 @@
             scrub: 0.85,
           },
           onUpdate: function () {
+            if (!sphere) return;
             sphere.state.rot = proxy.rot;
             sphere.state.light = proxy.light;
             sphere.state.tilt = proxy.tilt;
@@ -327,7 +328,7 @@
               once: true,
             },
           })
-          .from("#contact .reveal", { y: 26, opacity: 0, stagger: 0.12 });
+          .from("#contact .contact-grid > div:first-child", { y: 26, opacity: 0 });
       }
 
       document.fonts.ready.then(function () {
