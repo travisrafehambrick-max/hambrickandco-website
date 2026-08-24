@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -84,6 +85,7 @@ header {
   top: 0;
   z-index: 50;
   background: rgba(18, 18, 18, 0.88);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--steel-line);
 }
@@ -254,6 +256,7 @@ h1 .amp {
 
 section {
   padding: 84px 0;
+  scroll-margin-top: 80px;
 }
 
 h2 {
@@ -394,7 +397,7 @@ h3 {
 }
 
 .sample-tag {
-  color: #c4a574;
+  color: rgba(243, 238, 228, 0.72);
 }
 
 .sample-info {
@@ -531,8 +534,29 @@ footer.site .wrap {
 }
 
 @media (max-width: 840px) {
+  html {
+    scroll-padding-top: 120px;
+  }
+
+  .nav {
+    height: auto;
+    min-height: 64px;
+    padding-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  header nav {
+    order: 3;
+    flex: 1 0 100%;
+    margin-top: 10px;
+    padding: 10px 0 12px;
+    border-top: 1px solid var(--steel-line);
+  }
+
   .nav-links {
-    display: none;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.82rem;
   }
 
   .hero-grid,
@@ -558,6 +582,7 @@ footer.site .wrap {
 
   section {
     padding: 60px 0;
+    scroll-margin-top: 120px;
   }
 
   .hero-object {

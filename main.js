@@ -73,11 +73,25 @@
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return null;
 
-    const state = { rot: 0.18, light: 0.72 };
-    const draw = function () {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssSize = 280;
+    canvas.width = Math.round(cssSize * dpr);
+    canvas.height = Math.round(cssSize * dpr);
+
+    const state = { rot: 0.18, light: 0.72, lastRot: -1, lastLight: -1 };
+    const draw = function (force) {
+      if (
+        !force &&
+        Math.abs(state.rot - state.lastRot) < 0.003 &&
+        Math.abs(state.light - state.lastLight) < 0.003
+      ) {
+        return;
+      }
+      state.lastRot = state.rot;
+      state.lastLight = state.light;
       renderSphere(ctx, canvas.width, state.rot, state.light);
     };
-    draw();
+    draw(true);
     return { state, draw };
   }
 
