@@ -221,9 +221,9 @@ header {
   position: absolute;
   top: 8%;
   right: 7%;
-  width: min(220px, 28vw);
+  width: min(240px, 30vw);
   height: auto;
-  opacity: 0.72;
+  opacity: 0.82;
   will-change: transform;
 }
 
@@ -326,7 +326,7 @@ h1 .amp {
 }
 
 #sphere {
-  width: 76%;
+  width: 84%;
   height: auto;
   display: block;
   transform-style: preserve-3d;

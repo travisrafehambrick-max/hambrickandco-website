@@ -31,9 +31,9 @@
 
         const ndotl = Math.max(0, nx * Lx + ny * Ly + nz2 * Lz);
         const lat = Math.asin(Math.max(-1, Math.min(1, ny)));
-        const groove = Math.exp(-((lat * 16) ** 2)) * 0.22;
-        const ridge = Math.exp(-((lat * 48) ** 2)) * 0.1;
-        const rings = Math.sin(lat * 86) * 0.028 * (1 - Math.abs(lat));
+        const groove = Math.exp(-((lat * 14) ** 2)) * 0.3;
+        const ridge = Math.exp(-((lat * 40) ** 2)) * 0.14;
+        const rings = Math.sin(lat * 64) * 0.045 * (1 - Math.abs(lat));
 
         let rC = 0.2 - groove + ridge + rings;
         let gC = 0.21 - groove * 0.9 + ridge * 0.85 + rings;
@@ -258,11 +258,11 @@
           },
         });
 
-        film.fromTo(proxy, { rot: 0.16, light: 0.62, tilt: 0.02 }, { rot: 2.35, light: 2.05, tilt: 0.2 }, 0);
-        film.fromTo(".compass", { rotation: 0, scale: 1 }, { rotation: 26, scale: 1.06 }, 0);
-        film.fromTo(".streaks i", { xPercent: 0, yPercent: 0 }, { xPercent: 28, yPercent: -16 }, 0);
-        film.fromTo(".sphere-spec", { x: 0, y: 0, scale: 1 }, { x: 36, y: 10, scale: 1.15 }, 0);
-        film.fromTo(".hero-object", { y: 0, scale: 1 }, { y: -16, scale: 1.04 }, 0);
+        film.fromTo(proxy, { rot: 0.12, light: 0.48, tilt: 0.01 }, { rot: 3.7, light: 2.55, tilt: 0.28 }, 0);
+        film.fromTo(".compass", { rotation: 0, scale: 1 }, { rotation: 38, scale: 1.08 }, 0);
+        film.fromTo(".streaks i", { xPercent: 0, yPercent: 0 }, { xPercent: 42, yPercent: -22 }, 0);
+        film.fromTo(".sphere-spec", { x: 0, y: 0, scale: 1 }, { x: 54, y: 16, scale: 1.2 }, 0);
+        film.fromTo(".hero-object", { y: 0, scale: 1 }, { y: -22, scale: 1.05 }, 0);
       }
 
       if (typeof ScrollTrigger !== "undefined") {
@@ -277,8 +277,8 @@
                 once: true,
               },
             })
-            .from(offers[0], { y: 28, autoAlpha: 0 })
-            .from(offers.slice(1), { y: 36, autoAlpha: 0, stagger: 0.12 }, "-=0.35");
+            .from(offers[0], { y: 28, opacity: 0 })
+            .from(offers.slice(1), { y: 36, opacity: 0, stagger: 0.12 }, "-=0.35");
         }
 
         gsap
@@ -290,8 +290,8 @@
               once: true,
             },
           })
-          .from("#process .sec-head", { y: 22, autoAlpha: 0 })
-          .from("#process .proc li", { y: 28, autoAlpha: 0, stagger: 0.1 }, "-=0.25");
+          .from("#process .sec-head", { y: 22, opacity: 0 })
+          .from("#process .proc li", { y: 28, opacity: 0, stagger: 0.1 }, "-=0.25");
 
         gsap
           .timeline({
@@ -302,8 +302,8 @@
               once: true,
             },
           })
-          .from("#work .sec-head", { y: 22, autoAlpha: 0 })
-          .from("#work .sample", { y: 32, autoAlpha: 0 }, "-=0.3");
+          .from("#work .sec-head", { y: 22, opacity: 0 })
+          .from("#work .sample", { y: 32, opacity: 0 }, "-=0.3");
 
         gsap
           .timeline({
@@ -314,9 +314,9 @@
               once: true,
             },
           })
-          .from(".amp-well", { y: 30, autoAlpha: 0, scale: 0.96 })
+          .from(".amp-well", { y: 30, opacity: 0, scale: 0.96 })
           .from(".amp-well .amp", { rotation: -12, duration: 0.9 }, "<0.05")
-          .from("#about .about", { y: 24, autoAlpha: 0 }, "-=0.45");
+          .from("#about .about", { y: 24, opacity: 0 }, "-=0.45");
 
         gsap
           .timeline({
@@ -327,7 +327,7 @@
               once: true,
             },
           })
-          .from("#contact .reveal", { y: 26, autoAlpha: 0, stagger: 0.12 });
+          .from("#contact .reveal", { y: 26, opacity: 0, stagger: 0.12 });
       }
 
       document.fonts.ready.then(function () {
