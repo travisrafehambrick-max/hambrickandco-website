@@ -26,32 +26,34 @@
 
         const nz = Math.sqrt(1 - d2);
         const nx = dx * cosR + nz * sinR;
-        const ny = dy;
+        const ny = -dy;
         const nz2 = -dx * sinR + nz * cosR;
 
         const ndotl = Math.max(0, nx * Lx + ny * Ly + nz2 * Lz);
         const lat = Math.asin(Math.max(-1, Math.min(1, ny)));
-        const groove = Math.exp(-((lat * 11) ** 2)) * 0.14;
+        const groove = Math.exp(-((lat * 14) ** 2)) * 0.16;
+        const ridge = Math.exp(-((lat * 42) ** 2)) * 0.08;
 
-        let rC = 0.91 - groove;
-        let gC = 0.87 - groove * 0.88;
-        let bC = 0.8 - groove * 0.68;
+        let rC = 0.9 - groove + ridge;
+        let gC = 0.86 - groove * 0.88 + ridge * 0.9;
+        let bC = 0.78 - groove * 0.7 + ridge * 0.7;
 
         const fres = (1 - nz) ** 2.15;
-        rC = rC * (1 - fres) + 0.58 * fres;
-        gC = gC * (1 - fres) + 0.59 * fres;
-        bC = bC * (1 - fres) + 0.61 * fres;
+        rC = rC * (1 - fres) + 0.56 * fres;
+        gC = gC * (1 - fres) + 0.57 * fres;
+        bC = bC * (1 - fres) + 0.59 * fres;
 
         const hx = Lx;
-        const hy = Ly + 1;
-        const hz = Lz;
+        const hy = Ly;
+        const hz = Lz + 1;
         const hlen = Math.hypot(hx, hy, hz) || 1;
-        const spec = Math.max(0, (nx * hx + ny * hy + nz2 * hz) / hlen) ** 46;
+        const spec = Math.max(0, (nx * hx + ny * hy + nz2 * hz) / hlen) ** 52;
+        const sheen = Math.max(0, (nx * hx + ny * hy + nz2 * hz) / hlen) ** 8;
 
-        const lum = 0.27 + ndotl * 0.73;
-        let rr = rC * lum + spec * 0.9 + nx * 0.025;
-        let gg = gC * lum + spec * 0.88;
-        let bb = bC * lum + spec * 0.78 - nx * 0.018;
+        const lum = 0.26 + ndotl * 0.74;
+        let rr = rC * lum + spec * 0.95 + sheen * 0.08 + nx * 0.02;
+        let gg = gC * lum + spec * 0.9 + sheen * 0.07;
+        let bb = bC * lum + spec * 0.78 + sheen * 0.05 - nx * 0.016;
 
         const edge = d2 > 0.9 ? (1 - d2) / 0.1 : 1;
         const i = (y * size + x) * 4;
@@ -172,18 +174,20 @@
         });
       }
 
-      gsap.utils.toArray(".reveal").forEach(function (el) {
-        gsap.from(el, {
-          y: 18,
-          autoAlpha: 0,
-          duration: 0.55,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 86%",
-          },
+      if (typeof ScrollTrigger !== "undefined") {
+        gsap.utils.toArray(".reveal").forEach(function (el) {
+          gsap.from(el, {
+            y: 18,
+            autoAlpha: 0,
+            duration: 0.55,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 86%",
+            },
+          });
         });
-      });
+      }
     }
   );
 

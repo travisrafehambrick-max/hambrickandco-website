@@ -223,9 +223,7 @@ h1 .amp {
 .hero-object {
   margin: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  justify-content: center;
 }
 
 .sphere-well {
@@ -250,16 +248,6 @@ h1 .amp {
   display: block;
   transform-style: preserve-3d;
   filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45));
-}
-
-.hero-object figcaption {
-  text-align: center;
-}
-
-.hero-object figcaption .amp {
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 0.95em;
 }
 
 /* Sections */
