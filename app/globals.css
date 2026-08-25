@@ -1,0 +1,213 @@
+/* ---------- Custom Properties ---------- */
+:root {
+  --bg: #08090b;
+  --bg-elevated: #0d0f12;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-raised: rgba(255, 255, 255, 0.045);
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-border-bright: rgba(198, 165, 109, 0.35);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #ede9e2;
+  --text-muted: #a8a6a0;
+  --text-dim: #6f6d69;
+  --accent: #9c7b4a;
+  --accent-bright: #c6a56d;
+  --accent-soft: rgba(198, 165, 109, 0.14);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+  --max-width: 1240px;
+  --gutter: clamp(1.5rem, 5vw, 4rem);
+
+  color-scheme: dark;
+}
+
+/* ---------- Reset ---------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Film grain overlay: cheap, no image asset */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  position: relative;
+}
+
+/* ---------- Focus states ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--text);
+}
+
+h1 {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  color: var(--text-muted);
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  margin-bottom: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  box-shadow: 0 0 8px 1px var(--accent-bright);
+  flex-shrink: 0;
+}
+
+/* ---------- Glass surfaces ---------- */
+.glass-panel {
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.015)
+  );
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+    0 20px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Section rhythm ---------- */
+section {
+  padding: clamp(4.5rem, 10vw, 8rem) 0;
+  position: relative;
+}
+
+section h2 {
+  max-width: 680px;
+  margin-bottom: 3.5rem;
+}
+
+.section-border {
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

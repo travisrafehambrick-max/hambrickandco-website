@@ -1,0 +1,107 @@
+.panel {
+  border-radius: 18px;
+  padding: 1.6rem 1.75rem 1.5rem;
+  width: min(340px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  box-shadow: 0 0 10px 2px rgba(198, 165, 109, 0.6);
+  flex-shrink: 0;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--accent-bright);
+}
+
+.detail {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  min-height: 2.6em;
+}
+
+.wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 42px;
+}
+
+.bar {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to top,
+    rgba(198, 165, 109, 0.85),
+    rgba(198, 165, 109, 0.15)
+  );
+  animation: wave 1.8s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    height: 18%;
+  }
+  50% {
+    height: 85%;
+  }
+}
+
+.states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--glass-border);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+
+.state {
+  color: var(--text-dim);
+  transition: color 0.3s ease;
+}
+
+.stateActive {
+  color: var(--accent-bright);
+  transition: color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+  .bar {
+    animation: none;
+  }
+}

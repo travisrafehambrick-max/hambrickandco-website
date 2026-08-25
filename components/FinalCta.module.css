@@ -1,0 +1,45 @@
+.contact {
+  text-align: center;
+  position: relative;
+}
+
+.contact::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  width: min(700px, 90%);
+  height: 60%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(198, 165, 109, 0.09),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  max-width: 640px;
+  position: relative;
+  z-index: 1;
+}
+
+.center {
+  justify-content: center;
+}
+
+.heading {
+  margin: 0 auto 1.25rem;
+}
+
+.sub {
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+}
+
+.ctaWrap {
+  display: flex;
+  justify-content: center;
+}
