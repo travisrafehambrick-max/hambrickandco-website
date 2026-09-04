@@ -1,5 +1,6 @@
 hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
+Harcourt copy canonical
 parked halls
 MetalRimCTA
 GoldMetalBar
@@ -9,5 +10,5 @@ GoldMetalMark
 MeshStandardMaterial
 @react-three/fiber
 magnetic <=20px
-tip fb8909a
-parent 48dceda
+tip e9785f7
+parent f9dacdb
