@@ -139,10 +139,10 @@ export function BalancePage() {
           >
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">Missed</p>
             <p className="mt-4 font-display text-[1.55rem] leading-snug">
-              We sent the number. Nobody wrote back.
+              Inbound open. No reply on the estimate.
             </p>
             <p className={`mt-5 font-mono text-[10px] uppercase tracking-[0.16em] ${face === "recovered" ? "metal-text" : "text-ink/35"}`}>
-              Recovered · the estimate came back before the truck left
+              Recovered · first reply out
             </p>
             <button
               ref={turn}

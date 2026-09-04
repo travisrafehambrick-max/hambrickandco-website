@@ -113,7 +113,9 @@ stage, never the `100+` counters:
   R3F orb takes living gold and keeps rotating across chapter cuts (handoff
   mid-motion). One `GateSlot` only — no second 3D object.
 - Pin one full-viewport stage per chapter (`end: +=100%`). Scrub the still:
-  depth / scale / blur. White type does not fade or wobble.
+  depth / scale / blur. Hard-exclusive: one chapter opaque at a time. White
+  type on the live chapter does not fade or wobble. R3F pauses offscreen
+  (`IntersectionObserver` + `frameloop="demand"`).
 - Black holds between chapters for the miss (dead hairline, no gold).
 - Nav hides on scroll-down, shows on scroll-up (`0.45s`, `aisEase`).
 - Controls 0.3–0.7s ease-out. No spring. No count-ups.
@@ -133,7 +135,9 @@ Airy calm. Ballance live-scroll, closed — steal the stillness, never the count
 - One hero carrier: the R3F pebble. It parallax-lags the copy (`scrub: 1.2`, ~28px vs ~86px). No `bindAiasLive`. No second 3D object after the seam.
 - Hard `#121212` → `#F5F5F5` seam at the turning point (`border-t border-black`). Header morphs with that seam. Gold only on recovered type, the turn control, and the CTA.
 - One tactile control (“Turn the slip”). After a turn, stillness (`STILLNESS`) — do not chain more motion.
-- No KPI count-ups, no invented %, hours, or 10x. Truth only: area, email, phone, the missed/recovered sentences.
+- No KPI count-ups, no invented %, hours, or 10x. No invented homeowner
+  quotes or testimonials. Truth only: area, email, phone, anonymous
+  missed/recovered sentences. No “growth partner”. Metal CTAs stay.
 - GSAP / ScrollTrigger / R3F only. No Framer Motion.
 - `prefers-reduced-motion` → recovered still, progress `1`, parallax off.
 
@@ -146,7 +150,8 @@ Split assist / console recovery thread. SiteAssist live-scroll, closed:
 - Sticky header morphs `#121212` → `#F5F5F5` on the white pin, back to black at `#request`. Gold only on the living step, the recovered word, and the CTA. No Assist kicker.
 - One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.14 / 0.38 / 0.7 / 1`. Not a continuous scrub.
 - Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
-- Hero is oversized type (“Missed thread.” / metal “Recovered.”) plus a DOM lock-screen sheet already mid-story. No second 3D peel in the hero.
+- Intro is short so the peel (stage 0 / Missed) is in the first screenful.
+  No second 3D peel. No Stage NN / NN eyebrows.
 - Evidence is a discrete job-type carousel (shape of the work, not a case study), staggered in.
 - No `bindAiasLive` / no `data-depth` on this route.
 - Seams are hard black/white. Ease is `cubic-bezier(.22,1,.36,1)`.

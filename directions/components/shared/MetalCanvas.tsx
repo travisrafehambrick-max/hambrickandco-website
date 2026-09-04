@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
@@ -45,20 +45,42 @@ type Props = {
 };
 
 export function MetalCanvas({ children, camera }: Props) {
+  const host = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(true);
+
+  useEffect(() => {
+    const el = host.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setOn(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setOn(entry.isIntersecting),
+      { root: null, rootMargin: "10% 0px", threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <Canvas
-      frameloop="demand"
-      dpr={[1, 1.75]}
-      camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
-      gl={{ antialias: true, alpha: true }}
-      onCreated={({ gl }) => {
-        gl.setClearColor(0x000000, 0);
-        gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.outputColorSpace = THREE.SRGBColorSpace;
-      }}
-    >
-      <MetalRig />
-      {children}
-    </Canvas>
+    <div ref={host} className="h-full w-full">
+      {on ? (
+        <Canvas
+          frameloop="demand"
+          dpr={[1, 1.75]}
+          camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
+          gl={{ antialias: true, alpha: true }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(0x000000, 0);
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.outputColorSpace = THREE.SRGBColorSpace;
+          }}
+        >
+          <MetalRig />
+          {children}
+        </Canvas>
+      ) : null}
+    </div>
   );
 }

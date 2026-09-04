@@ -109,7 +109,6 @@ export function AssistPane() {
           { y: AIS_RISE, filter: "blur(6px)", autoAlpha: 0 },
           { y: 0, filter: "blur(0px)", autoAlpha: 1, duration: AIS_REVEAL },
         )
-        .fromTo(".assist-sheet", { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, AIS_STAGGER)
         .to({}, { duration: STILLNESS });
 
       STEPS.forEach((_, i) => {
@@ -171,26 +170,17 @@ export function AssistPane() {
         </div>
       </header>
 
-      <section className="relative mx-auto min-h-[100svh] max-w-[1280px] px-5 pb-16 pt-10 md:px-8">
+      <section className="relative mx-auto max-w-[1280px] px-5 pb-6 pt-6 md:px-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">Missed thread</p>
-        <h1 className="assist-display mt-6 font-display text-[clamp(4.2rem,14vw,9.4rem)] leading-[0.78] tracking-[-0.04em]">
-          Missed
-          <br />
-          thread.
+        <h1 className="assist-display mt-3 font-display text-[clamp(2.4rem,7vw,4.6rem)] leading-[0.86] tracking-[-0.03em]">
+          Missed thread.
         </h1>
-        <p className="assist-display mt-8 max-w-md font-display italic text-[clamp(2rem,5vw,3.6rem)] leading-none">
+        <p className="assist-display mt-3 font-display italic text-[clamp(1.4rem,2.6vw,2rem)] leading-none">
           <span className="metal-text">Recovered.</span>
         </p>
-        <p className="assist-display mt-6 max-w-sm font-sans text-[16px] text-matte/60">
+        <p className="assist-display mt-3 max-w-sm font-sans text-[14px] text-matte/60">
           One sheet. Four landmarks. {AREA}.
         </p>
-        <article className="assist-sheet mt-12 w-[min(280px,80%)] border border-black bg-matte p-5 text-ink">
-          <p className="font-display text-2xl leading-tight">Missed</p>
-          <p className="mt-3 font-sans text-[14px] text-ink/60">2h 14m on the lock screen</p>
-          <p className="mt-4 font-display text-2xl leading-tight">
-            <span className="metal-text">Recovered</span>
-          </p>
-        </article>
       </section>
 
       <section className="assist-pin border-t border-black bg-matte pb-[18vh] text-ink">

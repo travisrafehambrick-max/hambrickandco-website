@@ -219,8 +219,16 @@ export function SignatureReel() {
             ) : (
               <div className="reel-hold min-h-[28svh] border-t border-black bg-ink" aria-hidden />
             )}
-            <section data-ch={i} className="reel-chapter min-h-[100svh] bg-ink">
-              <div className="mx-auto grid min-h-[100svh] max-w-[1440px] md:grid-cols-12 md:pr-[32%]">
+            <section
+              data-ch={i}
+              className="reel-chapter min-h-[100svh] bg-ink"
+              aria-hidden={chapter !== i}
+            >
+              <div
+                className={`mx-auto grid min-h-[100svh] max-w-[1440px] md:grid-cols-12 md:pr-[32%] ${
+                  chapter === i ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
+              >
                 <div className="flex items-center justify-center px-6 py-16 md:col-span-6">
                   <figure
                     data-ch={i}
