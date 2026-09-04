@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindMagnetic } from "@/lib/bind-magnetic";
 
 type Props = {
   href: string;
@@ -23,32 +24,13 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.set(bar, { scaleX: 0, transformOrigin: "left center" });
       if (reduce) return;
-      gsap.set(el, {
-        y: 0,
-        filter: "brightness(1)",
-        boxShadow: "0 0 0 0 rgba(196,165,116,0)",
-      });
+
+      const releaseMagnetic = bindMagnetic(el, 20);
 
       const enter = () => {
-        gsap.to(el, {
-          y: -1,
-          filter: "brightness(1.06)",
-          boxShadow: "0 8px 22px -6px rgba(196,165,116,0.55)",
-          duration: 0.32,
-          ease: aisEase,
-          overwrite: "auto",
-        });
         gsap.to(bar, { scaleX: 1, duration: 0.32, ease: aisEase, overwrite: "auto" });
       };
       const leave = () => {
-        gsap.to(el, {
-          y: 0,
-          filter: "brightness(1)",
-          boxShadow: "0 0 0 0 rgba(196,165,116,0)",
-          duration: 0.28,
-          ease: aisEase,
-          overwrite: "auto",
-        });
         gsap.to(bar, { scaleX: 0, duration: 0.28, ease: aisEase, overwrite: "auto" });
       };
 
@@ -57,6 +39,7 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       el.addEventListener("focus", enter);
       el.addEventListener("blur", leave);
       return () => {
+        releaseMagnetic();
         el.removeEventListener("pointerenter", enter);
         el.removeEventListener("pointerleave", leave);
         el.removeEventListener("focus", enter);
@@ -68,10 +51,10 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
 
   const skin =
     tone === "gold"
-      ? "bg-gold text-ink"
+      ? "metal-cta"
       : tone === "ghost-light"
-        ? "bg-transparent text-matte border border-matte/35"
-        : "bg-transparent text-ink border border-ink/30";
+        ? "metal-cta-ghost text-matte"
+        : "metal-cta-ghost text-ink";
 
   const shared = `relative inline-flex items-center justify-center px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] ${skin} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold`;
 
@@ -81,7 +64,7 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       <span
         ref={line}
         aria-hidden
-        className="pointer-events-none absolute inset-x-3 bottom-[7px] h-px origin-left bg-ink/70"
+        className="pointer-events-none absolute inset-x-3 bottom-[7px] h-px origin-left metal-rule"
       />
     </>
   );

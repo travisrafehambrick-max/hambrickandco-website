@@ -53,7 +53,7 @@ export function CallPhone({ compact = false }: { compact?: boolean }) {
             >
               <p
                 className={`font-mono text-[10px] uppercase tracking-[0.2em] ${
-                  face.live ? "text-gold" : "text-matte/40"
+                  face.live ? "metal-text" : "text-matte/40"
                 }`}
               >
                 {face.verb}

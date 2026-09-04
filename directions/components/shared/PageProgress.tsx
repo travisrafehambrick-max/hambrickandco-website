@@ -52,11 +52,11 @@ export function PageProgress() {
       aria-valuemax={100}
     >
       <span className="absolute inset-0 bg-matte/10" />
-      <span ref={fill} className="absolute inset-y-0 left-0 w-full origin-left bg-gold" />
+      <span ref={fill} className="metal-rule absolute inset-y-0 left-0 w-full origin-left" />
       <span
         ref={dot}
         aria-hidden
-        className="progress-dot absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold"
+        className="progress-dot absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
       />
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { bindMagnetic } from "@/lib/bind-magnetic";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
 import { AIS_REVEAL, AIS_RISE, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
@@ -13,6 +14,7 @@ import { ObjectSlot } from "@/components/shared/CanvasSlot";
 export function BalancePage() {
   const root = useRef<HTMLDivElement>(null);
   const slip = useRef<HTMLElement>(null);
+  const turn = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [face, setFace] = useState<"missed" | "recovered">("missed");
@@ -30,6 +32,7 @@ export function BalancePage() {
       }
 
       if (root.current) bindAiasLive(root.current);
+      const releaseTurn = turn.current ? bindMagnetic(turn.current, 16) : undefined;
 
       const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
@@ -68,6 +71,10 @@ export function BalancePage() {
           0,
         )
         .to({}, { duration: 0.2 });
+
+      return () => {
+        releaseTurn?.();
+      };
     },
     { scope: root, dependencies: [reduced], revertOnUpdate: true },
   );
@@ -84,7 +91,10 @@ export function BalancePage() {
       </header>
 
       <section className="relative mx-auto flex min-h-[100svh] max-w-[1100px] flex-col justify-between px-6 pb-16 pt-4">
-        <div>
+        <div className="pointer-events-none absolute inset-x-0 top-[18%] h-[42vh]">
+          <ObjectSlot progress={Math.max(progress, 0.4)} />
+        </div>
+        <div className="relative z-10">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ink/40">04 — Balance Object</p>
           <h1 className="mt-8 max-w-xl font-display text-[clamp(2.6rem,6vw,4.8rem)] leading-[0.95]">
             A quiet field.
@@ -99,7 +109,7 @@ export function BalancePage() {
           ref={slip}
           className="relative z-10 w-[min(100%,340px)] border border-ink/15 bg-matte p-6 shadow-[8px_12px_0_0_#12121208]"
         >
-          <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${face === "recovered" ? "text-gold" : "text-ink/40"}`}>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${face === "recovered" ? "metal-text" : "text-ink/40"}`}>
             {face === "recovered" ? "Recovered" : "Missed"}
           </p>
           <p className="mt-6 font-display text-[1.65rem] leading-snug">
@@ -108,9 +118,10 @@ export function BalancePage() {
               : "The estimate came back before the truck left."}
           </p>
           <button
+            ref={turn}
             type="button"
             onClick={() => setFace((f) => (f === "missed" ? "recovered" : "missed"))}
-            className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+            className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] metal-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
           >
             Turn the slip
           </button>
@@ -139,11 +150,11 @@ export function BalancePage() {
           </p>
           <p className="mt-6 font-sans text-[15px] text-ink/55">
             Hambrick &amp; Co. works the quiet hours between a missed inbound and a reply that lands.{" "}
-            <a className="text-gold" href={`mailto:${EMAIL}`}>
+            <a className="metal-text" href={`mailto:${EMAIL}`}>
               {EMAIL}
             </a>
             {" · "}
-            <a className="text-gold" href={PHONE_HREF}>
+            <a className="metal-text" href={PHONE_HREF}>
               {PHONE}
             </a>
           </p>

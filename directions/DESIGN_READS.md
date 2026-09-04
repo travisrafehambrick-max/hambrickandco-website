@@ -48,6 +48,14 @@ Where a line is the attention carrier (Society Hall rail, Solid Proof playhead, 
 - `prefers-reduced-motion` strips transitions, parallax, opacity, and transforms
 - Hover = slight lift / brighten only — no bounce
 
+## Motion raise (craft host)
+
+Living gold is metal, never a flat `#C4A574` fill. One system per viewport:
+R3F `MeshStandardMaterial` + `RoomEnvironment` PMREM + rim lights, or a metal
+gradient/rim on DOM carriers. Magnetic CTAs pull ≤20px (GSAP). Reduced-motion
+freezes a static metal frame at the recovered end-state. No Framer Motion.
+No Higgsfield.
+
 ## AIAS live pass (final additions)
 
 - Weighted Lenis-style scroll, same AIS ease

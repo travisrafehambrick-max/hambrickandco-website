@@ -1,12 +1,23 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { auditMailto, CTA_AUDIT, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
+import { useGSAP } from "@/lib/register-gsap";
+import { bindMagnetic } from "@/lib/bind-magnetic";
 
 export function AuditForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const [name, setName] = useState("");
   const [trade, setTrade] = useState("");
   const [note, setNote] = useState("");
+  const submit = useRef<HTMLButtonElement>(null);
+
+  useGSAP(
+    () => {
+      if (!submit.current) return;
+      return bindMagnetic(submit.current, 20);
+    },
+    { scope: submit },
+  );
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -55,17 +66,18 @@ export function AuditForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         />
       </label>
       <button
+        ref={submit}
         type="submit"
-        className="justify-self-start bg-gold text-ink px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        className="metal-cta justify-self-start px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
       >
         {CTA_AUDIT}
       </button>
       <p className={`font-mono text-[11px] tracking-wide ${label}`}>
-        <a className="underline decoration-gold/70 underline-offset-4" href={`mailto:${EMAIL}`}>
+        <a className="underline decoration-white/40 underline-offset-4" href={`mailto:${EMAIL}`}>
           {EMAIL}
         </a>
         {" · "}
-        <a className="underline decoration-gold/70 underline-offset-4" href={PHONE_HREF}>
+        <a className="underline decoration-white/40 underline-offset-4" href={PHONE_HREF}>
           {PHONE}
         </a>
       </p>

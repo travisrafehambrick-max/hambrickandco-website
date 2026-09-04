@@ -9,6 +9,7 @@ import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
 import { PeelSlot } from "@/components/shared/CanvasSlot";
+import { bindMagnetic } from "@/lib/bind-magnetic";
 
 const THREAD = [
   { t: "14:02", who: "Missed", text: "Can you still do the estimate this week?", state: "missed" as const },
@@ -29,7 +30,7 @@ export function AssistPane() {
   const root = useRef<HTMLDivElement>(null);
   const sheet = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0.18);
   const [active, setActive] = useState(0);
 
   useGSAP(
@@ -47,6 +48,9 @@ export function AssistPane() {
       }
 
       if (root.current) bindAiasLive(root.current);
+      const releaseMarks = Array.from(root.current?.querySelectorAll<HTMLElement>(".assist-mark") ?? []).map((el) =>
+        bindMagnetic(el, 14),
+      );
 
       const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
@@ -66,7 +70,7 @@ export function AssistPane() {
         scrollTrigger: {
           trigger: ".assist-pin",
           start: "top top",
-          end: "+=100%",
+          end: "+=72%",
           pin: true,
           scrub: 0.7,
         },
@@ -88,6 +92,10 @@ export function AssistPane() {
         )
         .fromTo(".console-line", { x: -20 }, { x: 0, stagger: 0.08, duration: 0.4 }, 0.1)
         .to({}, { duration: 0.18 });
+
+      return () => {
+        releaseMarks.forEach((fn) => fn());
+      };
     },
     { scope: root, dependencies: [reduced], revertOnUpdate: true },
   );
@@ -117,8 +125,8 @@ export function AssistPane() {
                 key={verb}
                 type="button"
                 onClick={() => setActive(i)}
-                className={`font-mono text-[10px] uppercase tracking-[0.18em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-                  live ? "text-gold" : on ? "text-matte" : "text-matte/35"
+                className={`assist-mark font-mono text-[10px] uppercase tracking-[0.18em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
+                  live ? "metal-text" : on ? "text-matte" : "text-matte/35"
                 }`}
               >
                 {verb}
@@ -151,11 +159,14 @@ export function AssistPane() {
           </div>
         </div>
         <div className="relative flex flex-col justify-end px-5 py-12 md:px-8">
-          <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered thread.</p>
+          <div className="pointer-events-none absolute right-4 top-6 h-40 w-[46%]">
+            <PeelSlot progress={Math.max(progress, 0.18)} />
+          </div>
+          <p className="metal-text font-display italic text-3xl md:text-5xl">Recovered thread.</p>
           <div className="mt-10 space-y-4">
             {THREAD.filter((m) => m.state === "live").map((m) => (
-              <p key={m.t + m.text} className="assist-msg live max-w-sm border-l border-gold pl-4">
-                <span className="font-mono text-[10px] text-gold">
+              <p key={m.t + m.text} className="assist-msg live max-w-sm border-l-2 pl-4" style={{ borderImage: "linear-gradient(180deg, #6e5a3a, #f3eee4, #c4a574) 1" }}>
+                <span className="font-mono text-[10px] metal-text">
                   {m.t} · {m.who}
                 </span>
                 <span className="mt-1 block font-sans text-[15px]">{m.text}</span>
@@ -197,11 +208,11 @@ export function AssistPane() {
                     <button
                       type="button"
                       onClick={() => setActive(i)}
-                      className={`w-full border px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-                        live ? "border-gold" : "border-matte/15"
+                      className={`assist-mark w-full px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
+                        live ? "metal-edge" : "border border-matte/15"
                       } ${on ? "text-matte" : "text-matte/35"}`}
                     >
-                      <span className={`font-mono text-[10px] ${live ? "text-gold" : ""}`}>
+                      <span className={`font-mono text-[10px] ${live ? "metal-text" : ""}`}>
                         {m.t} · {m.who}
                       </span>
                       <span className="mt-1 block font-sans text-[14px]">{m.text}</span>
@@ -212,7 +223,7 @@ export function AssistPane() {
             </ol>
             <pre data-depth="mid" className="mt-10 overflow-x-auto font-mono text-[11px] leading-6 text-matte/50">
               {CONSOLE.map((line, i) => (
-                <div key={line} className={`console-line ${progress > 0.55 && i >= 2 ? "text-gold" : ""}`}>
+                <div key={line} className={`console-line ${progress > 0.55 && i >= 2 ? "metal-text" : ""}`}>
                   {line}
                 </div>
               ))}
@@ -229,7 +240,7 @@ export function AssistPane() {
             </h2>
             <p className="mt-6 max-w-md font-sans text-matte/60">
               Split pane is the work: a person on the left, the quiet machine on the right. Write {EMAIL} or call{" "}
-              <a className="text-gold" href={PHONE_HREF}>
+              <a className="metal-text" href={PHONE_HREF}>
                 {PHONE}
               </a>
               .

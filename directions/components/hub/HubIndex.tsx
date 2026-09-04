@@ -47,11 +47,11 @@ export function HubIndex() {
           <Wordmark tone="dark" kicker="Directions" />
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-matte/45 md:block">{WEDGE}</p>
         </div>
-        <span ref={line} aria-hidden className="signal-line block h-px origin-left bg-gold" />
+        <span ref={line} aria-hidden className="signal-line metal-rule block h-px origin-left" />
       </header>
 
       <main className="mx-auto max-w-[1200px] px-6 py-16 md:py-24">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">Draft index · not live</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.26em] metal-text">Draft index · not live</p>
         <h1 className="mt-6 max-w-3xl font-display text-[clamp(2.8rem,7vw,6.2rem)] leading-[0.88] tracking-[-0.03em]">
           Five halls.
           <br />
@@ -74,11 +74,11 @@ export function HubIndex() {
                 className="group grid grid-cols-[3rem_1fr] items-baseline gap-4 py-7 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.1fr)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
               >
                 <span className="font-mono text-[11px] text-matte/35">{d.n}</span>
-                <span className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-none group-hover:text-gold">
+                <span className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-none">
                   {d.name}
                 </span>
                 <span className="col-span-2 mt-2 font-sans text-[14px] text-matte/50 md:col-span-1 md:mt-0">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold/80">{d.carrier}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] metal-text">{d.carrier}</span>
                   <span className="mt-1 block">{d.line}</span>
                 </span>
               </Link>
@@ -87,10 +87,10 @@ export function HubIndex() {
         </ol>
 
         <footer className="mt-24 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] text-matte/45">
-          <a className="hover:text-gold" href={`mailto:${EMAIL}`}>
+          <a className="hover:opacity-80" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
-          <a className="hover:text-gold" href={PHONE_HREF}>
+          <a className="hover:opacity-80" href={PHONE_HREF}>
             {PHONE}
           </a>
           <span>{AREA}</span>

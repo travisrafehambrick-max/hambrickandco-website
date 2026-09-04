@@ -41,7 +41,7 @@ export function SocietyHall() {
       gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
 
       if (reduced) {
-        gsap.set(path, { strokeDashoffset: 0, stroke: "#C4A574", filter: "none", y: 0, autoAlpha: 1 });
+        gsap.set(path, { strokeDashoffset: 0, stroke: "url(#metalLive)", filter: "none", y: 0, autoAlpha: 1 });
         gsap.set(rail.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
         gsap.set(".hall-recovered", { autoAlpha: 1, y: 0, filter: "none" });
         gsap.set(".thesis-row", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
@@ -68,7 +68,7 @@ export function SocietyHall() {
           { strokeDashoffset: len, stroke: "#F5F5F5", filter: "blur(8px)", y: AIS_RISE, autoAlpha: 0 },
           {
             strokeDashoffset: len * 0.55,
-            stroke: "#C4A574",
+            stroke: "url(#metalLive)",
             filter: "blur(0px)",
             y: 0,
             autoAlpha: 1,
@@ -102,7 +102,7 @@ export function SocietyHall() {
 
       chapter
         .to(rail.current, { scaleX: 1, duration: 0.7 }, 0)
-        .to(path, { strokeDashoffset: 0, stroke: "#C4A574", duration: 0.7 }, 0)
+        .to(path, { strokeDashoffset: 0, stroke: "url(#metalLive)", duration: 0.7 }, 0)
         .to(
           {},
           {
@@ -157,7 +157,7 @@ export function SocietyHall() {
               <a
                 key={id}
                 href={href}
-                className={lane === id ? "text-gold" : "text-matte/45 hover:text-matte"}
+                className={lane === id ? "metal-text" : "text-matte/45 hover:text-matte"}
               >
                 {label}
               </a>
@@ -168,21 +168,33 @@ export function SocietyHall() {
           </nav>
           <LiveButton href="#pledge">{CTA_FLOW}</LiveButton>
         </div>
-        <span ref={rail} aria-hidden className="signal-line block h-px origin-left bg-gold" />
+        <span ref={rail} aria-hidden className="signal-line metal-rule block h-px origin-left" />
       </header>
 
       <svg data-depth="far" className="pointer-events-none fixed inset-x-0 top-[28%] z-20 h-24 w-full" viewBox="0 0 1200 80" fill="none" aria-hidden>
+        <defs>
+          <linearGradient id="metalLive" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#6e5a3a" />
+            <stop offset="0.28" stopColor="#f3eee4" />
+            <stop offset="0.52" stopColor="#c4a574" />
+            <stop offset="0.78" stopColor="#8a7350" />
+            <stop offset="1" stopColor="#e8d5b0" />
+          </linearGradient>
+        </defs>
         <path
           ref={line}
           d="M40 48 C 220 12, 380 70, 560 36 S 900 10, 1160 44"
-          stroke="#F5F5F5"
-          strokeWidth="1.5"
+          stroke="url(#metalLive)"
+          strokeWidth="2"
           strokeLinecap="round"
         />
       </svg>
 
       <section id="top" className="relative mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 items-end gap-10 px-5 pb-16 pt-10 md:grid-cols-12 md:px-10">
-        <div className="md:col-span-7">
+        <div className="relative md:col-span-7">
+          <div className="pointer-events-none absolute inset-x-0 -top-4 h-28">
+            <FilamentSlot progress={Math.max(progress, 0.22)} />
+          </div>
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/40">01 — Society Hall</p>
           <h1 className="mt-6 font-display text-[clamp(3.2rem,9vw,8.4rem)] leading-[0.86] tracking-[-0.03em]">
             The lead
@@ -195,7 +207,7 @@ export function SocietyHall() {
           </p>
         </div>
         <div className="md:col-span-5 md:justify-self-end md:text-right">
-          <p className="hall-recovered signal-related font-display italic text-[clamp(2rem,4vw,3.4rem)] leading-none text-gold">
+          <p className="hall-recovered signal-related metal-text font-display italic text-[clamp(2rem,4vw,3.4rem)] leading-none">
             Recovered.
           </p>
           <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-matte/50">14:04 · first reply out</p>
@@ -214,7 +226,7 @@ export function SocietyHall() {
             <div data-depth="mid" className="h-[42vh] md:h-full">
               <FilamentSlot progress={progress} />
             </div>
-            <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+            <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.22em] metal-text">
               Live
             </p>
           </div>
@@ -232,7 +244,7 @@ export function SocietyHall() {
                       onClick={() => setLiveThesis(i)}
                       className="flex w-full items-baseline gap-6 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                     >
-                      <span className={`font-mono text-[11px] ${live ? "text-gold" : "text-matte/35"}`}>{row.n}</span>
+                      <span className={`font-mono text-[11px] ${live ? "metal-text" : "text-matte/35"}`}>{row.n}</span>
                       <span className={`font-display text-[clamp(1.4rem,3vw,2.15rem)] leading-[1.1] ${live ? "text-matte" : "text-matte/40"}`}>
                         {row.t}
                       </span>
@@ -250,14 +262,14 @@ export function SocietyHall() {
       <section id="pledge" className="border-t border-black px-5 py-24 md:px-10">
         <div className="mx-auto grid max-w-[1400px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Pledge</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] metal-text">Pledge</p>
             <h2 className="mt-4 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.95]">
               Request a recovery audit.
             </h2>
             <p className="mt-6 max-w-md font-sans text-[16px] leading-relaxed text-matte/70">
               Hambrick &amp; Co. is an AI automation practice. We put the missed inbound and the open estimate back
               into motion. Write {EMAIL} or call{" "}
-              <a className="text-gold" href={PHONE_HREF}>
+              <a className="metal-text" href={PHONE_HREF}>
                 {PHONE}
               </a>
               .

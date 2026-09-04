@@ -15,10 +15,10 @@ export function Wordmark({
   return (
     <Link href={href} className={`group inline-flex items-baseline gap-3 ${ink}`}>
       <span className="font-display text-[1.15rem] leading-none tracking-tight">
-        Hambrick <em className="text-gold font-display italic">{"&"}</em> Co.
+        Hambrick <em className="metal-text font-display italic">{"&"}</em> Co.
       </span>
       {kicker ? (
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold/80">
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">
           {kicker}
         </span>
       ) : null}

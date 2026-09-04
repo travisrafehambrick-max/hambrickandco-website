@@ -32,7 +32,7 @@ const CHAPTERS = [
 ];
 
 function ChapterStill({ mark, live }: { mark: string; live: boolean }) {
-  const rule = live ? "bg-gold" : "bg-matte/25";
+  const rule = live ? "metal-rule" : "bg-matte/25";
   return (
     <div className="relative h-full w-full overflow-hidden bg-ink">
       <span className={`absolute left-6 top-6 h-px w-16 ${rule}`} />
@@ -41,14 +41,14 @@ function ChapterStill({ mark, live }: { mark: string; live: boolean }) {
         <div className="absolute inset-[22%] border border-matte/15" />
       )}
       {mark === "reply" && (
-        <div className="absolute inset-[18%] border border-gold">
-          <div className="absolute left-4 top-4 h-8 w-24 bg-gold" />
-          <div className="absolute bottom-6 left-4 right-4 h-px bg-gold/70" />
+        <div className="absolute inset-[18%] metal-edge" style={{ ["--metal-fill" as string]: "#121212" }}>
+          <div className="absolute left-4 top-4 h-8 w-24 metal-rule" />
+          <div className="absolute bottom-6 left-4 right-4 h-px metal-rule" />
         </div>
       )}
       {mark === "quote" && (
-        <div className="absolute inset-x-[16%] inset-y-[20%] border border-gold/80 bg-matte/[0.04] p-5">
-          <div className="h-px w-2/3 bg-gold" />
+        <div className="absolute inset-x-[16%] inset-y-[20%] metal-edge bg-matte/[0.04] p-5" style={{ ["--metal-fill" as string]: "#121212" }}>
+          <div className="h-px w-2/3 metal-rule" />
           <div className="mt-4 h-px w-full bg-matte/20" />
           <div className="mt-3 h-px w-5/6 bg-matte/20" />
           <div className="mt-3 h-px w-1/2 bg-matte/20" />
@@ -95,7 +95,7 @@ export function SignatureReel() {
         scrollTrigger: {
           trigger: ".reel-pin",
           start: "top top",
-          end: "+=100%",
+          end: "+=115%",
           pin: true,
           scrub: 0.6,
         },
@@ -127,7 +127,7 @@ export function SignatureReel() {
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4">
           <Wordmark tone="dark" kicker="Reel" />
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/70">
-            Folio 0{chapter + 1} / 03
+            {CHAPTERS[chapter].title}
           </p>
           <LiveButton href="#colophon" tone="ghost-light">
             {CTA_AUDIT}
@@ -146,20 +146,23 @@ export function SignatureReel() {
             </h1>
           </div>
           <div className="reel-recovered md:col-span-5 md:text-right">
-            <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered still.</p>
-            <p className="intro-beat mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">16:16 · reply filed</p>
+            <p className="metal-text font-display italic text-3xl md:text-5xl">Recovered still.</p>
+            <p className="intro-beat mt-3 font-mono text-[10px] uppercase tracking-[0.2em] metal-text">16:16 · reply filed</p>
           </div>
         </div>
         <div className="mt-12 grid items-end gap-6 md:grid-cols-12">
-          <div className="reel-missed relative aspect-[16/9] border border-matte/15 md:col-span-7">
+          <div className="reel-missed relative aspect-[16/9] border border-matte/15 md:col-span-6">
             <ChapterStill mark="empty" live={false} />
             <p className="absolute bottom-4 left-5 font-mono text-[10px] uppercase tracking-[0.2em] text-matte/50">
               16:12 · inbox empty
             </p>
           </div>
-          <div className="reel-recovered relative aspect-[4/5] border border-gold md:col-span-5">
+          <div className="relative h-[220px] md:col-span-3">
+            <GateSlot progress={Math.max(progress, 0.32)} />
+          </div>
+          <div className="reel-recovered relative aspect-[4/5] metal-edge md:col-span-3" style={{ ["--metal-fill" as string]: "#121212" }}>
             <ChapterStill mark="reply" live />
-            <p className="absolute bottom-4 left-5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">
+            <p className="absolute bottom-4 left-5 font-mono text-[10px] uppercase tracking-[0.2em] metal-text">
               Recovered frame
             </p>
           </div>
@@ -172,10 +175,10 @@ export function SignatureReel() {
             <div data-depth="mid" className="absolute inset-0">
               <GateSlot progress={progress} />
             </div>
-            <figure className={`relative z-10 mx-auto mt-[14vh] aspect-[4/5] w-[min(72%,420px)] bg-ink ${progress > 0.28 ? "border border-gold" : "border border-matte/20"}`}>
+            <figure className={`relative z-10 mx-auto mt-[14vh] aspect-[4/5] w-[min(72%,420px)] bg-ink ${progress > 0.28 ? "metal-edge" : "border border-matte/20"}`}>
               <ChapterStill mark={still.mark} live={progress > 0.28} />
               <figcaption className="absolute inset-x-0 bottom-0 p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">{still.n}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">{still.n}</p>
                 <p className="mt-2 font-display text-3xl leading-tight">{still.title}</p>
               </figcaption>
             </figure>
@@ -183,21 +186,23 @@ export function SignatureReel() {
               Object hands off mid-turn
             </p>
           </div>
-          <div className="flex flex-col justify-center gap-16 px-6 py-16 md:col-span-6 md:px-16">
-            {CHAPTERS.map((c) => (
-              <button
-                key={c.n}
-                type="button"
-                onClick={() => setChapter(Number(c.n) - 1)}
-                className="reel-caption text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
-              >
-                <span className={`font-mono text-[10px] tracking-[0.2em] ${chapter === Number(c.n) - 1 ? "text-gold" : "text-matte/35"}`}>
-                  CHAPTER {c.n}
-                </span>
-                <span className="mt-2 block font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-[1.05]">{c.title}</span>
-                <span className="mt-3 block max-w-sm font-sans text-[15px] text-matte/60">{c.body}</span>
-              </button>
-            ))}
+          <div className="flex flex-col justify-center gap-8 px-6 py-16 md:col-span-6 md:px-16">
+            <div className="reel-caption text-left">
+              <p className="metal-text font-mono text-[10px] tracking-[0.2em]">{still.n}</p>
+              <p className="mt-2 font-display text-[clamp(1.8rem,3vw,2.6rem)] leading-[1.05]">{still.title}</p>
+              <p className="mt-3 max-w-sm font-sans text-[15px] text-matte/60">{still.body}</p>
+            </div>
+            <div className="flex gap-3">
+              {CHAPTERS.map((c, i) => (
+                <button
+                  key={c.n}
+                  type="button"
+                  onClick={() => setChapter(i)}
+                  aria-label={c.title}
+                  className={`h-1.5 w-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${chapter === i ? "metal-rule" : "bg-matte/20"}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -214,7 +219,7 @@ export function SignatureReel() {
       <section id="colophon" className="border-t border-black px-6 py-24">
         <div className="mx-auto grid max-w-[1440px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Colophon</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">Colophon</p>
             <h2 className="mt-4 font-display text-[clamp(2.4rem,5vw,4rem)] leading-[0.95]">
               Request a recovery audit.
             </h2>

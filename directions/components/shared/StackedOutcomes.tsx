@@ -77,7 +77,7 @@ export function StackedOutcomes() {
               <article className="outcome-card sticky top-[18vh] mb-6 min-h-[52vh] origin-top border border-black bg-[#161616] p-8 md:p-12">
                 <p
                   className={`font-mono text-[10px] uppercase tracking-[0.22em] ${
-                    card.live && card.verb === "Recovered" ? "text-gold" : "text-matte/40"
+                    card.live && card.verb === "Recovered" ? "metal-text" : "text-matte/40"
                   }`}
                 >
                   {card.n} · {card.verb}

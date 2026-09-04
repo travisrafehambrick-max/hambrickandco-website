@@ -8,7 +8,7 @@ import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
-import { TicketSlot } from "@/components/shared/CanvasSlot";
+import { RibbonSlot, TicketSlot } from "@/components/shared/CanvasSlot";
 
 const TICKETS = [
   { id: "T-104", job: "Roof estimate", dead: "No reply · 2h 14m", live: "Text returned · 4 min", col: "Missed" },
@@ -31,7 +31,7 @@ export function SolidProof() {
       if (reduced) {
         gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0, filter: "none" });
         gsap.set(".board-ticket", { x: 0, autoAlpha: 1, filter: "none" });
-        gsap.set(playhead.current, { scaleX: 1, backgroundColor: "#C4A574", filter: "none", y: 0, autoAlpha: 1 });
+        gsap.set(playhead.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
         if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         return;
@@ -45,13 +45,12 @@ export function SolidProof() {
       intro
         .fromTo(
           playhead.current,
-          { scaleX: 0, filter: "blur(6px)", y: AIS_RISE, autoAlpha: 0, backgroundColor: "#F5F5F5" },
+          { scaleX: 0, filter: "blur(6px)", y: AIS_RISE, autoAlpha: 0 },
           {
             scaleX: 0.36,
             filter: "blur(0px)",
             y: 0,
             autoAlpha: 1,
-            backgroundColor: "#C4A574",
             duration: AIS_REVEAL,
           },
         )
@@ -77,7 +76,7 @@ export function SolidProof() {
       });
 
       pin
-        .to(playhead.current, { scaleX: 1, backgroundColor: "#C4A574", duration: 0.8 })
+        .to(playhead.current, { scaleX: 1, duration: 0.8 })
         .to(
           {},
           {
@@ -106,7 +105,7 @@ export function SolidProof() {
             {CTA_AUDIT}
           </LiveButton>
         </div>
-        <span ref={playhead} aria-hidden className="signal-line block h-px origin-left bg-gold" />
+        <span ref={playhead} aria-hidden className="signal-line metal-rule block h-px origin-left" />
       </header>
 
       <section className="mx-auto grid min-h-[100svh] max-w-[1280px] grid-cols-1 items-stretch gap-0 px-5 py-10 md:grid-cols-12 md:px-8">
@@ -115,11 +114,14 @@ export function SolidProof() {
           <h1 className="mt-5 font-display text-[clamp(2.8rem,6vw,5.4rem)] leading-[0.9]">
             Dead board.
             <br />
-            <span className="text-gold">Live board.</span>
+            <span className="metal-text">Live board.</span>
           </h1>
           <p className="intro-beat mt-6 max-w-sm font-sans text-[16px] leading-relaxed text-ink/65">
             {WEDGE} as a working strip — not a speech. Gold only after a ticket comes back.
           </p>
+          <div className="mt-8 h-24">
+            <RibbonSlot progress={Math.max(progress, 0.2)} />
+          </div>
         </div>
         <div className="ticket-pair grid grid-cols-2 gap-4 py-10 md:col-span-7 md:pl-10">
           <article className="dead-face border border-ink/15 bg-ink p-5 text-matte">
@@ -127,8 +129,8 @@ export function SolidProof() {
             <h2 className="mt-8 font-display text-3xl">Roof estimate</h2>
             <p className="mt-3 font-sans text-sm text-matte/55">No reply · 2h 14m</p>
           </article>
-          <article className="live-face border border-gold bg-matte p-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">T-104 · Live</p>
+          <article className="live-face metal-edge p-5" style={{ ["--metal-fill" as string]: "#F5F5F5" }}>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] metal-text">T-104 · Live</p>
             <h2 className="mt-8 font-display text-3xl">Roof estimate</h2>
             <p className="mt-3 font-sans text-sm text-ink/60">Text returned · 4 min</p>
           </article>
@@ -155,10 +157,10 @@ export function SolidProof() {
                     type="button"
                     onClick={() => setOpen(i)}
                     className={`board-ticket grid grid-cols-[auto_1fr_auto] items-center gap-4 border px-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
-                      alive ? "border-gold text-matte" : "border-matte/15 text-matte/45"
+                      alive ? "metal-edge text-matte" : "border border-matte/15 text-matte/45"
                     } ${open === i ? "bg-matte/5" : ""}`}
                   >
-                    <span className={`font-mono text-[10px] ${alive ? "text-gold" : ""}`}>{t.id}</span>
+                    <span className={`font-mono text-[10px] ${alive ? "metal-text" : ""}`}>{t.id}</span>
                     <span className="font-sans text-[15px]">
                       {t.job}
                       <span className="block text-[13px] text-current/70">{alive ? t.live : t.dead}</span>
