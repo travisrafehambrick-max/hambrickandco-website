@@ -33,7 +33,7 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 
 1. **Society Hall / AIS** — sticky chrome; product stage *is* the recovery board; gold only on the active lane and live signal.
 2. **Solid Proof / Solidroad** — gold signal line scrubs missed→recovered across sticky chrome; tickets still the carrier.
-3. **Signature Reel / Austin Werner** — one metallic orb as the sole 3D; rotation hands off mid-motion. Chapter still stays the DOM carrier.
+3. **Signature Reel / Austin Werner** — one gold orb through missed→recovered (statue→orb handoff mapped to our still + orb). Pin one full-viewport stage per chapter; scrub depth/scale/blur. Black holds between chapters; white type stays stable. Nav hide on scroll-down / show on scroll-up. Controls 0.3–0.7s ease-out. Gold markers before headings. Calm contact hover only. No invented counters.
 4. **Balance Object / Ballance** — first screen composed (no autoplay). One hero pebble with slower parallax than the copy. Hard black→white seam at the turning point. One tactile slip control; high stillness. No KPI count-ups. GSAP / ScrollTrigger / R3F only — no Framer Motion. Reduced-motion = recovered still.
 5. **Assist Pane / SiteAssist** — header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Module list left / media right; media swaps on scroll landmarks. Oversized type reveal; staggered job-type cards; discrete carousel OK. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`).
 
@@ -87,9 +87,24 @@ asymmetric proof notes. R3F is shallow ticket planes.
 
 ### 03 Signature Reel — chapter still mid-pin
 
-Editorial asymmetric portfolio. Magazine spread, huge serif, uneven columns.
-Carrier: one chapter still that stays pinned mid-viewport while copy slides.
-First screen: missed still vs recovered still as a spread. R3F is a film gate.
+Editorial asymmetric portfolio. Austin Werner live-scroll, closed — steal the
+stage, never the `100+` counters:
+
+- One gold carrier through missed→recovered. The DOM still is the “statue”; the
+  R3F orb takes living gold and keeps rotating across chapter cuts (handoff
+  mid-motion). One `GateSlot` only — no second 3D object.
+- Pin one full-viewport stage per chapter (`end: +=100%`). Scrub the still:
+  depth / scale / blur. White type does not fade or wobble.
+- Black holds between chapters for the miss (dead hairline, no gold).
+- Nav hides on scroll-down, shows on scroll-up (`0.45s`, `aisEase`).
+- Controls 0.3–0.7s ease-out. No spring. No count-ups.
+- Gold chapter markers (metal-rule + index) sit before headings.
+- Colophon is calm: `reel-calm` 1px hover only — no magnetic pull.
+- First screen is composed: missed still + recovered still + orb already mid-story.
+  No load autoplay. No `bindAiasLive`.
+- `prefers-reduced-motion` → last chapter, progress `1`, stills sharp, header shown.
+
+Carrier: the chapter still. R3F is the orb, one instance through the track.
 
 ### 04 Balance Object — quote slip
 

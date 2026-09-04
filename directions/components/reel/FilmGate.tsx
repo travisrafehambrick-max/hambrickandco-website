@@ -15,8 +15,11 @@ function Orb({ progress }: { progress: number }) {
     if (!mesh.current) return;
     const mat = mesh.current.material as THREE.MeshStandardMaterial;
     applyMetal(mat, progress > 0.28);
-    mesh.current.rotation.y = progress * 2.15;
-    mesh.current.rotation.x = 0.22 + progress * 0.35;
+    const live = THREE.MathUtils.clamp(progress, 0, 1);
+    mesh.current.rotation.y = live * 2.15;
+    mesh.current.rotation.x = 0.22 + live * 0.35;
+    const s = 0.86 + live * 0.14;
+    mesh.current.scale.setScalar(s);
     invalidate();
   }, [progress, invalidate]);
 

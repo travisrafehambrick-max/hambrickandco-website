@@ -38,7 +38,7 @@ export const DIRECTIONS = [
     slug: "signature-reel",
     name: "Signature Reel",
     carrier: "Chapter still mid-pin",
-    line: "Editorial spread. One still holds the chapter while copy slides.",
+    line: "One orb through the cut. A pinned stage per chapter.",
   },
   {
     n: "04",

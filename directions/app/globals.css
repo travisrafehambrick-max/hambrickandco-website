@@ -108,6 +108,18 @@ body {
   border-color: #000;
 }
 
+.reel-calm {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reel-calm:hover,
+.reel-calm:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
