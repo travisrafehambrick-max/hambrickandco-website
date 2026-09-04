@@ -23,6 +23,7 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.set(bar, { scaleX: 0, transformOrigin: "left center" });
       if (reduce) return;
+      gsap.set(el, { y: 0, filter: "brightness(1)" });
 
       const enter = () => {
         gsap.to(el, { y: -2, filter: "brightness(1.08)", duration: 0.32, ease: aisEase, overwrite: "auto" });
