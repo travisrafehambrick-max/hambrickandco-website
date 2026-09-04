@@ -103,6 +103,10 @@ If WebGL is missing, the GPU is weak, or reduced motion is on, show the same thr
 - Do not mention internal staff, Alfred, Manor, or n8n.
 - Family name on purpose: Hambrick & Co.
 
+## Preview gallery (not live)
+
+`variants/` holds five Draft 3 direction studies so Travis can compare looks in a browser. They are preview-only. They use a locked black / white / gold study palette. They do not replace this live paper-and-ink plan. Do not publish them to hambrickco.com.
+
 ## Not in this plan
 
 - A new company name
@@ -112,6 +116,7 @@ If WebGL is missing, the GPU is weak, or reduced motion is on, show the same thr
 - Building painter demos in this repo
 - Publishing to Netlify or connecting a custom domain unless Travis asks
 - Replacing the wordmark
+- Promoting a `variants/` study to production without Travis asking
 
 ## Stack
 

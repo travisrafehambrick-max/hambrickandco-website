@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recovery Signal · Hambrick &amp; Co</title>
+  <meta name="description" content="Missed call to recovered estimate. Hambrick &amp; Co looks first, free. Charlottesville, Virginia.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Hanken+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#signal">Skip to story</a>
+  <header>
+    <div class="wrap bar">
+      <a class="wordmark" href="#top">Hambrick <i>&amp;</i> Co</a>
+      <nav aria-label="Main">
+        <a href="#offer">Offer</a>
+        <a href="#flow">Flow</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn commit" href="#contact">Request a recovery audit</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="signal" aria-labelledby="signal-live">
+      <div class="wrap">
+        <p class="kicker">Illustration · missed call becoming a reply</p>
+        <p class="line one" id="line-one">Someone called.</p>
+        <div class="signal-track" aria-hidden="true">
+          <span class="signal-bar" id="signal-bar"></span>
+        </div>
+        <p class="line two" id="signal-live">
+          <span class="dead" id="line-dead">Nobody called back.</span>
+          <span class="live" id="line-live">The estimate came back.</span>
+        </p>
+        <p class="territory">Charlottesville, Virginia and a forty-mile radius.</p>
+        <div class="hero-actions">
+          <a class="btn commit" href="#flow">See the recovery flow</a>
+          <a class="btn ghost commit" href="#contact">Request a recovery audit</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="offer">
+      <div class="wrap split">
+        <h2>One offer. Lead Response and Estimate Recovery.</h2>
+        <div>
+          <p>We look first, free. If we find nothing worth fixing, we say so. The quote comes in writing after.</p>
+          <p>For local home services and trades — landscaping, HVAC, plumbing, electrical first.</p>
+        </div>
+      </div>
+      <div class="wrap pair">
+        <article>
+          <p class="num">01</p>
+          <h3>The unanswered call</h3>
+          <p>A text that knows the shop. It asks what the job is, offers a booking, and puts the thread in front of the owner.</p>
+        </article>
+        <article>
+          <p class="num">02</p>
+          <h3>The dead estimate</h3>
+          <p>A timed, job-specific follow-up on every unanswered estimate. It stops the moment they reply.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="wrap">
+        <h2>The recovery flow</h2>
+        <ol>
+          <li>
+            <span>Look</span>
+            <p>Thirty minutes on how calls, quotes, and messages reach you now.</p>
+          </li>
+          <li>
+            <span>Find</span>
+            <p>We map the leak. Free. You see where booked work is going quiet.</p>
+          </li>
+          <li>
+            <span>Write</span>
+            <p>Nothing to fix, nothing to pay. If there is work, the quote is in writing.</p>
+          </li>
+          <li>
+            <span>Run</span>
+            <p>You approve what gets said. Then it answers while you are on the job.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <h2>The <i>&amp;</i> is you.</h2>
+        <p>Hambrick &amp; Co is a working label on a family name. Travis Hambrick works from Charlottesville, Virginia. No case studies yet. When there is one, it will carry the owner’s name. This page will not invent one.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap contact">
+        <div>
+          <h2>Request a recovery audit</h2>
+          <p>Tell us the shop name and how people reach you. We look first.</p>
+          <p class="reach"><a class="commit" href="mailto:hello@hambrickco.com">hello@hambrickco.com</a></p>
+          <p class="reach"><a class="commit" href="tel:+14342600823">(434) 260-0823</a></p>
+        </div>
+        <form id="lead-form" action="mailto:hello@hambrickco.com" method="post" enctype="text/plain">
+          <label>Your name <input name="name" id="name" required autocomplete="name"></label>
+          <label>Business name <input name="business" id="biz" required autocomplete="organization"></label>
+          <label>Email or phone <input name="contact" id="reach" required></label>
+          <label>How do enquiries reach you now? <textarea name="enquiries" id="enquiries" rows="3"></textarea></label>
+          <button class="btn commit" type="submit">Open in your email app</button>
+          <p class="note">Nothing is sent from this page. Your mail app opens addressed to hello@hambrickco.com.</p>
+          <p class="confirm" id="form-confirm" hidden>Your email app should open with hello@hambrickco.com addressed. If it does not, write that address yourself.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap bar">
+      <a href="../index.html">All five directions</a>
+      <span>Preview only · not hambrickco.com</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

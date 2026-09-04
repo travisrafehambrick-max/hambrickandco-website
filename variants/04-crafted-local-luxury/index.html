@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crafted Local Luxury · Hambrick &amp; Co</title>
+  <meta name="description" content="Editorial study of Lead Response and Estimate Recovery. Hambrick &amp; Co, Charlottesville.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Hanken+Grotesk:wght@400;500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="wrap">
+    <a class="wordmark" href="#top">Hambrick <i>&amp;</i> Co</a>
+    <nav>
+      <a href="#work">The work</a>
+      <a href="#look">The look</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="kicker">Working label · Charlottesville</p>
+        <h1>The quote sat on the bench. Then it sat too long.</h1>
+        <p class="lede">Lead Response and Estimate Recovery for local trades. We look first, free. The quote, if there is one, comes in writing after.</p>
+        <div class="actions">
+          <a class="btn commit" href="#work">See the recovery flow</a>
+          <a class="text-link commit" href="#contact">Request a recovery audit</a>
+        </div>
+      </div>
+
+      <div class="hero-object">
+        <figure class="still-life" aria-hidden="true">
+          <svg viewBox="0 0 420 160">
+            <rect x="16" y="24" width="180" height="112" fill="none" stroke="#121212" stroke-width="1.25"/>
+            <rect x="32" y="40" width="148" height="6" fill="#c4a574"/>
+            <circle cx="320" cy="80" r="52" fill="none" stroke="#c4a574" stroke-width="1.25"/>
+            <path d="M320 36 v28 M292 80 h56" stroke="#121212" stroke-width="1.5"/>
+          </svg>
+        </figure>
+        <article class="slip" id="quote-slip" data-state="dead" aria-live="polite">
+          <p class="slip-kicker">Estimate · illustration</p>
+          <h2 id="slip-title">Deck repair · sitting</h2>
+          <p id="slip-body">Sent Monday. They called Tuesday. Nobody called back.</p>
+          <span class="rule" id="slip-rule"></span>
+          <p class="slip-end" id="slip-end">No reply. No booking.</p>
+        </article>
+        <p class="fine">Illustration. Paper estimate and tools. Not a photograph. Not a client.</p>
+      </div>
+    </section>
+
+    <section class="work wrap" id="work">
+      <h2>One offer, written plainly.</h2>
+      <div class="duo">
+        <div>
+          <h3>The unanswered call</h3>
+          <p>A text that knows the shop, asks what the job is, offers a booking, and puts the thread in front of the owner.</p>
+        </div>
+        <div>
+          <h3>The dead estimate</h3>
+          <p>A timed, job-specific follow-up. It stops the moment they reply.</p>
+        </div>
+      </div>
+      <p class="fine">Landscaping, HVAC, plumbing, electrical first. Charlottesville, Virginia and a forty-mile radius.</p>
+    </section>
+
+    <section class="look wrap" id="look">
+      <h2>We look first.</h2>
+      <ol>
+        <li>You show us how enquiries arrive.</li>
+        <li>We find the leak, free.</li>
+        <li>Written quote — or we stop.</li>
+        <li>You approve the language. It runs while you are on the job.</li>
+      </ol>
+      <p>Travis Hambrick. Family name on purpose. No case studies yet.</p>
+    </section>
+
+    <section class="contact wrap" id="contact">
+      <h2>Request a recovery audit</h2>
+      <p class="reach"><a class="commit" href="mailto:hello@hambrickco.com">hello@hambrickco.com</a></p>
+      <p class="reach"><a class="commit" href="tel:+14342600823">(434) 260-0823</a></p>
+      <form id="lead-form" action="mailto:hello@hambrickco.com" method="post" enctype="text/plain">
+        <label>Your name <input id="name" name="name" required autocomplete="name"></label>
+        <label>Business name <input id="biz" name="business" required autocomplete="organization"></label>
+        <label>Email or phone <input id="reach" name="contact" required></label>
+        <label>How do enquiries reach you now? <textarea id="enquiries" name="enquiries" rows="3"></textarea></label>
+        <button class="btn commit" type="submit">Open in your email app</button>
+        <p class="note">Nothing is sent from this page. Your mail app opens addressed to hello@hambrickco.com.</p>
+        <p class="confirm" id="form-confirm" hidden>Your email app should open with hello@hambrickco.com addressed. If it does not, write that address yourself.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <a href="../index.html">All five directions</a>
+    <span>Preview only</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

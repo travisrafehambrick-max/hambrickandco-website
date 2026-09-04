@@ -1,0 +1,9 @@
+{
+  "name": "hambrickandco-website",
+  "private": true,
+  "description": "Hambrick & Co. company site. Preview: npm run preview, then open /variants/",
+  "scripts": {
+    "preview": "npx --yes serve .",
+    "start": "npx --yes serve ."
+  }
+}
