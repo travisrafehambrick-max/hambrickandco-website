@@ -10,5 +10,5 @@ GoldMetalMark
 MeshStandardMaterial
 @react-three/fiber
 magnetic <=20px
-tip 60635a6
-parent d711557
+tip 74e4e1d
+parent 7f8bc03
