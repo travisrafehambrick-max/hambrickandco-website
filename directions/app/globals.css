@@ -52,7 +52,8 @@ body {
 
   .signal-line,
   .signal-related,
-  [data-parallax] {
+  [data-parallax],
+  .hub-row a {
     filter: none !important;
     transform: none !important;
     opacity: 1 !important;
