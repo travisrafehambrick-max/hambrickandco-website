@@ -29,6 +29,7 @@ import {
   PROOF_LEAD,
   PROOF_MATH_CLOSE,
   PROOF_NOTE,
+  PROOF_SETUP,
   PROOF_TRAVIS,
 } from "@/components/assist/copy";
 
@@ -294,6 +295,12 @@ export function AssistPane() {
               <GoldMetalMark />
               <span className="metal-text">{OFFER_WEDGE}</span>
             </div>
+            <div className="assist-panel mt-8 flex flex-wrap items-center gap-4">
+              <MetalRimCTA href={PHONE_HREF} className="inline-flex px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">
+                {CTA_TALK}
+              </MetalRimCTA>
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/45">{AREA_CLOSE}</span>
+            </div>
           </div>
         </section>
 
@@ -311,7 +318,14 @@ export function AssistPane() {
               <p className="mt-10 font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.12]">{PROOF_MATH_CLOSE}</p>
               <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/80">{PROOF_BODY}</p>
               <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/70">{PROOF_TRAVIS}</p>
+              <p className="mt-4 max-w-xl font-sans text-[16px] leading-relaxed text-ink/70">{PROOF_SETUP}</p>
               <p className="mt-6 max-w-xl font-sans text-[14px] leading-relaxed text-ink/45">{PROOF_NOTE}</p>
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <MetalRimCTA href={PHONE_HREF} className="inline-flex px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em]">
+                {CTA_TALK}
+              </MetalRimCTA>
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/45">{AREA_CLOSE}</span>
             </div>
           </div>
         </section>

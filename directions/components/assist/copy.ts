@@ -11,9 +11,9 @@ export const HERO_HEADLINE =
 export const HERO_SUB =
   "Hambrick & Co installs the systems that catch leads, close follow-ups, and fill the calendar — for local businesses within 40 miles of Charlottesville.";
 
-export const CTA_TALK = "Talk to Travis";
+export const CTA_TALK = "Stop the leak — talk to Travis";
 export const CTA_AUDIT = "Request a recovery audit";
-export const CTA_BOOK = "Book a short call with Travis";
+export const CTA_BOOK = "Stop the leak — talk to Travis";
 export const AREA_CLOSE = "Charlottesville + 40 miles";
 
 export const PROBLEM_LEAD = "You already pay for the phone to ring and the quote to go out. What you don't catch:";
@@ -62,7 +62,8 @@ export const OFFER_STACK = [
   },
 ] as const;
 
-export const OFFER_WEDGE = "First wedge: Lead Response & Estimate Recovery.";
+export const OFFER_WEDGE =
+  "Start here: Lead Response & Estimate Recovery — the leak that usually costs the most.";
 
 export const PROOF_LEAD =
   "Here’s the math most local shops already feel:";
@@ -81,6 +82,8 @@ export const PROOF_BODY =
 
 export const PROOF_TRAVIS =
   "Travis is the human bridge — setup, handoff, final say. You deal with a person, not a portal.";
+
+export const PROOF_SETUP = "No software to learn on day one. Travis runs setup and handoff.";
 
 export const PROOF_NOTE =
   "(Named case studies stay off the site until a real install can stand behind them.)";
