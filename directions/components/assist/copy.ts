@@ -2,8 +2,8 @@
  * CANONICAL — Harcourt is the ONLY copy for this raise.
  * Ignore any Sterling copy pack. Do not remix.
  * Hero / problem / offer stack / proof / CTA: verbatim only.
- * Harcourt PROOF revise 2026-09-04.
- * Named case studies stay off until a real install can stand behind them.
+ * Harcourt PROOF revise 2026-09-04 (CoS canonical).
+ * Named case studies stay off the site until a real install can stand behind them.
  */
 export const HERO_HEADLINE =
   "Every missed call and unanswered estimate is money walking out the door.";
@@ -64,8 +64,6 @@ export const OFFER_STACK = [
 
 export const OFFER_WEDGE = "First wedge: Lead Response & Estimate Recovery.";
 
-export const PROOF_EYEBROW = "PROOF";
-
 export const PROOF_LEAD =
   "Here’s the math most local shops already feel:";
 
@@ -83,5 +81,8 @@ export const PROOF_BODY =
 
 export const PROOF_TRAVIS =
   "Travis is the human bridge — setup, handoff, final say. You deal with a person, not a portal.";
+
+export const PROOF_NOTE =
+  "(Named case studies stay off the site until a real install can stand behind them.)";
 
 export const CLOSE_HEADLINE = "If leads and estimates are leaking, let's plug the expensive ones first.";
