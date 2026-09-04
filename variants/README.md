@@ -25,6 +25,8 @@ Then open `http://localhost:3000/variants/`.
 
 ## Public preview (not live hambrickco.com)
 
+jsDelivr on this branch serves `index.html` as `text/plain` (source, not a site). GitHub Pages is not enabled on the repo.
+
 **Preview (open in browser):** https://hambrick-d3-gallery-7cc90b.tiiny.site/
 
 - https://hambrick-d3-gallery-7cc90b.tiiny.site/01-recovery-signal/
@@ -33,4 +35,4 @@ Then open `http://localhost:3000/variants/`.
 - https://hambrick-d3-gallery-7cc90b.tiiny.site/04-crafted-local-luxury/
 - https://hambrick-d3-gallery-7cc90b.tiiny.site/05-metallic-diagnostic/
 
-This is a separate static host. It is not hambrickco.com and not Netlify production.
+Separate static host. Not hambrickco.com. Not Netlify production.
