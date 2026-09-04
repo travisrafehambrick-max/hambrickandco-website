@@ -139,9 +139,9 @@ export function AssistPane() {
       });
       ScrollTrigger.create({
         trigger: "#request",
-        start: "top 18%",
-        onEnter: () => paintHeader(true),
-        onLeaveBack: () => paintHeader(false),
+        start: "top 72%",
+        end: "bottom bottom",
+        onToggle: (self) => paintHeader(self.isActive),
       });
 
       gsap.fromTo(
