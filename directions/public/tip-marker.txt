@@ -1,8 +1,9 @@
 hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
-hero stills: missed-call is primary
-estimate recovery booked are secondary
-BrandMark untouched
-tip d49ed6a
-parent bf29ddc
+CRO: Stop the leak — talk to Travis
+OFFER_WEDGE start here
+PROOF_SETUP no software day one
+BrandMark + hero stills + money-math untouched
+tip 0c5da72
+parent 256b375
