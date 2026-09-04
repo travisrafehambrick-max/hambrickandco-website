@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { EMAIL, PHONE_HREF } from "@/lib/facts";
 import { AIS_REVEAL, AIS_RISE, AIS_STAGGER, STILLNESS, ScrollTrigger, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
-import { BrandMark } from "@/components/assist/BrandMark";
+import { BrandLockup } from "@/components/brand/BrandLockup";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
 import { PeelSlot } from "@/components/shared/CanvasSlot";
@@ -165,7 +165,7 @@ export function AssistPane() {
         className={`assist-header sticky top-0 z-40 border-b ${ink ? "border-black bg-ink text-matte" : "border-ink bg-matte text-ink"}`}
       >
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-5 py-4 md:px-8">
-          <BrandMark tone={ink ? "dark" : "light"} />
+          <BrandLockup tone={ink ? "dark" : "light"} />
           <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
             <LiveButton href={PHONE_HREF}>{CTA_TALK}</LiveButton>
             <span className="hidden sm:inline-flex">

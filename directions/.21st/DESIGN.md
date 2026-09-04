@@ -41,11 +41,15 @@ Generated from project sources at 2026-09-04T14:34:48.517Z.
 
 ### Must
 
-- None recorded
+- Header brand is Logo Trace Loader 16834 as the left glyph of a Hambrick & Co lockup
+- Living gold on the mark and ampersand is MeshStandard / MetalRim, never a flat jewelry fill
+- Keep the italic Instrument Serif ampersand in the wordmark
 
 ### Avoid
 
-- None recorded
+- 21st component 12197 Hover Brand Logo
+- Framer Motion
+- Harcourt conversion copy rewrites
 
 ## Decisions
 

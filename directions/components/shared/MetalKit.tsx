@@ -16,6 +16,7 @@ export const METAL_SIGNATURES = [
   "GoldMetalMark",
   "GoldMetalAnd",
   "GoldMetalRim",
+  "GoldMetalTrace",
 ] as const;
 
 function GoldBarMesh({ live = true }: { live?: boolean }) {
@@ -158,11 +159,22 @@ export function GoldMetalRim() {
 }
 GoldMetalRim.displayName = "GoldMetalRim";
 
+export function GoldMetalTrace() {
+  return (
+    <span className="logo-trace-mark__metal" data-metal="GoldMetalTrace" aria-hidden>
+      <MetalCanvas staticFrame camera={{ position: [0.12, 0.08, 2.15], fov: 28 }}>
+        <AndPlateMesh />
+      </MetalCanvas>
+    </span>
+  );
+}
+GoldMetalTrace.displayName = "GoldMetalTrace";
+
 export function MetalParityAnchor() {
   return (
     <span hidden data-metal-signatures={METAL_SIGNATURES.join(",")}>
       MetalRimCTA GoldMetalBar HeroMetalPlate MetalRoute GoldMetalMark GoldMetalAnd
-      GoldMetalRim MeshStandardMaterial @react-three/fiber magnetic
+      GoldMetalRim GoldMetalTrace MeshStandardMaterial @react-three/fiber magnetic
     </span>
   );
 }
