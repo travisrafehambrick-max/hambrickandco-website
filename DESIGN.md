@@ -39,13 +39,12 @@ The page is a quiet paper studio: warm off-white, ink type, one antique gold. Th
 | Token | Hex | Use |
 | --- | --- | --- |
 | Paper | `#FBFBF9` | Page ground |
-| Ink | `#0F1115` | Type, dark band |
-| Gold | `#A98F45` | Buttons, toggle pill, 3D light |
-| Gold text | `#7E672C` | The `&`, labels, hover |
+| Ink | `#0F1115` | Type, dark band, near-black |
+| Gold | `#A98F45` | The `&`, buttons, toggle, 3D light |
 | Wash | `#F4EFE0` | First offer well, contact ground |
 | Copy | `#3A3F47` | Body |
 | Gray | `#5F646B` | Captions, mono |
-| Line | `#12151A1F` | Hairlines |
+| Rust | `#F9ECEA` / `#913C35` | Leak / fail state |
 | Surface | `#FFFFFF` | Cards, browser |
 
 Think letterpress on paper, not a SaaS dashboard. Gold is an accent, never a gradient wash.
@@ -58,7 +57,7 @@ The live pairing, already on hambrickco.com:
 - Body / UI: Hanken Grotesk
 - Labels: JetBrains Mono, wide tracking
 
-The `&` is italic Source Serif 4 in gold text. No hexagon H. Favicon is the `&`.
+The `&` is italic Source Serif 4 in gold `#A98F45`. No hexagon H. Favicon is the `&`.
 
 Kickers stay small. Headlines can be large. Do not set fake display words (FOCUS, DISCIPLINE) over the real copy.
 

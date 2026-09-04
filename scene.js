@@ -143,29 +143,29 @@ function paintScreen(THREE, mode) {
         { title: "Follow-up", time: "Friday", detail: "Never scheduled" },
       ];
 
-  ctx.fillStyle = "#111318";
+  ctx.fillStyle = "#0F1115";
   ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
   ctx.fillStyle = "#FBFBF9";
   ctx.font = "600 34px Arial, sans-serif";
   ctx.fillText(after ? "illustration · recovered" : "illustration · missed", 54, 86);
-  ctx.fillStyle = "#7F838A";
+  ctx.fillStyle = "#5F646B";
   ctx.font = "24px Arial, sans-serif";
   ctx.fillText("10:42", 54, 132);
 
   rows.forEach(function (row, index) {
     const y = 218 + index * 190;
-    ctx.fillStyle = index === 1 ? "#A98F45" : "#25282E";
+    ctx.fillStyle = index === 1 ? "#A98F45" : "#3A3F47";
     ctx.fillRect(44, y - 58, 8, 126);
     ctx.fillStyle = "#FBFBF9";
     ctx.font = "600 31px Arial, sans-serif";
     ctx.fillText(row.title, 78, y - 8);
-    ctx.fillStyle = "#9A9DA3";
+    ctx.fillStyle = "#5F646B";
     ctx.font = "24px Arial, sans-serif";
     ctx.fillText(row.time, 78, y + 30);
     ctx.fillText(row.detail, 78, y + 66);
   });
 
-  ctx.fillStyle = after ? "#A98F45" : "#22252B";
+  ctx.fillStyle = after ? "#A98F45" : "#3A3F47";
   ctx.fillRect(44, 1010, 552, 104);
   ctx.fillStyle = after ? "#0F1115" : "#FBFBF9";
   ctx.font = "600 28px Arial, sans-serif";
@@ -216,13 +216,13 @@ function initPhone(THREE) {
       bevelThickness: 0.1,
       curveSegments: 10,
     }).center(),
-    new THREE.MeshStandardMaterial({ color: 0x090a0d, roughness: 0.78, metalness: 0.18 })
+    new THREE.MeshStandardMaterial({ color: 0x0f1115, roughness: 0.78, metalness: 0.18 })
   );
   group.add(body);
 
   const bezel = new THREE.Mesh(
     new THREE.ShapeGeometry(roundedRect(THREE, 3.34, 6.48, 0.36), 10),
-    new THREE.MeshStandardMaterial({ color: 0x171a1e, roughness: 0.62, metalness: 0.1 })
+    new THREE.MeshStandardMaterial({ color: 0x0f1115, roughness: 0.62, metalness: 0.1 })
   );
   bezel.position.z = 0.34;
   group.add(bezel);
@@ -242,7 +242,7 @@ function initPhone(THREE) {
 
   const ear = new THREE.Mesh(
     new THREE.CapsuleGeometry(0.055, 0.42, 4, 10),
-    new THREE.MeshStandardMaterial({ color: 0x050608, roughness: 0.9 })
+    new THREE.MeshStandardMaterial({ color: 0x0f1115, roughness: 0.9 })
   );
   ear.rotation.z = Math.PI / 2;
   ear.position.set(0, 2.92, 0.39);

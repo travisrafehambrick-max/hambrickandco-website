@@ -1,23 +1,25 @@
 :root {
-  --paper: #fbfbf9;
   --ink: #0f1115;
+  --paper: #fbfbf9;
   --gold: #a98f45;
-  --gold-text: #7e672c;
+  --gold-text: #a98f45;
   --wash: #f4efe0;
-  --gray: #5f646b;
-  --line: #12151a1f;
   --copy: #3a3f47;
-  --surface: #fff;
-  --header: #fcfcf9f0;
-  --chrome: #f6f6f2;
-  --dot: #d8d8d2;
+  --gray: #5f646b;
+  --rust: #f9ecea;
+  --rust-text: #913c35;
+  --surface: #ffffff;
+  --line: #0f11151f;
+  --header: #fbfbf9f0;
+  --chrome: #ffffff;
+  --dot: #5f646b;
   --danger-surface: #f9ecea;
   --danger-text: #913c35;
-  --band-copy: #fcfcf9bf;
-  --band-line: #fcfcf940;
+  --band-copy: #fbfbf9bf;
+  --band-line: #ffffff40;
   --button-muted: #ffffffb3;
-  --shadow-browser: 0 24px 60px #12151a1a;
-  --shadow-toggle: 0 10px 24px #12151a40;
+  --shadow-browser: 0 24px 60px #0f11151a;
+  --shadow-toggle: 0 10px 24px #0f111540;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -428,8 +430,8 @@ h1 .amp {
 }
 
 .before .enquiry-state {
-  background: var(--danger-surface);
-  color: var(--danger-text);
+  background: var(--rust);
+  color: var(--rust-text);
 }
 
 .after .enquiry-state {
@@ -699,7 +701,7 @@ section > .wrap > :last-child.sec-head,
   border: 1px solid var(--band-line);
   border-radius: 28px;
   padding: 28px 22px 22px;
-  background: #171a1e;
+  background: var(--ink);
   width: min(260px, 80%);
 }
 
@@ -727,13 +729,13 @@ section > .wrap > :last-child.sec-head,
   border-radius: 10px;
   font-size: 0.78rem;
   font-weight: 600;
-  background: var(--color-danger-surface, #f9ecea);
-  color: #913c35;
+  background: var(--rust);
+  color: var(--rust-text);
 }
 
 .fallback-phone[data-mode="after"] .fallback-state {
-  background: #f4efe0;
-  color: #7e672c;
+  background: var(--wash);
+  color: var(--gold);
 }
 
 .about-grid {

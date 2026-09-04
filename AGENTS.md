@@ -23,7 +23,7 @@ Read DESIGN.md. If the design plan is still open, do not implement a new homepag
 ## Do
 
 - Static HTML, CSS, vanilla JS. Three.js and GSAP from a CDN are allowed. No framework unless Travis asks.
-- Keep the live visual system unless DESIGN.md says otherwise. Approved materials: paper #FBFBF9, ink #0F1115, gold #A98F45, gold text #7E672C, wash #F4EFE0, Source Serif 4, Hanken Grotesk, JetBrains Mono, gold italic "&".
+- Keep the live visual system unless DESIGN.md says otherwise. Approved materials: ink #0F1115, paper #FBFBF9, gold #A98F45, wash #F4EFE0, copy #3A3F47, gray #5F646B, rust #F9ECEA / #913C35, surface #FFFFFF, Source Serif 4, Hanken Grotesk, JetBrains Mono, gold italic "&". Do not invent a new palette or type stack.
 - Tell the truth. No invented clients, reviews, years, results, revenue, or scores.
 - Contact is hello@hambrickco.com. Forms must not fake a send.
 
