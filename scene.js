@@ -1,16 +1,97 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.module.js";
+const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.module.js";
 
 const stage = document.getElementById("phone-stage");
 const canvas = document.getElementById("phone-canvas");
 const fallback = document.getElementById("phone-fallback");
-const fallbackKicker = document.getElementById("fallback-kicker");
 const fallbackTitle = document.getElementById("fallback-title");
 const fallbackCopy = document.getElementById("fallback-copy");
-const fallbackTicket = document.getElementById("fallback-ticket");
+const fallbackState = document.getElementById("fallback-state");
+const fallbackPhone = fallback ? fallback.querySelector(".fallback-phone") : null;
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-function roundedRect(width, height, radius) {
+function showFallback(mode) {
+  if (!stage) return;
+  stage.classList.add("is-fallback");
+  if (canvas) canvas.style.display = "none";
+  if (fallback) fallback.style.display = "flex";
+  const after = mode === "after";
+  if (fallbackPhone) fallbackPhone.dataset.mode = after ? "after" : "before";
+  if (fallbackTitle) fallbackTitle.textContent = after ? "Text sent" : "Missed call";
+  if (fallbackCopy) {
+    fallbackCopy.textContent = after
+      ? "Job asked. Booking offered. In front of you."
+      : "Quote sitting. Nobody called back.";
+  }
+  if (fallbackState) {
+    fallbackState.textContent = after ? "Thursday · job booked." : "No reply. No booking.";
+  }
+}
+
+function hideFallback() {
+  if (!stage) return;
+  stage.classList.remove("is-fallback");
+  if (canvas) canvas.style.display = "block";
+  if (fallback) fallback.style.display = "none";
+}
+
+function canUseWebGL() {
+  if (!window.WebGLRenderingContext) return false;
+  if (navigator.connection && navigator.connection.saveData) return false;
+  try {
+    const probe = document.createElement("canvas");
+    return Boolean(probe.getContext("webgl2") || probe.getContext("webgl"));
+  } catch (err) {
+    return false;
+  }
+}
+
+let onMode = showFallback;
+let onProgress = function (progress, locked) {
+  if (locked) return;
+  if (progress > 0.62) showFallback("after");
+  else if (progress < 0.28) showFallback("before");
+};
+
+window.addEventListener("hbc:timeline-mode", function (event) {
+  const mode = event.detail;
+  if (mode !== "before" && mode !== "after") return;
+  onMode(mode);
+});
+window.addEventListener("hbc:process-progress", function (event) {
+  const detail = event.detail || {};
+  onProgress(Number(detail.progress) || 0, Boolean(detail.locked));
+});
+
+if (!stage || !canvas) {
+  showFallback("after");
+} else if (reduceMotion.matches) {
+  showFallback("after");
+  onProgress = function () {};
+} else if (!canUseWebGL()) {
+  showFallback("before");
+} else {
+  showFallback("before");
+  let started = false;
+  const boot = new IntersectionObserver(
+    function (entries) {
+      if (started || !entries.some(function (entry) { return entry.isIntersecting; })) return;
+      started = true;
+      boot.disconnect();
+      import(THREE_URL)
+        .then(function (THREE) {
+          initPhone(THREE);
+        })
+        .catch(function () {
+          showFallback("before");
+        });
+    },
+    { rootMargin: "25% 0px", threshold: 0.01 }
+  );
+  boot.observe(stage);
+}
+
+function roundedRect(THREE, width, height, radius) {
   const shape = new THREE.Shape();
   const x = -width / 2;
   const y = -height / 2;
@@ -26,7 +107,7 @@ function roundedRect(width, height, radius) {
   return shape;
 }
 
-function assignUVs(geometry) {
+function assignUVs(THREE, geometry) {
   geometry.computeBoundingBox();
   const box = geometry.boundingBox;
   const pos = geometry.getAttribute("position");
@@ -40,7 +121,7 @@ function assignUVs(geometry) {
   geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
 }
 
-function paintScreen(mode) {
+function paintScreen(THREE, mode) {
   const after = mode === "after";
   const canvas2d = document.createElement("canvas");
   canvas2d.width = 640;
@@ -98,96 +179,8 @@ function paintScreen(mode) {
   return texture;
 }
 
-function paintTicket(progress) {
-  const canvas2d = document.createElement("canvas");
-  canvas2d.width = 768;
-  canvas2d.height = 1024;
-  const ctx = canvas2d.getContext("2d");
-  if (!ctx) return null;
-  const alive = progress > 0.55;
-
-  ctx.fillStyle = "#F4EFE0";
-  ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
-  ctx.fillStyle = "#A98F45";
-  ctx.fillRect(0, 0, canvas2d.width, 18);
-  ctx.fillStyle = "#7E672C";
-  ctx.font = "600 28px Arial, sans-serif";
-  ctx.fillText("ESTIMATE", 56, 96);
-  ctx.fillStyle = "#0F1115";
-  ctx.font = "600 54px Georgia, serif";
-  ctx.fillText("Deck repair", 56, 180);
-  ctx.fillStyle = "#3A3F47";
-  ctx.font = "28px Arial, sans-serif";
-  ctx.fillText("Sent Monday. Still open.", 56, 236);
-  ctx.fillStyle = alive ? "#7E672C" : "#5F646B";
-  ctx.font = "600 32px Arial, sans-serif";
-  ctx.fillText(alive ? "Follow-up landed." : "No reply.", 56, 860);
-  ctx.fillStyle = "#5F646B";
-  ctx.font = "24px Arial, sans-serif";
-  ctx.fillText(alive ? "Stops the moment they write back." : "The job is going cold.", 56, 910);
-
-  const texture = new THREE.CanvasTexture(canvas2d);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 4;
-  texture.needsUpdate = true;
-  return texture;
-}
-
-function showFallback(mode, progress) {
-  if (!stage) return;
-  stage.classList.add("is-fallback");
-  if (canvas) canvas.style.display = "none";
-  if (fallback) fallback.style.display = "flex";
-  const after = mode === "after" || progress > 0.55;
-  if (fallbackKicker) fallbackKicker.textContent = after ? "Text sent" : "Missed call";
-  if (fallbackTitle) fallbackTitle.textContent = "Deck repair";
-  if (fallbackCopy) {
-    fallbackCopy.textContent = after
-      ? "Job asked. Booking offered. In front of you."
-      : "Quote sitting. Nobody called back.";
-  }
-  if (fallbackTicket) {
-    fallbackTicket.innerHTML = after
-      ? "<p>Estimate</p><p>Follow-up landed</p>"
-      : "<p>Estimate</p><p>No reply</p>";
-  }
-}
-
-function canUseWebGL() {
-  if (!window.WebGLRenderingContext) return false;
-  try {
-    const probe = document.createElement("canvas");
-    return Boolean(probe.getContext("webgl2") || probe.getContext("webgl"));
-  } catch (err) {
-    return false;
-  }
-}
-
-if (!stage || !canvas || reduceMotion.matches || !canUseWebGL()) {
-  showFallback("before", 0);
-} else {
-  const state = {
-    mode: "before",
-    progress: 0,
-    targetX: 0.14,
-    targetY: -0.08,
-    dead: false,
-    visible: false,
-    frame: 0,
-  };
-
+function initPhone(THREE) {
   let renderer;
-  let scene;
-  let camera;
-  let group;
-  let ticket;
-  let screenMaterial;
-  let screenTexture;
-  let ticketMaterial;
-  let ticketTexture;
-  let observer;
-  let resizeObserver;
-
   try {
     renderer = new THREE.WebGLRenderer({
       canvas,
@@ -196,238 +189,204 @@ if (!stage || !canvas || reduceMotion.matches || !canUseWebGL()) {
       powerPreference: "high-performance",
     });
   } catch (err) {
-    showFallback("before", 0);
+    showFallback("before");
+    return;
   }
 
-  if (renderer) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+  hideFallback();
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
 
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-    camera.position.set(0.55, 0.12, 12.2);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 0.08, 11.6);
 
-    group = new THREE.Group();
-    group.rotation.set(0.1, -0.055, -0.035);
-    group.scale.setScalar(0.86);
-    scene.add(group);
+  const group = new THREE.Group();
+  scene.add(group);
 
-    const body = new THREE.Mesh(
-      new THREE.ExtrudeGeometry(roundedRect(3.7, 6.9, 0.48), {
-        depth: 0.42,
-        bevelEnabled: true,
-        bevelSegments: 5,
-        steps: 1,
-        bevelSize: 0.11,
-        bevelThickness: 0.1,
-        curveSegments: 10,
-      }).center(),
-      new THREE.MeshStandardMaterial({ color: 0x090a0d, roughness: 0.78, metalness: 0.18 })
-    );
-    group.add(body);
-
-    const bezel = new THREE.Mesh(
-      new THREE.ShapeGeometry(roundedRect(3.34, 6.48, 0.36), 10),
-      new THREE.MeshStandardMaterial({ color: 0x171a1e, roughness: 0.62, metalness: 0.1 })
-    );
-    bezel.position.z = 0.34;
-    group.add(bezel);
-
-    const screenGeom = new THREE.ShapeGeometry(roundedRect(3.08, 6.15, 0.27), 10);
-    assignUVs(screenGeom);
-    screenTexture = paintScreen("before");
-    screenMaterial = new THREE.MeshBasicMaterial({ map: screenTexture, toneMapped: false });
-    const screen = new THREE.Mesh(screenGeom, screenMaterial);
-    screen.position.z = 0.355;
-    group.add(screen);
-
-    const ear = new THREE.Mesh(
-      new THREE.CapsuleGeometry(0.055, 0.42, 4, 10),
-      new THREE.MeshStandardMaterial({ color: 0x050608, roughness: 0.9 })
-    );
-    ear.rotation.z = Math.PI / 2;
-    ear.position.set(0, 2.92, 0.39);
-    group.add(ear);
-
-    const buttonMat = new THREE.MeshStandardMaterial({
-      color: 0x111318,
-      roughness: 0.55,
-      metalness: 0.35,
-    });
-    const button = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.72, 0.18), buttonMat);
-    button.position.set(-2.02, 1.2, 0.02);
-    group.add(button);
-    const button2 = button.clone();
-    button2.scale.y = 1.28;
-    button2.position.y = 0.15;
-    group.add(button2);
-
-    ticketTexture = paintTicket(0);
-    ticketMaterial = new THREE.MeshStandardMaterial({
-      map: ticketTexture,
-      roughness: 0.72,
-      metalness: 0.04,
-    });
-    const ticketGeom = new THREE.ExtrudeGeometry(roundedRect(2.55, 3.4, 0.12), {
-      depth: 0.04,
+  const body = new THREE.Mesh(
+    new THREE.ExtrudeGeometry(roundedRect(THREE, 3.7, 6.9, 0.48), {
+      depth: 0.42,
       bevelEnabled: true,
-      bevelSize: 0.02,
-      bevelThickness: 0.02,
-      curveSegments: 6,
-    });
-    assignUVs(ticketGeom);
-    ticket = new THREE.Mesh(ticketGeom, ticketMaterial);
-    ticket.position.set(2.55, -0.15, 0.2);
-    ticket.rotation.set(0.18, -0.72, 0.08);
-    scene.add(ticket);
+      bevelSegments: 5,
+      steps: 1,
+      bevelSize: 0.11,
+      bevelThickness: 0.1,
+      curveSegments: 10,
+    }).center(),
+    new THREE.MeshStandardMaterial({ color: 0x090a0d, roughness: 0.78, metalness: 0.18 })
+  );
+  group.add(body);
 
-    const light = new THREE.SpotLight(0xa98f45, 110, 26, Math.PI / 5, 0.78, 1.25);
-    light.position.set(-4.5, 5.8, 6.5);
-    light.target.position.set(0, 0, 0);
-    scene.add(light, light.target);
+  const bezel = new THREE.Mesh(
+    new THREE.ShapeGeometry(roundedRect(THREE, 3.34, 6.48, 0.36), 10),
+    new THREE.MeshStandardMaterial({ color: 0x171a1e, roughness: 0.62, metalness: 0.1 })
+  );
+  bezel.position.z = 0.34;
+  group.add(bezel);
 
-    const fill = new THREE.DirectionalLight(0xfbfbf9, 0.55);
-    fill.position.set(4.2, 2.4, 6);
-    scene.add(fill);
+  const screenGeom = new THREE.ShapeGeometry(roundedRect(THREE, 3.08, 6.15, 0.27), 10);
+  assignUVs(THREE, screenGeom);
+  let screenTexture = paintScreen(THREE, "before");
+  const screenMaterial = new THREE.MeshBasicMaterial({
+    map: screenTexture,
+    toneMapped: false,
+    transparent: true,
+    opacity: 0.72,
+  });
+  const screen = new THREE.Mesh(screenGeom, screenMaterial);
+  screen.position.z = 0.355;
+  group.add(screen);
 
-    const ground = new THREE.Mesh(
-      new THREE.CircleGeometry(4.5, 64),
-      new THREE.MeshBasicMaterial({ color: 0x0b0d11, transparent: true, opacity: 0.72 })
-    );
-    ground.scale.y = 0.18;
-    ground.position.set(0, -3.82, -0.45);
-    scene.add(ground);
+  const ear = new THREE.Mesh(
+    new THREE.CapsuleGeometry(0.055, 0.42, 4, 10),
+    new THREE.MeshStandardMaterial({ color: 0x050608, roughness: 0.9 })
+  );
+  ear.rotation.z = Math.PI / 2;
+  ear.position.set(0, 2.92, 0.39);
+  group.add(ear);
 
-    function resize() {
-      const width = Math.max(1, stage.clientWidth);
-      const height = Math.max(1, stage.clientHeight);
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+  const light = new THREE.SpotLight(0xa98f45, 90, 26, Math.PI / 5, 0.78, 1.25);
+  light.position.set(-4.5, 5.8, 6.5);
+  light.target.position.set(0, 0, 0);
+  scene.add(light, light.target);
+
+  const fill = new THREE.DirectionalLight(0xfbfbf9, 0.45);
+  fill.position.set(3.2, 2.2, 6);
+  scene.add(fill);
+
+  const state = {
+    mode: "before",
+    progress: 0,
+    visible: false,
+    dead: false,
+    frame: 0,
+    rotX: 0.24,
+    rotY: -0.16,
+    posY: -0.28,
+    opacity: 0.72,
+  };
+  const target = { rotX: 0.24, rotY: -0.16, posY: -0.28, opacity: 0.72 };
+
+  function poseFrom(progress) {
+    const t = Math.min(1, Math.max(0, progress));
+    target.rotX = 0.24 - t * 0.16;
+    target.rotY = -0.16 + t * 0.14;
+    target.posY = -0.28 + t * 0.4;
+    target.opacity = 0.72 + t * 0.28;
+  }
+
+  function applyMode(mode) {
+    state.mode = mode;
+    const next = paintScreen(THREE, mode);
+    if (next && screenMaterial) {
+      screenTexture?.dispose();
+      screenTexture = next;
+      screenMaterial.map = next;
+      screenMaterial.needsUpdate = true;
     }
+    poseFrom(mode === "after" ? 1 : 0);
+    kick();
+  }
 
-    let ticketAlive = false;
+  function resize() {
+    const width = Math.max(1, stage.clientWidth);
+    const height = Math.max(1, stage.clientHeight);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
 
-    function applyTicket(progress) {
-      if (!ticket) return;
-      const t = Math.min(1, Math.max(0, progress));
-      ticket.position.set(2.55 - t * 0.35, -0.15 + t * 0.35, 0.2 + t * 0.35);
-      ticket.rotation.set(0.18 - t * 0.12, -0.72 + t * 0.86, 0.08 - t * 0.06);
-      const alive = t > 0.55;
-      if (alive === ticketAlive) return;
-      ticketAlive = alive;
-      const next = paintTicket(t);
-      if (next) {
-        ticketTexture?.dispose();
-        ticketTexture = next;
-        ticketMaterial.map = next;
-        ticketMaterial.needsUpdate = true;
-      }
-    }
-
-    function applyMode(mode) {
-      state.mode = mode;
-      const next = paintScreen(mode);
-      if (next && screenMaterial) {
-        screenTexture?.dispose();
-        screenTexture = next;
-        screenMaterial.map = next;
-        screenMaterial.needsUpdate = true;
-      }
-      applyTicket(mode === "after" ? 1 : 0);
-    }
-
-    function loop() {
-      if (state.dead || !state.visible || document.hidden) {
-        state.frame = 0;
-        return;
-      }
-      group.rotation.x += (state.targetX - group.rotation.x) * 0.045;
-      group.rotation.y += (state.targetY - group.rotation.y) * 0.045;
-      renderer.render(scene, camera);
-      state.frame = requestAnimationFrame(loop);
-    }
-
-    function start() {
-      if (!state.frame) state.frame = requestAnimationFrame(loop);
-    }
-
-    function stop() {
-      if (state.frame) cancelAnimationFrame(state.frame);
+  function loop() {
+    if (state.dead || !state.visible || document.hidden) {
       state.frame = 0;
+      return;
     }
+    const dx = target.rotX - state.rotX;
+    const dy = target.rotY - state.rotY;
+    const dPos = target.posY - state.posY;
+    const dOp = target.opacity - state.opacity;
+    state.rotX += dx * 0.12;
+    state.rotY += dy * 0.12;
+    state.posY += dPos * 0.12;
+    state.opacity += dOp * 0.12;
+    group.rotation.x = state.rotX;
+    group.rotation.y = state.rotY;
+    group.position.y = state.posY;
+    screenMaterial.opacity = state.opacity;
+    renderer.render(scene, camera);
+    const moving = Math.abs(dx) + Math.abs(dy) + Math.abs(dPos) + Math.abs(dOp) > 0.004;
+    state.frame = moving ? requestAnimationFrame(loop) : 0;
+  }
 
+  function kick() {
+    if (!state.visible || state.dead || document.hidden) return;
+    if (!state.frame) state.frame = requestAnimationFrame(loop);
+  }
+
+  resize();
+  poseFrom(0);
+  group.rotation.set(state.rotX, state.rotY, -0.03);
+  group.position.y = state.posY;
+  renderer.render(scene, camera);
+
+  const resizeObserver = new ResizeObserver(function () {
     resize();
     renderer.render(scene, camera);
+  });
+  resizeObserver.observe(stage);
 
-    resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(stage);
-    observer = new IntersectionObserver(
-      function (entries) {
-        state.visible = entries.some(function (entry) {
-          return entry.isIntersecting;
-        });
-        if (state.visible) start();
-        else stop();
-      },
-      { threshold: 0.08 }
-    );
-    observer.observe(stage);
-
-    stage.addEventListener("pointermove", function (event) {
-      const box = stage.getBoundingClientRect();
-      const x = (event.clientX - box.left) / box.width - 0.5;
-      const y = (event.clientY - box.top) / box.height - 0.5;
-      state.targetY = -0.08 + x * 0.16;
-      state.targetX = 0.14 + y * 0.1;
-    });
-    stage.addEventListener("pointerleave", function () {
-      state.targetY = -0.08;
-      state.targetX = 0.14;
-    });
-
-    window.addEventListener("hbc:timeline-mode", function (event) {
-      const mode = event.detail;
-      if (mode !== "before" && mode !== "after") return;
-      applyMode(mode);
-    });
-
-    window.addEventListener("hbc:process-progress", function (event) {
-      const detail = event.detail;
-      const locked = Boolean(detail && typeof detail === "object" ? detail.locked : false);
-      const progress = Number(detail && typeof detail === "object" ? detail.progress : detail) || 0;
-      state.progress = progress;
-      if (locked) {
-        applyTicket(state.mode === "after" ? 1 : 0);
-        return;
-      }
-      applyTicket(progress);
-      if (progress > 0.62 && state.mode !== "after") applyMode("after");
-      if (progress < 0.28 && state.mode !== "before") applyMode("before");
-    });
-
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) stop();
-      else if (state.visible) start();
-    });
-
-    window.addEventListener("pagehide", function () {
-      state.dead = true;
-      stop();
-      observer?.disconnect();
-      resizeObserver?.disconnect();
-      screenTexture?.dispose();
-      ticketTexture?.dispose();
-      scene.traverse(function (obj) {
-        if (obj.geometry) obj.geometry.dispose();
-        if (obj.material) {
-          if (Array.isArray(obj.material)) obj.material.forEach(function (mat) { mat.dispose(); });
-          else obj.material.dispose();
-        }
+  const observer = new IntersectionObserver(
+    function (entries) {
+      state.visible = entries.some(function (entry) {
+        return entry.isIntersecting;
       });
-      renderer.dispose();
+      if (state.visible) kick();
+      else if (state.frame) {
+        cancelAnimationFrame(state.frame);
+        state.frame = 0;
+      }
+    },
+    { threshold: 0.08 }
+  );
+  observer.observe(stage);
+
+  onMode = applyMode;
+  onProgress = function (progress, locked) {
+    if (locked) {
+      poseFrom(state.mode === "after" ? 1 : 0);
+      kick();
+      return;
+    }
+    state.progress = progress;
+    poseFrom(progress);
+    if (progress > 0.62 && state.mode !== "after") applyMode("after");
+    else if (progress < 0.28 && state.mode !== "before") applyMode("before");
+    else kick();
+  };
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden && state.frame) {
+      cancelAnimationFrame(state.frame);
+      state.frame = 0;
+    } else if (state.visible) kick();
+  });
+
+  window.addEventListener("pagehide", function () {
+    state.dead = true;
+    if (state.frame) cancelAnimationFrame(state.frame);
+    observer.disconnect();
+    resizeObserver.disconnect();
+    screenTexture?.dispose();
+    scene.traverse(function (obj) {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) {
+        if (Array.isArray(obj.material)) obj.material.forEach(function (mat) { mat.dispose(); });
+        else obj.material.dispose();
+      }
     });
-  }
+    renderer.dispose();
+  });
 }

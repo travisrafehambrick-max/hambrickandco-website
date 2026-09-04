@@ -73,11 +73,11 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-control>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
         <span class="sr-only">Menu</span>
         <i></i><i></i>
       </button>
-      <a class="btn" href="#contact" data-control>
+      <a class="btn commit" href="#contact">
         <span>Ask for a look</span>
         <span class="btn-arrow" aria-hidden="true">↗</span>
       </a>
@@ -99,11 +99,11 @@
           <p class="hero-location reveal-item">Charlottesville, Virginia · forty-mile radius</p>
           <p class="lede reveal-item">Missed calls and unanswered estimates cost local trades booked work. Hambrick &amp; Co. finds where yours are leaking, free, then puts the follow-up in front of the owner.</p>
           <div class="hero-ctas reveal-item">
-            <a class="btn" href="#contact" data-control>
+            <a class="btn commit" href="#contact">
               <span>Ask for a look</span>
               <span class="btn-arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="btn line" href="#process" data-control>
+            <a class="btn line" href="#process">
               <span>How it works</span>
               <span class="btn-arrow" aria-hidden="true">↘</span>
             </a>
@@ -199,11 +199,11 @@
             </div>
 
             <div class="flip" role="group" aria-label="Toggle the illustration before and after">
-              <button type="button" aria-pressed="true" class="on" id="btn-before" data-control>
+              <button type="button" aria-pressed="true" class="on" id="btn-before">
                 <span class="toggle-pill" aria-hidden="true"></span>
                 <span class="toggle-label">Without us</span>
               </button>
-              <button type="button" aria-pressed="false" id="btn-after" data-control>
+              <button type="button" aria-pressed="false" id="btn-after">
                 <span class="toggle-label">With us</span>
               </button>
             </div>
@@ -267,14 +267,11 @@
             <div class="phone-stage" id="phone-stage" aria-hidden="true">
               <canvas id="phone-canvas"></canvas>
               <div class="phone-fallback" id="phone-fallback">
-                <div class="fallback-phone">
-                  <p class="fallback-kicker" id="fallback-kicker">Missed call</p>
-                  <p class="fallback-title" id="fallback-title">Deck repair</p>
+                <div class="fallback-phone" data-mode="before">
+                  <p class="fallback-kicker">Illustration</p>
+                  <p class="fallback-title" id="fallback-title">Missed call</p>
                   <p class="fallback-copy" id="fallback-copy">Quote sitting. Nobody called back.</p>
-                </div>
-                <div class="fallback-ticket" id="fallback-ticket">
-                  <p>Estimate</p>
-                  <p>No reply</p>
+                  <p class="fallback-state" id="fallback-state">No reply. No booking.</p>
                 </div>
               </div>
             </div>
@@ -309,8 +306,8 @@
         <div class="reveal-item">
           <h2 class="reveal-item">Find out where yours are going</h2>
           <p class="contact-intro reveal-item">Tell us the shop name and how people reach you now. We look first. The quote, if there is one, comes in writing after.</p>
-          <p class="big reveal-item"><a href="mailto:hello@hambrickco.com" data-control>hello@hambrickco.com</a></p>
-          <p class="phone reveal-item"><a href="tel:+14342600823" data-control>(434) 260-0823</a> · Call or text</p>
+          <p class="big reveal-item"><a class="commit" href="mailto:hello@hambrickco.com">hello@hambrickco.com</a></p>
+          <p class="phone reveal-item"><a class="commit" href="tel:+14342600823">(434) 260-0823</a> · Call or text</p>
         </div>
         <form id="lead-form" action="mailto:hello@hambrickco.com" method="post" enctype="text/plain">
           <div class="field reveal-item">
@@ -333,11 +330,12 @@
             <label for="enquiries">How do enquiries reach you now?</label>
             <input id="enquiries" name="enquiries" type="text" placeholder="Phone, form, referrals, all of it">
           </div>
-          <button class="btn reveal-item" type="submit" id="submit-btn" data-control>
+          <button class="btn commit reveal-item" type="submit" id="submit-btn">
             <span>Open in your email app</span>
             <span class="btn-arrow" aria-hidden="true">↗</span>
           </button>
           <p class="form-note">Nothing is sent from this page. Your mail app opens with hello@hambrickco.com already addressed.</p>
+          <p class="form-confirm" id="form-confirm" hidden>Your email app should open with hello@hambrickco.com addressed. If it does not, write that address yourself.</p>
         </form>
       </div>
     </section>
@@ -352,7 +350,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
   <script src="main.js" defer></script>
   <script type="module" src="scene.js"></script>
 </body>

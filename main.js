@@ -7,6 +7,7 @@
   const afterPane = document.getElementById("pane-after");
   const urlbar = document.getElementById("demo-url");
   const form = document.getElementById("lead-form");
+  const formConfirm = document.getElementById("form-confirm");
   const navToggle = document.querySelector(".nav-toggle");
   const mobileNav = document.getElementById("mobile-nav");
   const hasGsap = typeof gsap !== "undefined";
@@ -19,31 +20,39 @@
     window.dispatchEvent(new CustomEvent("hbc:timeline-mode", { detail: mode }));
   }
 
-  function playPane(pane) {
+  function playPane(pane, after) {
     if (!pane) return;
     const rows = pane.querySelectorAll(".enquiry-row");
-    const words = pane.querySelectorAll(".flip-word");
+    const chips = pane.querySelectorAll(".enquiry-state, .flip-word");
     if (!hasGsap || prefersReduced()) {
       rows.forEach(function (row) {
-        row.style.opacity = "1";
+        row.style.opacity = after ? "1" : "0.58";
         row.style.transform = "none";
       });
-      words.forEach(function (word) {
-        word.style.opacity = "1";
-        word.style.transform = "none";
+      chips.forEach(function (chip) {
+        chip.style.opacity = "1";
+        chip.style.transform = "none";
       });
       return;
     }
-    gsap.fromTo(
-      rows,
-      { autoAlpha: 0, y: 8 },
-      { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.07, ease: "power3.out", overwrite: true }
-    );
-    gsap.fromTo(
-      words,
-      { autoAlpha: 0, rotationX: -70 },
-      { autoAlpha: 1, rotationX: 0, duration: 0.42, stagger: 0.04, ease: "power3.out", overwrite: true }
-    );
+    if (after) {
+      gsap.fromTo(
+        rows,
+        { y: 6, autoAlpha: 0.55 },
+        { y: 0, autoAlpha: 1, duration: 0.18, stagger: 0.035, ease: "power2.out", overwrite: true }
+      );
+      gsap.fromTo(
+        chips,
+        { y: 4, autoAlpha: 0.45 },
+        { y: 0, autoAlpha: 1, duration: 0.18, stagger: 0.03, ease: "power2.out", overwrite: true }
+      );
+    } else {
+      gsap.fromTo(
+        rows,
+        { y: 0, autoAlpha: 1 },
+        { y: 3, autoAlpha: 0.58, duration: 0.16, stagger: 0.03, ease: "power2.out", overwrite: true }
+      );
+    }
   }
 
   function setMode(mode, userMoved) {
@@ -61,21 +70,10 @@
       beforeBtn.classList.toggle("on", !after);
       afterBtn.classList.toggle("on", after);
       const pill = demo.querySelector(".toggle-pill");
-      if (pill && hasGsap && !prefersReduced()) {
-        const host = after ? afterBtn : beforeBtn;
-        if (!pill.parentElement || pill.parentElement !== host) {
-          host.prepend(pill);
-        }
-        gsap.fromTo(
-          pill,
-          { scaleX: 0.86, autoAlpha: 0.7 },
-          { scaleX: 1, autoAlpha: 1, duration: 0.28, ease: "power3.out" }
-        );
-      } else if (pill) {
-        (after ? afterBtn : beforeBtn).prepend(pill);
-      }
+      const host = after ? afterBtn : beforeBtn;
+      if (pill && pill.parentElement !== host) host.prepend(pill);
     }
-    playPane(after ? afterPane : beforePane);
+    playPane(after ? afterPane : beforePane, after);
     dispatchMode(after ? "after" : "before");
     if (userMoved) demo.dataset.locked = "1";
   }
@@ -91,25 +89,17 @@
     });
   }
 
-  function bindControls() {
-    document.querySelectorAll("[data-control]").forEach(function (el) {
-      if (!hasGsap || prefersReduced()) return;
-      const arrow = el.querySelector(".btn-arrow");
-      el.addEventListener("pointerenter", function () {
-        gsap.to(el, { scale: 1.015, duration: 0.22, ease: "power3.out", overwrite: "auto" });
-        if (arrow) {
-          gsap.to(arrow, { x: 2, y: el.classList.contains("line") ? 2 : -2, duration: 0.22, ease: "power3.out" });
-        }
-      });
-      el.addEventListener("pointerleave", function () {
-        gsap.to(el, { scale: 1, duration: 0.22, ease: "power3.out", overwrite: "auto" });
-        if (arrow) gsap.to(arrow, { x: 0, y: 0, duration: 0.22, ease: "power3.out" });
-      });
+  function bindCommitment() {
+    if (!hasGsap || prefersReduced()) return;
+    document.querySelectorAll(".commit").forEach(function (el) {
       el.addEventListener("pointerdown", function () {
-        gsap.to(el, { scale: 0.97, duration: 0.08, ease: "power2.out", overwrite: "auto" });
+        gsap.to(el, { scale: 0.98, duration: 0.12, ease: "power2.out", overwrite: "auto" });
       });
       el.addEventListener("pointerup", function () {
-        gsap.to(el, { scale: 1.015, duration: 0.16, ease: "power2.out", overwrite: "auto" });
+        gsap.to(el, { scale: 1, duration: 0.16, ease: "power2.out", overwrite: "auto" });
+      });
+      el.addEventListener("pointerleave", function () {
+        gsap.to(el, { scale: 1, duration: 0.16, ease: "power2.out", overwrite: "auto" });
       });
     });
   }
@@ -148,6 +138,7 @@
         "&body=" +
         encodeURIComponent(lines.join("\n"));
       window.location.href = href;
+      if (formConfirm) formConfirm.hidden = false;
     });
   }
 
@@ -168,90 +159,29 @@
     });
   }
 
-  function setupMotion() {
-    if (!hasGsap) return;
-    if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
-    if (typeof SplitText !== "undefined") gsap.registerPlugin(SplitText);
-
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: reduce)", function () {
-      gsap.set(".enquiry-row, .flip-word", { autoAlpha: 1, y: 0, clearProps: "transform" });
-    });
-
-    mm.add("(prefers-reduced-motion: no-preference)", function () {
-      const title = document.getElementById("hero-title");
-      if (title && typeof SplitText !== "undefined") {
-        SplitText.create(title, {
-          type: "words,lines",
-          mask: "lines",
-          autoSplit: true,
-          aria: "auto",
-          onSplit: function (self) {
-            return gsap.from(self.words, {
-              yPercent: 110,
-              autoAlpha: 0,
-              duration: 0.8,
-              stagger: 0.045,
-              ease: "power4.out",
-            });
-          },
-        });
-      }
-
-      const steps = gsap.utils.toArray(".proc-step");
-      if (typeof ScrollTrigger !== "undefined" && steps.length) {
-        ScrollTrigger.create({
-          trigger: "#process",
-          start: "top 70%",
-          end: "bottom 40%",
-          onUpdate: function (self) {
-            const index = Math.min(steps.length - 1, Math.floor(self.progress * steps.length));
-            steps.forEach(function (step, i) {
-              step.classList.toggle("is-live", i <= index);
-            });
-            window.dispatchEvent(
-              new CustomEvent("hbc:process-progress", {
-                detail: {
-                  progress: self.progress,
-                  locked: Boolean(demo && demo.dataset.locked),
-                  mode: demo ? demo.dataset.mode : "before",
-                },
-              })
-            );
-          },
-        });
-      }
-
-      if (demo && typeof ScrollTrigger !== "undefined") {
-        ScrollTrigger.create({
-          trigger: ".hero",
-          start: "top 40%",
-          end: "bottom 35%",
-          onLeave: function () {
-            if (demo.dataset.locked) return;
-            setMode("after", false);
-          },
-          onEnterBack: function () {
-            if (demo.dataset.locked) return;
-            setMode("before", false);
-          },
-        });
-      }
-
-      document.fonts.ready.then(function () {
-        if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
-      });
+  function setupRevivalScroll() {
+    if (!hasGsap || prefersReduced() || typeof ScrollTrigger === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+      trigger: "#process",
+      start: "top 70%",
+      end: "bottom 40%",
+      onUpdate: function (self) {
+        window.dispatchEvent(
+          new CustomEvent("hbc:process-progress", {
+            detail: {
+              progress: self.progress,
+              locked: Boolean(demo && demo.dataset.locked),
+              mode: demo ? demo.dataset.mode : "before",
+            },
+          })
+        );
+      },
     });
   }
 
-  bindControls();
+  bindCommitment();
   bindFields();
-  setMode("before", false);
-  setupMotion();
-
-  reduceMotion.addEventListener("change", function () {
-    if (hasGsap && typeof gsap.matchMediaRefresh === "function") {
-      gsap.matchMediaRefresh();
-    }
-  });
+  setMode(prefersReduced() ? "after" : "before", false);
+  setupRevivalScroll();
 })();

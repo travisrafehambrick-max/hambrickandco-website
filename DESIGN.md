@@ -64,27 +64,25 @@ Kickers stay small. Headlines can be large. Do not set fake display words (FOCUS
 
 ## Motion
 
-Physical, short, with a reason (Winslow's rule). GSAP is required. Motion must show a missed call resolving, a quote coming back to life, or a follow-up landing. No motion for decoration only.
+Winslow only. If a move does not show a missed call or dead quote dying or coming back to life, cut it. Ink and paper waking. No SaaS bounce, no neon, no section-wide fade.
 
-Use it:
+What moves:
 
-- SplitText (or an equivalent split) on the hero headline. Words or masked lines. Not a character scramble.
-- Before/after enquiry timeline: rows land, the state line flips, the toggle pill slides.
-- Buttons, links, and fields: hover, focus, press. The arrow moves because the control is live.
-- Process steps light as you scroll. The WebGL phone and job ticket follow that progress, unless the visitor has locked Without us / With us.
-- Do not fade every section in with the same y/stagger. That is decoration. Motion stays on story-bearing beats only.
+- Hero illustration: the before-thread settles and dims; the after-thread lifts and the status chip wakes. Lost work vs booked work.
+- Meaningful state: leak vs fix, quote dead vs alive, form submit → honest mail-app confirmation.
+- Micro-interactions only on commitment (primary CTAs, phone/email, form focus/submit). 120–200ms ease-outs. No bounce.
+- One 3D object: the phone. Depth sells “this call is real and unanswered.” Tilt and lift only along the unread → revive arc. No idle spin, no second artifact.
+- Scroll-linked revelation only to finish that revival, and only if the visitor has not locked Without us / With us. Do not pin. Do not autoplay the hero.
 
-Honor `prefers-reduced-motion`: no SplitText, no scroll-tied 3D, no entrance motion. Static phone fallback. No Lottie. No looped hero video.
+What never moves: body copy, numbers, legal, contact details except a focus ring or underline, nav chrome, particles, loops, logo flourish, hover that does not change state.
+
+Honor `prefers-reduced-motion` as a kill switch: instant swap to the booked / alive end state. No WebGL. The 2D phone still tells the story. No essential information only in motion.
 
 ## The object
 
-One restrained WebGL scene in the process band: a machined phone and a paper job ticket.
+One phone. Lazy-init WebGL only when the process well is near the viewport. Cap pixel ratio, run frames only while the revive pose is moving, dispose on teardown.
 
-The phone screen is the missed-call story. The ticket is the dead estimate. Scroll or the With us / Without us toggle brings the ticket back to life and puts the follow-up on the screen. Pointer tilt is slight. It must not read as a floating blob, a chrome planet, or a crypto globe.
-
-If WebGL is missing, or reduced motion is on, show a still of the same story. Do not leave an empty well.
-
-Target 60fps on a laptop: cap pixel ratio, pause offscreen, dispose on teardown.
+If WebGL is missing, the GPU is weak, or reduced motion is on, show the same thread as a still 2D phone. Mid-laptop 60fps on that path. It must not read as a floating blob, a chrome planet, or a crypto globe.
 
 ## Page map (same bones as the live site)
 

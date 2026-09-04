@@ -141,31 +141,10 @@ header {
 .nav-links a {
   color: var(--copy);
   text-decoration: none;
-  transition: color 0.18s var(--ease);
-  position: relative;
 }
 
-.nav-links a::after {
-  content: "";
-  background: var(--gold-text);
-  transform-origin: 0;
-  height: 1px;
-  transition: transform 0.22s var(--ease);
-  position: absolute;
-  bottom: -0.28rem;
-  left: 0;
-  right: 0;
-  transform: scaleX(0);
-}
-
-.nav-links a:hover,
 .nav-links a:focus-visible {
   color: var(--gold-text);
-}
-
-.nav-links a:hover::after,
-.nav-links a:focus-visible::after {
-  transform: scaleX(1);
 }
 
 .nav-toggle {
@@ -184,7 +163,6 @@ header {
   height: 1px;
   background: var(--ink);
   margin: 5px auto;
-  transition: transform 0.22s var(--ease);
 }
 
 .nav-toggle[aria-expanded="true"] i:first-child {
@@ -230,16 +208,18 @@ header {
   font-weight: 600;
   text-decoration: none;
   font-family: inherit;
-  transition:
-    background-color 0.18s var(--ease),
-    border-color 0.18s var(--ease),
-    color 0.18s var(--ease);
   display: inline-flex;
-  will-change: transform;
 }
 
-.btn:hover,
-.btn:focus-visible {
+.btn.commit {
+  transition:
+    background-color 0.16s var(--ease),
+    border-color 0.16s var(--ease),
+    color 0.16s var(--ease);
+}
+
+.btn.commit:hover,
+.btn.commit:focus-visible {
   background: var(--ink);
   border-color: var(--ink);
   color: var(--paper);
@@ -255,14 +235,17 @@ header {
   place-items: center;
   font-size: 0.86rem;
   line-height: 1;
-  transition:
-    background-color 0.18s var(--ease),
-    color 0.18s var(--ease);
   display: inline-grid;
 }
 
-.btn:hover .btn-arrow,
-.btn:focus-visible .btn-arrow {
+.btn.commit .btn-arrow {
+  transition:
+    background-color 0.16s var(--ease),
+    color 0.16s var(--ease);
+}
+
+.btn.commit:hover .btn-arrow,
+.btn.commit:focus-visible .btn-arrow {
   background: var(--paper);
   color: var(--ink);
 }
@@ -278,13 +261,11 @@ header {
   color: var(--paper);
 }
 
-.btn.line:hover,
 .btn.line:focus-visible {
   background: var(--ink);
   color: var(--paper);
 }
 
-.btn.line:hover .btn-arrow,
 .btn.line:focus-visible .btn-arrow {
   background: var(--paper);
   color: var(--ink);
@@ -491,7 +472,6 @@ h1 .amp {
   font-family: inherit;
   font-size: 0.8rem;
   font-weight: 600;
-  transition: color 0.18s var(--ease);
   position: relative;
 }
 
@@ -651,11 +631,6 @@ section > .wrap > :last-child.sec-head,
 .proc-step {
   border-top: 1px solid var(--band-line);
   padding-top: 16px;
-  transition: border-color 0.3s var(--ease);
-}
-
-.proc-step.is-live {
-  border-top-color: var(--gold);
 }
 
 .step-label {
@@ -720,13 +695,12 @@ section > .wrap > :last-child.sec-head,
   display: flex;
 }
 
-.fallback-phone,
-.fallback-ticket {
+.fallback-phone {
   border: 1px solid var(--band-line);
-  border-radius: 18px;
-  padding: 22px 18px;
+  border-radius: 28px;
+  padding: 28px 22px 22px;
   background: #171a1e;
-  min-width: 140px;
+  width: min(260px, 80%);
 }
 
 .fallback-kicker {
@@ -741,16 +715,25 @@ section > .wrap > :last-child.sec-head,
   font-size: 1.2rem;
 }
 
-.fallback-copy,
-.fallback-ticket p {
+.fallback-copy {
   color: var(--band-copy);
   font-size: 0.82rem;
   margin-top: 6px;
 }
 
-.fallback-ticket {
-  background: #1b1812;
-  transform: rotate(6deg);
+.fallback-state {
+  margin-top: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--color-danger-surface, #f9ecea);
+  color: #913c35;
+}
+
+.fallback-phone[data-mode="after"] .fallback-state {
+  background: #f4efe0;
+  color: #7e672c;
 }
 
 .about-grid {
@@ -798,7 +781,6 @@ form {
 label {
   font-size: 0.85rem;
   font-weight: 700;
-  transition: color 0.18s var(--ease);
 }
 
 .field.is-live label {
@@ -829,9 +811,15 @@ textarea:focus-visible {
   box-shadow: 0 0 0 3px #a98f452e;
 }
 
-.form-note {
+.form-note,
+.form-confirm {
   color: var(--gray);
   font-size: 0.85rem;
+}
+
+.form-confirm {
+  color: var(--gold-text);
+  font-weight: 600;
 }
 
 .contact .big {
@@ -847,9 +835,10 @@ textarea:focus-visible {
   text-decoration: none;
 }
 
-.contact .big a:hover,
-.phone a:hover {
+.contact .big a:focus-visible,
+.phone a:focus-visible {
   color: var(--gold-text);
+  text-decoration: underline;
 }
 
 .contact-intro {
