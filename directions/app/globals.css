@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-gold: #c4a574;
+  --color-matte: #f5f5f5;
+  --color-ink: #121212;
+  --font-display: var(--font-instrument);
+  --font-sans: var(--font-hanken);
+  --font-mono: var(--font-plex);
+}
+
+html,
+body {
+  background: #121212;
+  color: #f5f5f5;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-hanken), sans-serif;
+}
+
+::selection {
+  background: #c4a574;
+  color: #121212;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

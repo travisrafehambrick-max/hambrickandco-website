@@ -1,0 +1,211 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
+import { EASE, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { Wordmark } from "@/components/shared/Wordmark";
+import { LiveButton } from "@/components/shared/LiveButton";
+import { AuditForm } from "@/components/shared/AuditForm";
+import { PeelSlot } from "@/components/shared/CanvasSlot";
+
+const THREAD = [
+  { t: "14:02", who: "Inbound", text: "Can you still do the estimate this week?", state: "missed" as const },
+  { t: "14:02", who: "Line", text: "Missed. Sheet sits on the lock screen.", state: "missed" as const },
+  { t: "14:04", who: "Recovery", text: "Yes — we can hold Thursday morning. Confirm the address?", state: "live" as const },
+  { t: "14:06", who: "Inbound", text: "Same street. After 9 is fine.", state: "live" as const },
+];
+
+const CONSOLE = [
+  "queue.open  inbound.sms",
+  "wait        2h 14m  — dead",
+  "recover     first_reply",
+  "send        estimate_hold",
+  "state       recovered",
+];
+
+export function AssistPane() {
+  const root = useRef<HTMLDivElement>(null);
+  const sheet = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState(0);
+
+  useGSAP(
+    () => {
+      if (reduced === null) return;
+
+      if (reduced) {
+        gsap.set(sheet.current, { rotateX: 0, y: 0 });
+        gsap.set(".assist-msg", { autoAlpha: 1, x: 0 });
+        gsap.set(".console-line", { autoAlpha: 1 });
+        setProgress(1);
+        setActive(THREAD.length - 1);
+        return;
+      }
+
+      const intro = gsap.timeline({ defaults: { ease: EASE } });
+      intro
+        .fromTo(sheet.current, { rotateX: 62, y: 24 }, { rotateX: 28, y: 8, duration: 0.7 })
+        .fromTo(".assist-msg.missed", { x: -12 }, { x: 0, duration: 0.4 }, 0)
+        .fromTo(".assist-msg.live", { autoAlpha: 0.15 }, { autoAlpha: 0.85, duration: 0.45 }, 0.25)
+        .to({}, { duration: STILLNESS });
+      intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.35));
+
+      const pin = gsap.timeline({
+        defaults: { ease: LINEAR },
+        scrollTrigger: {
+          trigger: ".assist-pin",
+          start: "top top",
+          end: "+=100%",
+          pin: true,
+          scrub: 0.7,
+        },
+      });
+
+      pin
+        .to(sheet.current, { rotateX: 0, y: 0, duration: 0.7 })
+        .to(
+          {},
+          {
+            duration: 0.7,
+            onUpdate() {
+              const p = 0.35 + this.progress() * 0.65;
+              setProgress(p);
+              setActive(Math.min(THREAD.length - 1, Math.floor(p * THREAD.length)));
+            },
+          },
+          0,
+        )
+        .fromTo(".console-line", { x: -20 }, { x: 0, stagger: 0.08, duration: 0.4 }, 0.1)
+        .to({}, { duration: 0.18 });
+    },
+    { scope: root, dependencies: [reduced], revertOnUpdate: true },
+  );
+
+  return (
+    <div ref={root} className="min-h-screen bg-ink text-matte">
+      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
+        <div className="grid grid-cols-2">
+          <div className="flex items-center justify-between border-r border-matte/10 px-5 py-3 md:px-8">
+            <Wordmark tone="dark" kicker="Assist" />
+          </div>
+          <div className="flex items-center justify-between px-5 py-3 md:px-8">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/45">Console</span>
+            <LiveButton href="#request">{CTA_AUDIT}</LiveButton>
+          </div>
+        </div>
+      </header>
+
+      <section className="grid min-h-[100svh] md:grid-cols-2">
+        <div className="flex flex-col justify-end border-b border-matte/10 px-5 py-12 md:border-b-0 md:border-r md:px-8">
+          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">05 — Assist Pane</p>
+          <h1 className="mt-5 font-display text-[clamp(2.8rem,6vw,5rem)] leading-[0.9]">
+            Missed
+            <br />
+            thread.
+          </h1>
+          <div className="mt-10 space-y-4">
+            {THREAD.filter((m) => m.state === "missed").map((m) => (
+              <p key={m.t + m.text} className="assist-msg missed max-w-sm border-l border-matte/20 pl-4">
+                <span className="font-mono text-[10px] text-matte/40">
+                  {m.t} · {m.who}
+                </span>
+                <span className="mt-1 block font-sans text-[15px]">{m.text}</span>
+              </p>
+            ))}
+          </div>
+        </div>
+        <div className="relative flex flex-col justify-end px-5 py-12 md:px-8">
+          <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered thread.</p>
+          <div className="mt-10 space-y-4">
+            {THREAD.filter((m) => m.state === "live").map((m) => (
+              <p key={m.t + m.text} className="assist-msg live max-w-sm border-l border-gold pl-4">
+                <span className="font-mono text-[10px] text-gold">
+                  {m.t} · {m.who}
+                </span>
+                <span className="mt-1 block font-sans text-[15px]">{m.text}</span>
+              </p>
+            ))}
+          </div>
+          <article
+            ref={sheet}
+            style={{ transformStyle: "preserve-3d", perspective: 800 }}
+            className="absolute right-6 top-16 w-[min(260px,70%)] origin-top border border-matte/20 bg-matte p-4 text-ink"
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/40">Phone sheet</p>
+            <p className="mt-3 font-display text-xl leading-tight">
+              {progress > 0.4 ? "Estimate hold · Thursday" : "Missed · 2h 14m"}
+            </p>
+            <p className="mt-2 font-sans text-[12px] text-ink/50">Carrier · peel left → forward</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="assist-pin border-t border-matte/10">
+        <div className="grid min-h-[100svh] md:grid-cols-2">
+          <div className="relative border-r border-matte/10">
+            <div className="h-[36vh] md:h-full">
+              <PeelSlot progress={progress} />
+            </div>
+          </div>
+          <div className="px-5 py-10 md:px-10">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/40">
+              Recovery thread · {AREA}
+            </p>
+            <ol className="mt-8 space-y-3">
+              {THREAD.map((m, i) => {
+                const on = i <= active;
+                const live = m.state === "live" && on;
+                return (
+                  <li key={m.text}>
+                    <button
+                      type="button"
+                      onClick={() => setActive(i)}
+                      className={`w-full border px-4 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
+                        live ? "border-gold" : "border-matte/15"
+                      } ${on ? "text-matte" : "text-matte/35"}`}
+                    >
+                      <span className={`font-mono text-[10px] ${live ? "text-gold" : ""}`}>
+                        {m.t} · {m.who}
+                      </span>
+                      <span className="mt-1 block font-sans text-[14px]">{m.text}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+            <pre className="mt-10 overflow-x-auto font-mono text-[11px] leading-6 text-matte/50">
+              {CONSOLE.map((line, i) => (
+                <div key={line} className={`console-line ${progress > 0.55 && i >= 2 ? "text-gold" : ""}`}>
+                  {line}
+                </div>
+              ))}
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="request" className="border-t border-matte/10 px-5 py-24 md:px-10">
+        <div className="mx-auto grid max-w-[1200px] gap-16 md:grid-cols-2">
+          <div>
+            <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[0.95]">
+              Request a recovery audit.
+            </h2>
+            <p className="mt-6 max-w-md font-sans text-matte/60">
+              Split pane is the work: a person on the left, the quiet machine on the right. Write {EMAIL} or call{" "}
+              <a className="text-gold" href={PHONE_HREF}>
+                {PHONE}
+              </a>
+              .
+            </p>
+            <div className="mt-8">
+              <LiveButton href={`mailto:${EMAIL}`}>{CTA_FLOW}</LiveButton>
+            </div>
+          </div>
+          <AuditForm tone="dark" />
+        </div>
+      </section>
+    </div>
+  );
+}
