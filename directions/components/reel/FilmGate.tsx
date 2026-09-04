@@ -20,8 +20,8 @@ function Gate({ progress }: { progress: number }) {
   }, [progress, invalidate]);
 
   return (
-    <mesh ref={frame}>
-      <ringGeometry args={[1.15, 1.28, 4]} />
+    <mesh ref={frame} rotation={[0, 0, Math.PI / 4]}>
+      <ringGeometry args={[1.05, 1.32, 4]} />
       <meshStandardMaterial color="#1a1a1a" roughness={0.9} metalness={0.05} />
     </mesh>
   );

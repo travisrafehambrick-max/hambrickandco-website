@@ -27,8 +27,8 @@ export function SolidProof() {
       if (reduced === null) return;
 
       if (reduced) {
-        gsap.set(".ticket-card", { x: 0, autoAlpha: 1 });
-        gsap.set(".ticket-card", { "--alive": 1 });
+        gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0 });
+        gsap.set(".board-ticket", { x: 0, autoAlpha: 1 });
         setProgress(1);
         return;
       }

@@ -10,10 +10,52 @@ import { AuditForm } from "@/components/shared/AuditForm";
 import { GateSlot } from "@/components/shared/CanvasSlot";
 
 const CHAPTERS = [
-  { n: "01", title: "Empty desk at 16:12", body: "The inbound sat. Nobody marked it. The still is the miss." },
-  { n: "02", title: "Reply in the same light", body: "Four minutes. Same chair. The still holds while the copy walks." },
-  { n: "03", title: "Estimate on the table", body: "Not a campaign. A number that made it back to the person who asked." },
+  {
+    n: "01",
+    title: "Empty desk at 16:12",
+    body: "The inbound sat. Nobody marked it. The still is the miss.",
+    mark: "empty",
+  },
+  {
+    n: "02",
+    title: "Reply in the same light",
+    body: "Four minutes. Same chair. The still holds while the copy walks.",
+    mark: "reply",
+  },
+  {
+    n: "03",
+    title: "Estimate on the table",
+    body: "Not a campaign. A number that made it back to the person who asked.",
+    mark: "quote",
+  },
 ];
+
+function ChapterStill({ mark, live }: { mark: string; live: boolean }) {
+  const rule = live ? "bg-gold" : "bg-matte/25";
+  return (
+    <div className="relative h-full w-full overflow-hidden bg-ink">
+      <span className={`absolute left-6 top-6 h-px w-16 ${rule}`} />
+      <span className={`absolute right-6 top-6 h-16 w-px ${rule}`} />
+      {mark === "empty" && (
+        <div className="absolute inset-[22%] border border-matte/15" />
+      )}
+      {mark === "reply" && (
+        <div className="absolute inset-[18%] border border-gold">
+          <div className="absolute left-4 top-4 h-8 w-24 bg-gold" />
+          <div className="absolute bottom-6 left-4 right-4 h-px bg-gold/70" />
+        </div>
+      )}
+      {mark === "quote" && (
+        <div className="absolute inset-x-[16%] inset-y-[20%] border border-gold/80 bg-matte/[0.04] p-5">
+          <div className="h-px w-2/3 bg-gold" />
+          <div className="mt-4 h-px w-full bg-matte/20" />
+          <div className="mt-3 h-px w-5/6 bg-matte/20" />
+          <div className="mt-3 h-px w-1/2 bg-matte/20" />
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function SignatureReel() {
   const root = useRef<HTMLDivElement>(null);
@@ -72,10 +114,10 @@ export function SignatureReel() {
 
   return (
     <div ref={root} className="min-h-screen bg-ink text-matte">
-      <header className="sticky top-0 z-40 mix-blend-difference">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5">
+      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4">
           <Wordmark tone="dark" kicker="Reel" />
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte">
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/70">
             Folio 0{chapter + 1} / 03
           </p>
           <LiveButton href="#colophon" tone="ghost-light">
@@ -84,26 +126,33 @@ export function SignatureReel() {
         </div>
       </header>
 
-      <section className="mx-auto grid min-h-[100svh] max-w-[1440px] grid-cols-1 items-end px-6 pb-16 pt-8 md:grid-cols-12">
-        <div className="reel-missed md:col-span-7">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-matte/40">03 — Signature Reel</p>
-          <h1 className="mt-6 font-display text-[clamp(3.4rem,10vw,9rem)] leading-[0.8] tracking-[-0.035em]">
-            Missed
-            <br />
-            still.
-          </h1>
-          <div className="mt-10 aspect-[16/9] max-w-xl border border-matte/15 bg-[linear-gradient(135deg,#121212_0%,#2a2a2a_48%,#121212_100%)]">
-            <div className="flex h-full items-end p-5">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-matte/50">16:12 · inbox empty</span>
-            </div>
+      <section className="mx-auto min-h-[100svh] max-w-[1440px] px-6 pb-16 pt-8">
+        <div className="grid items-end gap-8 md:grid-cols-12">
+          <div className="reel-missed md:col-span-7">
+            <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-matte/40">03 — Signature Reel</p>
+            <h1 className="mt-6 font-display text-[clamp(3.4rem,10vw,8.4rem)] leading-[0.8] tracking-[-0.035em]">
+              Missed
+              <br />
+              still.
+            </h1>
+          </div>
+          <div className="reel-recovered md:col-span-5 md:text-right">
+            <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered still.</p>
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">16:16 · reply filed</p>
           </div>
         </div>
-        <div className="reel-recovered mt-12 md:col-span-5 md:mt-0 md:translate-y-16">
-          <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered still.</p>
-          <div className="mt-8 aspect-[3/4] border border-gold bg-[linear-gradient(180deg,#1a1a1a_0%,#121212_60%,#C4A574_160%)]">
-            <div className="flex h-full items-end justify-between p-5">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">16:16 · reply filed</span>
-            </div>
+        <div className="mt-12 grid items-end gap-6 md:grid-cols-12">
+          <div className="reel-missed relative aspect-[16/9] border border-matte/15 md:col-span-7">
+            <ChapterStill mark="empty" live={false} />
+            <p className="absolute bottom-4 left-5 font-mono text-[10px] uppercase tracking-[0.2em] text-matte/50">
+              16:12 · inbox empty
+            </p>
+          </div>
+          <div className="reel-recovered relative aspect-[4/5] border border-gold md:col-span-5">
+            <ChapterStill mark="reply" live />
+            <p className="absolute bottom-4 left-5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">
+              Recovered frame
+            </p>
           </div>
         </div>
       </section>
@@ -114,7 +163,8 @@ export function SignatureReel() {
             <div className="absolute inset-0">
               <GateSlot progress={progress} />
             </div>
-            <figure className="relative z-10 mx-auto mt-[18vh] aspect-[4/5] w-[min(72%,420px)] border border-matte/20 bg-ink">
+            <figure className={`relative z-10 mx-auto mt-[14vh] aspect-[4/5] w-[min(72%,420px)] bg-ink ${progress > 0.28 ? "border border-gold" : "border border-matte/20"}`}>
+              <ChapterStill mark={still.mark} live={progress > 0.28} />
               <figcaption className="absolute inset-x-0 bottom-0 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">{still.n}</p>
                 <p className="mt-2 font-display text-3xl leading-tight">{still.title}</p>

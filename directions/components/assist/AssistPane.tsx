@@ -131,7 +131,7 @@ export function AssistPane() {
           <article
             ref={sheet}
             style={{ transformStyle: "preserve-3d", perspective: 800 }}
-            className="absolute right-6 top-16 w-[min(260px,70%)] origin-top border border-matte/20 bg-matte p-4 text-ink"
+            className="absolute left-0 top-10 z-10 w-[min(240px,68%)] origin-top -translate-x-1/2 border border-ink/10 bg-matte p-4 text-ink max-md:left-auto max-md:right-5 max-md:translate-x-0"
           >
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/40">Phone sheet</p>
             <p className="mt-3 font-display text-xl leading-tight">
