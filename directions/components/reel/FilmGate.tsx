@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { MetalCanvas } from "@/components/shared/MetalCanvas";
+import { HeroMetalPlate } from "@/components/shared/MetalCanvas";
 import { applyMetal } from "@/lib/metal";
 
 /** Sole 3D object. MeshStandard + env. Rotation stays mid-handoff. */
@@ -33,8 +33,8 @@ function Orb({ progress }: { progress: number }) {
 
 export function FilmGate({ progress }: { progress: number }) {
   return (
-    <MetalCanvas camera={{ position: [0, 0.1, 3.8], fov: 28 }}>
+    <HeroMetalPlate camera={{ position: [0, 0.1, 3.8], fov: 28 }}>
       <Orb progress={progress} />
-    </MetalCanvas>
+    </HeroMetalPlate>
   );
 }

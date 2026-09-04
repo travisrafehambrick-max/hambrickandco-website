@@ -109,18 +109,21 @@ export function SignatureReel() {
           end: "+=100%",
           pin: true,
           scrub: 0.65,
+          onToggle: (self) => {
+            if (self.isActive) setChapter(i);
+          },
           onUpdate: (self) => {
+            if (!self.isActive) return;
             const p = self.progress;
-            const peak = p < 0.5 ? p * 2 : (1 - p) * 2;
             if (stage) {
               gsap.set(stage, {
-                scale: 0.94 + peak * 0.08,
-                filter: `blur(${(1 - peak) * 4.5}px)`,
-                y: (1 - peak) * 16,
+                scale: 0.96 + p * 0.04,
+                filter: "none",
+                y: 0,
+                autoAlpha: 1,
               });
             }
             setProgress((i + p) / CHAPTERS.length);
-            setChapter(i);
           },
         });
       });
@@ -225,9 +228,8 @@ export function SignatureReel() {
               aria-hidden={chapter !== i}
             >
               <div
-                className={`mx-auto grid min-h-[100svh] max-w-[1440px] md:grid-cols-12 md:pr-[32%] ${
-                  chapter === i ? "opacity-100" : "pointer-events-none opacity-0"
-                }`}
+                className="mx-auto grid min-h-[100svh] max-w-[1440px] md:grid-cols-12 md:pr-[32%]"
+                style={{ opacity: chapter === i ? 1 : 0, pointerEvents: chapter === i ? "auto" : "none" }}
               >
                 <div className="flex items-center justify-center px-6 py-16 md:col-span-6">
                   <figure

@@ -44,7 +44,8 @@ type Props = {
   camera?: { position?: [number, number, number]; fov?: number };
 };
 
-export function MetalCanvas({ children, camera }: Props) {
+/** R3F metal plate. `frameloop="never"` when offscreen — no demand ticks. */
+export function HeroMetalPlate({ children, camera }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(true);
 
@@ -56,8 +57,8 @@ export function MetalCanvas({ children, camera }: Props) {
       return;
     }
     const io = new IntersectionObserver(
-      ([entry]) => setOn(entry.isIntersecting),
-      { root: null, rootMargin: "10% 0px", threshold: 0 },
+      ([entry]) => setOn(entry.isIntersecting && entry.intersectionRatio > 0),
+      { root: null, rootMargin: "0px", threshold: 0 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -65,22 +66,24 @@ export function MetalCanvas({ children, camera }: Props) {
 
   return (
     <div ref={host} className="h-full w-full">
-      {on ? (
-        <Canvas
-          frameloop="demand"
-          dpr={[1, 1.75]}
-          camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
-          gl={{ antialias: true, alpha: true }}
-          onCreated={({ gl }) => {
-            gl.setClearColor(0x000000, 0);
-            gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.outputColorSpace = THREE.SRGBColorSpace;
-          }}
-        >
-          <MetalRig />
-          {children}
-        </Canvas>
-      ) : null}
+      <Canvas
+        frameloop={on ? "demand" : "never"}
+        dpr={[1, 1.75]}
+        camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
+        gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+          gl.toneMapping = THREE.ACESFilmicToneMapping;
+          gl.outputColorSpace = THREE.SRGBColorSpace;
+        }}
+      >
+        <MetalRig />
+        {children}
+      </Canvas>
     </div>
   );
+}
+
+export function MetalCanvas(props: Props) {
+  return <HeroMetalPlate {...props} />;
 }

@@ -112,10 +112,10 @@ stage, never the `100+` counters:
 - One gold carrier through missed→recovered. The DOM still is the “statue”; the
   R3F orb takes living gold and keeps rotating across chapter cuts (handoff
   mid-motion). One `GateSlot` only — no second 3D object.
-- Pin one full-viewport stage per chapter (`end: +=100%`). Scrub the still:
-  depth / scale / blur. Hard-exclusive: one chapter opaque at a time. White
-  type on the live chapter does not fade or wobble. R3F pauses offscreen
-  (`IntersectionObserver` + `frameloop="demand"`).
+- Pin one full-viewport stage per chapter (`end: +=100%`). Hard-exclusive:
+  opacity 1 only for the active index — no soft in-window bleed. White
+  type on the live chapter does not fade. `HeroMetalPlate` uses
+  IntersectionObserver; `frameloop="never"` when offscreen.
 - Black holds between chapters for the miss (dead hairline, no gold).
 - Nav hides on scroll-down, shows on scroll-up (`0.45s`, `aisEase`).
 - Controls 0.3–0.7s ease-out. No spring. No count-ups.
@@ -148,7 +148,7 @@ Carrier: the quote slip on the table. R3F is the pebble, hero only.
 Split assist / console recovery thread. SiteAssist live-scroll, closed:
 
 - Sticky header morphs `#121212` → `#F5F5F5` on the white pin, back to black at `#request`. Gold only on the living step, the recovered word, and the CTA. No Assist kicker.
-- One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.14 / 0.38 / 0.7 / 1`. Not a continuous scrub.
+- One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.28 / 0.38 / 0.7 / 1`. Stage 0 starts more open (~28% clip). Pin start `top 12%`. Not a continuous scrub.
 - Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
 - Intro is short so the peel (stage 0 / Missed) is in the first screenful.
   No second 3D peel. No Stage NN / NN eyebrows.

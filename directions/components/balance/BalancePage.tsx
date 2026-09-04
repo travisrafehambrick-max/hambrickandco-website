@@ -137,12 +137,12 @@ export function BalancePage() {
             ref={slip}
             className="relative z-10 w-[min(100%,340px)] border border-black bg-matte p-6 text-ink"
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">Missed</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">Recovery note</p>
             <p className="mt-4 font-display text-[1.55rem] leading-snug">
-              Inbound open. No reply on the estimate.
+              {face === "missed" ? "Inbound open. No reply on the estimate." : "First reply out. Estimate back on the board."}
             </p>
             <p className={`mt-5 font-mono text-[10px] uppercase tracking-[0.16em] ${face === "recovered" ? "metal-text" : "text-ink/35"}`}>
-              Recovered · first reply out
+              {face === "missed" ? "Missed" : "Recovered"}
             </p>
             <button
               ref={turn}

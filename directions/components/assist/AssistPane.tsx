@@ -14,7 +14,7 @@ const STEPS = [
   {
     verb: "Missed",
     line: "Can you still do the estimate this week?",
-    peel: 0.14,
+    peel: 0.28,
     live: false,
   },
   {
@@ -49,7 +49,7 @@ export function AssistPane() {
   const header = useRef<HTMLElement>(null);
   const goStepRef = useRef<(i: number, immediate?: boolean) => void>(() => {});
   const reduced = useReducedMotion();
-  const [progress, setProgress] = useState(0.14);
+  const [progress, setProgress] = useState(0.28);
   const [active, setActive] = useState(0);
   const [ink, setInk] = useState(true);
   const [slide, setSlide] = useState(0);
@@ -57,7 +57,7 @@ export function AssistPane() {
   useGSAP(
     () => {
       if (reduced === null) return;
-      const peel = { v: 0.14 };
+      const peel = { v: 0.28 };
 
       const goStep = (i: number, immediate = false) => {
         const next = STEPS[i];
@@ -114,7 +114,7 @@ export function AssistPane() {
       STEPS.forEach((_, i) => {
         ScrollTrigger.create({
           trigger: `.assist-step[data-step="${i}"]`,
-          start: "top 48%",
+          start: i === 0 ? "top 12%" : "top 48%",
           end: "bottom 48%",
           onToggle: (self) => {
             if (self.isActive) goStep(i);
@@ -124,8 +124,11 @@ export function AssistPane() {
 
       ScrollTrigger.create({
         trigger: ".assist-pin",
-        start: "top 10%",
-        onEnter: () => paintHeader(false),
+        start: "top 12%",
+        onEnter: () => {
+          paintHeader(false);
+          goStep(0);
+        },
         onLeaveBack: () => paintHeader(true),
       });
       ScrollTrigger.create({
@@ -170,15 +173,12 @@ export function AssistPane() {
         </div>
       </header>
 
-      <section className="relative mx-auto max-w-[1280px] px-5 pb-6 pt-6 md:px-8">
+      <section className="relative mx-auto max-w-[1280px] px-5 py-4 md:px-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">Missed thread</p>
-        <h1 className="assist-display mt-3 font-display text-[clamp(2.4rem,7vw,4.6rem)] leading-[0.86] tracking-[-0.03em]">
-          Missed thread.
+        <h1 className="assist-display mt-2 font-display text-[clamp(1.8rem,4.5vw,2.8rem)] leading-[0.95] tracking-[-0.02em]">
+          Missed thread. <span className="metal-text italic">Recovered.</span>
         </h1>
-        <p className="assist-display mt-3 font-display italic text-[clamp(1.4rem,2.6vw,2rem)] leading-none">
-          <span className="metal-text">Recovered.</span>
-        </p>
-        <p className="assist-display mt-3 max-w-sm font-sans text-[14px] text-matte/60">
+        <p className="assist-display mt-2 max-w-sm font-sans text-[13px] text-matte/55">
           One sheet. Four landmarks. {AREA}.
         </p>
       </section>
@@ -192,7 +192,9 @@ export function AssistPane() {
                 <li
                   key={s.verb}
                   data-step={i}
-                  className="assist-step flex min-h-[52vh] flex-col justify-center border-b border-ink px-5 py-16 md:min-h-[78vh] md:px-8"
+                  className={`assist-step flex flex-col justify-center border-b border-ink px-5 py-10 md:px-8 ${
+                    i === 0 ? "min-h-[28vh] md:min-h-[36vh]" : "min-h-[52vh] md:min-h-[78vh]"
+                  }`}
                 >
                   <button
                     type="button"
