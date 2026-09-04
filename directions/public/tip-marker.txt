@@ -1,6 +1,6 @@
 hambrickandco-website PR #8
-directions/ metal-parity
-cond-close-2
+directions/ Assist Pane conversion homepage
+parked halls
 MetalRimCTA
 GoldMetalBar
 HeroMetalPlate
@@ -9,5 +9,5 @@ GoldMetalMark
 MeshStandardMaterial
 @react-three/fiber
 magnetic <=20px
-tip 2489f80
-parent fcd206e
+tip fb8909a
+parent 48dceda
