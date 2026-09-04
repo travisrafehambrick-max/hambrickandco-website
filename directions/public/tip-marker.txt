@@ -2,12 +2,9 @@ hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
 parked halls
+proof felt math — no named client
+no Stonefield
 MetalRim living-gold wordmark lockup
-GoldMetalAnd
-GoldMetalRim
-MeshStandardMaterial
-no 16834 Logo Trace Loader
-no 12197 Hover Brand Logo
 magnetic <=20px
-tip 968a369
-parent 6dd93af
+tip de245ff
+parent 7e92b41
