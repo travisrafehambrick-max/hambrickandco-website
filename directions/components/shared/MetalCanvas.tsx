@@ -5,9 +5,10 @@ import { Canvas, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-function MetalRig() {
+function MetalRig({ staticFrame = false }: { staticFrame?: boolean }) {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
   const invalidate = useThree((s) => s.invalidate);
 
   useEffect(() => {
@@ -20,6 +21,16 @@ function MetalRig() {
     const env = pmrem.fromScene(room, 0.04).texture;
     scene.environment = env;
     room.dispose();
+    if (staticFrame) {
+      gl.render(scene, camera);
+      const id = requestAnimationFrame(() => gl.render(scene, camera));
+      return () => {
+        cancelAnimationFrame(id);
+        scene.environment = null;
+        env.dispose();
+        pmrem.dispose();
+      };
+    }
     invalidate();
 
     return () => {
@@ -27,7 +38,7 @@ function MetalRig() {
       env.dispose();
       pmrem.dispose();
     };
-  }, [gl, scene, invalidate]);
+  }, [gl, scene, camera, invalidate, staticFrame]);
 
   return (
     <>
@@ -42,17 +53,19 @@ function MetalRig() {
 type Props = {
   children: ReactNode;
   camera?: { position?: [number, number, number]; fov?: number };
+  /** One MeshStandard frame. Used for the header mark and reduced-motion. */
+  staticFrame?: boolean;
 };
 
 /** R3F metal plate. `frameloop="never"` when offscreen — no demand ticks. */
-export function HeroMetalPlate({ children, camera }: Props) {
+export function HeroMetalPlate({ children, camera, staticFrame = false }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(true);
 
   useEffect(() => {
     const el = host.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (staticFrame || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setOn(true);
       return;
     }
@@ -62,12 +75,14 @@ export function HeroMetalPlate({ children, camera }: Props) {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [staticFrame]);
+
+  const freeze = staticFrame;
 
   return (
     <div ref={host} className="h-full w-full">
       <Canvas
-        frameloop={on ? "demand" : "never"}
+        frameloop={freeze ? "never" : on ? "demand" : "never"}
         dpr={[1, 1.75]}
         camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
         gl={{ antialias: true, alpha: true }}
@@ -77,7 +92,7 @@ export function HeroMetalPlate({ children, camera }: Props) {
           gl.outputColorSpace = THREE.SRGBColorSpace;
         }}
       >
-        <MetalRig />
+        <MetalRig staticFrame={freeze} />
         {children}
       </Canvas>
     </div>

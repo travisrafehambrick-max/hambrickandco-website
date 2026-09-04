@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, type CSSProperties, type ReactNode } from "react";
 import { MeshStandardMaterial } from "three";
 import { bindMagnetic } from "@/lib/bind-magnetic";
-import { applyMetal } from "@/lib/metal";
+import { applyLiveMetal, applyMetal } from "@/lib/metal";
+import { makeAmpersandGeometry } from "@/lib/ampersand";
 import { HeroMetalPlate, MetalCanvas } from "@/components/shared/MetalCanvas";
 import { ProofRibbon } from "@/components/proof/TicketScene";
 
@@ -14,6 +15,7 @@ export const METAL_SIGNATURES = [
   "HeroMetalPlate",
   "MetalRoute",
   "GoldMetalMark",
+  "GoldMetalAnd",
 ] as const;
 
 function GoldBarMesh({ live = true }: { live?: boolean }) {
@@ -37,6 +39,24 @@ function GoldMarkMesh() {
     <mesh>
       <sphereGeometry args={[0.22, 32, 32]} />
       <meshStandardMaterial color="#C4A574" metalness={1} roughness={0.16} />
+    </mesh>
+  );
+}
+
+function AmpersandMesh() {
+  const geom = useMemo(() => makeAmpersandGeometry(), []);
+  useEffect(() => () => geom.dispose(), [geom]);
+
+  return (
+    <mesh geometry={geom} rotation={[-0.18, 0.48, 0.05]}>
+      <meshStandardMaterial
+        ref={(m: MeshStandardMaterial | null) => {
+          if (m) applyLiveMetal(m);
+        }}
+        color="#C4A574"
+        metalness={1}
+        roughness={0.16}
+      />
     </mesh>
   );
 }
@@ -118,11 +138,22 @@ export function GoldMetalMark() {
 }
 GoldMetalMark.displayName = "GoldMetalMark";
 
+export function GoldMetalAnd() {
+  return (
+    <span className="gold-metal-and" data-metal="GoldMetalAnd" aria-hidden>
+      <MetalCanvas staticFrame camera={{ position: [0.08, 0.02, 2.05], fov: 24 }}>
+        <AmpersandMesh />
+      </MetalCanvas>
+    </span>
+  );
+}
+GoldMetalAnd.displayName = "GoldMetalAnd";
+
 export function MetalParityAnchor() {
   return (
     <span hidden data-metal-signatures={METAL_SIGNATURES.join(",")}>
-      MetalRimCTA GoldMetalBar HeroMetalPlate MetalRoute GoldMetalMark MeshStandardMaterial
-      @react-three/fiber magnetic
+      MetalRimCTA GoldMetalBar HeroMetalPlate MetalRoute GoldMetalMark GoldMetalAnd
+      MeshStandardMaterial @react-three/fiber magnetic
     </span>
   );
 }

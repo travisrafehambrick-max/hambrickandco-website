@@ -129,6 +129,43 @@ body {
   flex-shrink: 0;
 }
 
+.brand-mark {
+  display: inline-flex;
+  align-items: baseline;
+  column-gap: 0.4em;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-mark:focus-visible {
+  outline: 1px solid #c4a574;
+  outline-offset: 4px;
+}
+
+.brand-mark__name {
+  font-family: var(--font-instrument), ui-serif, serif;
+  font-size: 1.12rem;
+  letter-spacing: -0.042em;
+  line-height: 1;
+}
+
+.gold-metal-and {
+  display: inline-block;
+  width: 1.38rem;
+  height: 1.72rem;
+  margin-block: -0.28rem;
+  translate: 0 0.28em;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.brand-mark__house {
+  font-family: var(--font-instrument), ui-serif, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
 .metal-rim-cta {
   position: relative;
 }
