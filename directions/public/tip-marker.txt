@@ -1,8 +1,8 @@
 hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
-hero stills missed-call estimate recovery booked
-PeelSlot sticky media
+hero stills: missed-call is primary
+estimate recovery booked are secondary
 BrandMark untouched
-tip 040f56a
-parent 22276fa
+tip d49ed6a
+parent bf29ddc
