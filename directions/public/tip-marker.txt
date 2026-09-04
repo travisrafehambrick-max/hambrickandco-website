@@ -10,3 +10,5 @@ GoldMetalRim
 MeshStandardMaterial
 no 12197 Hover Brand Logo
 magnetic <=20px
+tip 2c1030f
+parent 63c8aac
