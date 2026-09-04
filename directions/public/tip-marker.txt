@@ -9,5 +9,5 @@ GoldMetalMark
 MeshStandardMaterial
 @react-three/fiber
 magnetic <=20px
-tip pending
+tip 2489f80
 parent fcd206e
