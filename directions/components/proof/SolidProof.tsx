@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, WEDGE } from "@/lib/facts";
-import { AIS_REVEAL, AIS_STAGGER, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, AIS_STAGGER, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -31,9 +32,12 @@ export function SolidProof() {
         gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0, filter: "none" });
         gsap.set(".board-ticket", { x: 0, autoAlpha: 1, filter: "none" });
         gsap.set(playhead.current, { scaleX: 1, backgroundColor: "#C4A574", filter: "none", y: 0, autoAlpha: 1 });
+        if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         return;
       }
+
+      if (root.current) bindAiasLive(root.current);
 
       gsap.set(playhead.current, { scaleX: 0, transformOrigin: "left center" });
 
@@ -41,7 +45,7 @@ export function SolidProof() {
       intro
         .fromTo(
           playhead.current,
-          { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0, backgroundColor: "#F5F5F5" },
+          { scaleX: 0, filter: "blur(6px)", y: AIS_RISE, autoAlpha: 0, backgroundColor: "#F5F5F5" },
           {
             scaleX: 0.36,
             filter: "blur(0px)",
@@ -53,8 +57,8 @@ export function SolidProof() {
         )
         .fromTo(
           ".ticket-pair .live-face",
-          { autoAlpha: 0.15, y: 10, filter: "blur(6px)" },
-          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7 },
+          { autoAlpha: 0.15, y: AIS_RISE, filter: "blur(6px)" },
+          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.85 },
           AIS_STAGGER,
         )
         .to({}, { duration: STILLNESS });
@@ -92,7 +96,7 @@ export function SolidProof() {
 
   return (
     <div ref={root} className="min-h-screen bg-matte text-ink">
-      <header className="sticky top-0 z-40 border-b border-ink/10 bg-matte">
+      <header className="sticky top-0 z-40 border-b border-ink bg-matte">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-3 md:px-8">
           <Wordmark tone="light" kicker="Proof" />
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-ink/45 md:block">
@@ -106,14 +110,14 @@ export function SolidProof() {
       </header>
 
       <section className="mx-auto grid min-h-[100svh] max-w-[1280px] grid-cols-1 items-stretch gap-0 px-5 py-10 md:grid-cols-12 md:px-8">
-        <div className="flex flex-col justify-end border-b border-ink/10 pb-10 md:col-span-5 md:border-b-0 md:border-r md:pr-10">
+        <div className="flex flex-col justify-end border-b border-ink pb-10 md:col-span-5 md:border-b-0 md:border-r md:pr-10">
           <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink/40">02 — Solid Proof</p>
           <h1 className="mt-5 font-display text-[clamp(2.8rem,6vw,5.4rem)] leading-[0.9]">
             Dead board.
             <br />
             <span className="text-gold">Live board.</span>
           </h1>
-          <p className="mt-6 max-w-sm font-sans text-[16px] leading-relaxed text-ink/65">
+          <p className="intro-beat mt-6 max-w-sm font-sans text-[16px] leading-relaxed text-ink/65">
             {WEDGE} as a working strip — not a speech. Gold only after a ticket comes back.
           </p>
         </div>
@@ -131,10 +135,10 @@ export function SolidProof() {
         </div>
       </section>
 
-      <section className="proof-pin border-t border-ink/10 bg-ink text-matte">
+      <section className="proof-pin border-t border-ink bg-ink text-matte">
         <div className="mx-auto grid min-h-[100svh] max-w-[1280px] md:grid-cols-12">
           <div className="relative md:col-span-5">
-            <div className="h-[38vh] md:h-full">
+            <div data-depth="device" className="h-[38vh] md:h-full">
               <TicketSlot progress={progress} />
             </div>
           </div>
@@ -171,7 +175,7 @@ export function SolidProof() {
         </div>
       </section>
 
-      <section id="audit" className="border-t border-ink/10 px-5 py-24 md:px-8">
+      <section id="audit" className="border-t border-ink px-5 py-24 md:px-8">
         <div className="mx-auto grid max-w-[1280px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/40">Proof notes</p>

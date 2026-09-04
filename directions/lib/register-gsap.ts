@@ -10,7 +10,17 @@ if (typeof window !== "undefined") {
 }
 
 export { gsap, ScrollTrigger, useGSAP };
-export { aisEase, AIS_REVEAL, AIS_STAGGER } from "@/lib/ais-ease";
+export {
+  aisEase,
+  AIS_REVEAL,
+  AIS_REVEAL_MIN,
+  AIS_RISE,
+  AIS_STAGGER,
+  AIS_CROSSFADE,
+  AIS_CENTERED_DIM,
+  AIS_STACK_SCALE,
+  PARALLAX,
+} from "@/lib/ais-ease";
 
 /** Doctrine: no bounce, elastic, back, or breathe. */
 export const EASE = "power2.inOut";

@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL } from "@/lib/facts";
-import { EASE, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -67,17 +68,25 @@ export function SignatureReel() {
     () => {
       if (reduced === null) return;
       if (reduced) {
-        gsap.set(".reel-recovered", { autoAlpha: 1, x: 0 });
+        gsap.set(".reel-recovered", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
         gsap.set(".reel-caption", { y: 0, autoAlpha: 1 });
+        if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         setChapter(2);
         return;
       }
 
-      const intro = gsap.timeline({ defaults: { ease: EASE } });
+      if (root.current) bindAiasLive(root.current);
+
+      const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
         .fromTo(".reel-missed", { x: 0 }, { x: -12, duration: 0.5 })
-        .fromTo(".reel-recovered", { x: 40, autoAlpha: 0.2 }, { x: 0, autoAlpha: 1, duration: 0.65 }, 0.1)
+        .fromTo(
+          ".reel-recovered",
+          { x: 40, y: AIS_RISE, autoAlpha: 0.2, filter: "blur(6px)" },
+          { x: 0, y: 0, autoAlpha: 1, filter: "blur(0px)", duration: AIS_REVEAL },
+          0.1,
+        )
         .to({}, { duration: STILLNESS });
       intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.3));
 
@@ -114,7 +123,7 @@ export function SignatureReel() {
 
   return (
     <div ref={root} className="min-h-screen bg-ink text-matte">
-      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
+      <header className="sticky top-0 z-40 border-b border-black bg-ink">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4">
           <Wordmark tone="dark" kicker="Reel" />
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/70">
@@ -138,7 +147,7 @@ export function SignatureReel() {
           </div>
           <div className="reel-recovered md:col-span-5 md:text-right">
             <p className="font-display italic text-3xl text-gold md:text-5xl">Recovered still.</p>
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">16:16 · reply filed</p>
+            <p className="intro-beat mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">16:16 · reply filed</p>
           </div>
         </div>
         <div className="mt-12 grid items-end gap-6 md:grid-cols-12">
@@ -157,10 +166,10 @@ export function SignatureReel() {
         </div>
       </section>
 
-      <section className="reel-pin border-t border-matte/10">
+      <section className="reel-pin border-t border-black">
         <div className="mx-auto grid min-h-[100svh] max-w-[1440px] md:grid-cols-12">
           <div className="relative md:col-span-6">
-            <div className="absolute inset-0">
+            <div data-depth="mid" className="absolute inset-0">
               <GateSlot progress={progress} />
             </div>
             <figure className={`relative z-10 mx-auto mt-[14vh] aspect-[4/5] w-[min(72%,420px)] bg-ink ${progress > 0.28 ? "border border-gold" : "border border-matte/20"}`}>
@@ -193,7 +202,7 @@ export function SignatureReel() {
         </div>
       </section>
 
-      <section className="border-t border-matte/10 px-6 py-28">
+      <section className="border-t border-black px-6 py-28">
         <div className="mx-auto max-w-[1440px] md:w-7/12 md:ml-[8%]">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/40">{AREA}</p>
           <p className="mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] leading-[1.05]">
@@ -202,7 +211,7 @@ export function SignatureReel() {
         </div>
       </section>
 
-      <section id="colophon" className="border-t border-matte/10 px-6 py-24">
+      <section id="colophon" className="border-t border-black px-6 py-24">
         <div className="mx-auto grid max-w-[1440px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Colophon</p>

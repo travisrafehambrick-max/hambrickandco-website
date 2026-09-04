@@ -23,14 +23,32 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.set(bar, { scaleX: 0, transformOrigin: "left center" });
       if (reduce) return;
-      gsap.set(el, { y: 0, filter: "brightness(1)" });
+      gsap.set(el, {
+        y: 0,
+        filter: "brightness(1)",
+        boxShadow: "0 0 0 0 rgba(196,165,116,0)",
+      });
 
       const enter = () => {
-        gsap.to(el, { y: -2, filter: "brightness(1.08)", duration: 0.32, ease: aisEase, overwrite: "auto" });
+        gsap.to(el, {
+          y: -1,
+          filter: "brightness(1.06)",
+          boxShadow: "0 8px 22px -6px rgba(196,165,116,0.55)",
+          duration: 0.32,
+          ease: aisEase,
+          overwrite: "auto",
+        });
         gsap.to(bar, { scaleX: 1, duration: 0.32, ease: aisEase, overwrite: "auto" });
       };
       const leave = () => {
-        gsap.to(el, { y: 0, filter: "brightness(1)", duration: 0.28, ease: aisEase, overwrite: "auto" });
+        gsap.to(el, {
+          y: 0,
+          filter: "brightness(1)",
+          boxShadow: "0 0 0 0 rgba(196,165,116,0)",
+          duration: 0.28,
+          ease: aisEase,
+          overwrite: "auto",
+        });
         gsap.to(bar, { scaleX: 0, duration: 0.28, ease: aisEase, overwrite: "auto" });
       };
 

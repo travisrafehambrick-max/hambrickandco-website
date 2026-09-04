@@ -1,6 +1,6 @@
 /**
- * AIS live-scroll ease: cubic-bezier(.22, 1, .36, 1)
- * Reveals 0.5–1.1s. Related lines stagger 80ms.
+ * AIS / AIAS live-scroll ease: cubic-bezier(.22, 1, .36, 1)
+ * Reveals 0.7–1.1s (rise 18px). Related lines stagger 80ms.
  */
 function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
   const cx = 3 * x1;
@@ -34,7 +34,18 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
 
 export const aisEase = cubicBezier(0.22, 1, 0.36, 1);
 
-export const AIS_REVEAL = 0.85;
-export const AIS_REVEAL_MIN = 0.5;
+export const AIS_REVEAL = 0.9;
+export const AIS_REVEAL_MIN = 0.7;
 export const AIS_REVEAL_MAX = 1.1;
+export const AIS_RISE = 18;
 export const AIS_STAGGER = 0.08;
+export const AIS_CROSSFADE = 4.5;
+export const AIS_CENTERED_DIM = 0.22;
+export const AIS_STACK_SCALE = 0.95;
+
+export const PARALLAX = {
+  far: 0.31,
+  mid: 0.17,
+  device: 0.2,
+  fg: 0,
+} as const;

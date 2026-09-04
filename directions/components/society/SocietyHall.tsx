@@ -3,12 +3,15 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AREA, CTA_FLOW, EMAIL, PHONE, PHONE_HREF, WEDGE } from "@/lib/facts";
-import { AIS_REVEAL, AIS_STAGGER, LINEAR, STILLNESS, ScrollTrigger, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, AIS_STAGGER, LINEAR, STILLNESS, ScrollTrigger, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
 import { FilamentSlot } from "@/components/shared/CanvasSlot";
+import { CallPhone } from "@/components/shared/CallPhone";
+import { StackedOutcomes } from "@/components/shared/StackedOutcomes";
 
 const THESES = [
   { n: "01", t: "A lead that waits is a lead that leaves." },
@@ -42,11 +45,14 @@ export function SocietyHall() {
         gsap.set(rail.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
         gsap.set(".hall-recovered", { autoAlpha: 1, y: 0, filter: "none" });
         gsap.set(".thesis-row", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
+        if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         setLiveThesis(THESES.length - 1);
         setLane("stage");
         return;
       }
+
+      if (root.current) bindAiasLive(root.current);
 
       gsap.set(rail.current, { scaleX: 0, transformOrigin: "left center" });
 
@@ -54,12 +60,12 @@ export function SocietyHall() {
       intro
         .fromTo(
           rail.current,
-          { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0 },
+          { scaleX: 0, filter: "blur(6px)", y: AIS_RISE, autoAlpha: 0 },
           { scaleX: 0.42, filter: "blur(0px)", y: 0, autoAlpha: 1, duration: AIS_REVEAL },
         )
         .fromTo(
           path,
-          { strokeDashoffset: len, stroke: "#F5F5F5", filter: "blur(8px)", y: 12, autoAlpha: 0 },
+          { strokeDashoffset: len, stroke: "#F5F5F5", filter: "blur(8px)", y: AIS_RISE, autoAlpha: 0 },
           {
             strokeDashoffset: len * 0.55,
             stroke: "#C4A574",
@@ -72,8 +78,8 @@ export function SocietyHall() {
         )
         .fromTo(
           ".hall-recovered",
-          { autoAlpha: 0, y: 10, filter: "blur(6px)" },
-          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7 },
+          { autoAlpha: 0, y: AIS_RISE, filter: "blur(6px)" },
+          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.8 },
           AIS_STAGGER * 2,
         )
         .to({}, { duration: STILLNESS });
@@ -137,7 +143,7 @@ export function SocietyHall() {
 
   return (
     <div ref={root} className="bg-ink text-matte min-h-screen">
-      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
+      <header className="sticky top-0 z-40 border-b border-black bg-ink">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-4 md:px-10">
           <Wordmark tone="dark" kicker="Hall" />
           <nav className="hidden gap-8 font-mono text-[10px] uppercase tracking-[0.2em] md:flex">
@@ -165,7 +171,7 @@ export function SocietyHall() {
         <span ref={rail} aria-hidden className="signal-line block h-px origin-left bg-gold" />
       </header>
 
-      <svg className="pointer-events-none fixed inset-x-0 top-[28%] z-20 h-24 w-full" viewBox="0 0 1200 80" fill="none" aria-hidden>
+      <svg data-depth="far" className="pointer-events-none fixed inset-x-0 top-[28%] z-20 h-24 w-full" viewBox="0 0 1200 80" fill="none" aria-hidden>
         <path
           ref={line}
           d="M40 48 C 220 12, 380 70, 560 36 S 900 10, 1160 44"
@@ -183,7 +189,7 @@ export function SocietyHall() {
             <br />
             went quiet.
           </h1>
-          <p className="hall-missed mt-8 max-w-md font-sans text-[17px] leading-relaxed text-matte/70">
+          <p className="hall-missed intro-beat mt-8 max-w-md font-sans text-[17px] leading-relaxed text-matte/70">
             Missed at 14:02. A voicemail, an estimate left open, a shop that did not write back. The current is
             already moving left.
           </p>
@@ -193,16 +199,19 @@ export function SocietyHall() {
             Recovered.
           </p>
           <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-matte/50">14:04 · first reply out</p>
-          <p className="mt-6 max-w-sm md:ml-auto font-sans text-[15px] text-matte/65">
+          <p className="intro-beat mt-6 max-w-sm md:ml-auto font-sans text-[15px] text-matte/65">
             {WEDGE}. {AREA}.
           </p>
+          <div className="mt-10 md:ml-auto md:w-fit">
+            <CallPhone />
+          </div>
         </div>
       </section>
 
-      <section id="stage" className="hall-pin relative border-t border-matte/10">
+      <section id="stage" className="hall-pin relative border-t border-black">
         <div className="mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 md:grid-cols-12">
-          <div className="relative md:col-span-5 border-r border-matte/10">
-            <div className="h-[42vh] md:h-full">
+          <div className="relative md:col-span-5 border-r border-black">
+            <div data-depth="mid" className="h-[42vh] md:h-full">
               <FilamentSlot progress={progress} />
             </div>
             <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
@@ -217,7 +226,7 @@ export function SocietyHall() {
               {THESES.map((row, i) => {
                 const live = i <= liveThesis;
                 return (
-                  <li key={row.n} className="thesis-row border-t border-matte/10 py-5">
+                  <li key={row.n} className="thesis-row border-t border-black py-5">
                     <button
                       type="button"
                       onClick={() => setLiveThesis(i)}
@@ -236,7 +245,9 @@ export function SocietyHall() {
         </div>
       </section>
 
-      <section id="pledge" className="border-t border-matte/10 px-5 py-24 md:px-10">
+      <StackedOutcomes />
+
+      <section id="pledge" className="border-t border-black px-5 py-24 md:px-10">
         <div className="mx-auto grid max-w-[1400px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Pledge</p>

@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
-import { EASE, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -36,17 +37,24 @@ export function AssistPane() {
       if (reduced === null) return;
 
       if (reduced) {
-        gsap.set(sheet.current, { rotateX: 0, y: 0 });
-        gsap.set(".assist-msg", { autoAlpha: 1, x: 0 });
+        gsap.set(sheet.current, { rotateX: 0, y: 0, filter: "none" });
+        gsap.set(".assist-msg", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
         gsap.set(".console-line", { autoAlpha: 1 });
+        if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         setActive(THREAD.length - 1);
         return;
       }
 
-      const intro = gsap.timeline({ defaults: { ease: EASE } });
+      if (root.current) bindAiasLive(root.current);
+
+      const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
-        .fromTo(sheet.current, { rotateX: 62, y: 24 }, { rotateX: 28, y: 8, duration: 0.7 })
+        .fromTo(
+          sheet.current,
+          { rotateX: 62, y: AIS_RISE, filter: "blur(6px)" },
+          { rotateX: 28, y: 8, filter: "blur(0px)", duration: AIS_REVEAL },
+        )
         .fromTo(".assist-msg.missed", { x: -12 }, { x: 0, duration: 0.4 }, 0)
         .fromTo(".assist-msg.live", { autoAlpha: 0.15 }, { autoAlpha: 0.85, duration: 0.45 }, 0.25)
         .to({}, { duration: STILLNESS });
@@ -86,9 +94,9 @@ export function AssistPane() {
 
   return (
     <div ref={root} className="min-h-screen bg-ink text-matte">
-      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
+      <header className="sticky top-0 z-40 border-b border-black bg-ink">
         <div className="grid grid-cols-2">
-          <div className="flex items-center justify-between border-r border-matte/10 px-5 py-3 md:px-8">
+          <div className="flex items-center justify-between border-r border-black px-5 py-3 md:px-8">
             <Wordmark tone="dark" kicker="Assist" />
           </div>
           <div className="flex items-center justify-between px-5 py-3 md:px-8">
@@ -99,7 +107,7 @@ export function AssistPane() {
         <div
           role="status"
           aria-live="polite"
-          className="flex items-center justify-between gap-2 border-t border-matte/10 px-5 py-2 md:px-8"
+          className="flex items-center justify-between gap-2 border-t border-black px-5 py-2 md:px-8"
         >
           {(["Missed", "Alert", "Callback", "Recovered"] as const).map((verb, i) => {
             const on = i === active;
@@ -121,13 +129,16 @@ export function AssistPane() {
       </header>
 
       <section className="grid min-h-[100svh] md:grid-cols-2">
-        <div className="flex flex-col justify-end border-b border-matte/10 px-5 py-12 md:border-b-0 md:border-r md:px-8">
+        <div className="flex flex-col justify-end border-b border-black px-5 py-12 md:border-b-0 md:border-r md:px-8">
           <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">Missed</p>
           <h1 className="mt-5 font-display text-[clamp(2.8rem,6vw,5rem)] leading-[0.9]">
             Missed
             <br />
             thread.
           </h1>
+          <p className="intro-beat mt-6 max-w-sm font-sans text-[15px] text-matte/60">
+            A person on the left. The quiet machine on the right.
+          </p>
           <div className="mt-10 space-y-4">
             {THREAD.filter((m) => m.state === "missed").map((m) => (
               <p key={m.t + m.text} className="assist-msg missed max-w-sm border-l border-matte/20 pl-4">
@@ -166,10 +177,10 @@ export function AssistPane() {
         </div>
       </section>
 
-      <section className="assist-pin border-t border-matte/10">
+      <section className="assist-pin border-t border-black">
         <div className="grid min-h-[100svh] md:grid-cols-2">
-          <div className="relative border-r border-matte/10">
-            <div className="h-[36vh] md:h-full">
+          <div className="relative border-r border-black">
+            <div data-depth="device" className="h-[36vh] md:h-full">
               <PeelSlot progress={progress} />
             </div>
           </div>
@@ -199,7 +210,7 @@ export function AssistPane() {
                 );
               })}
             </ol>
-            <pre className="mt-10 overflow-x-auto font-mono text-[11px] leading-6 text-matte/50">
+            <pre data-depth="mid" className="mt-10 overflow-x-auto font-mono text-[11px] leading-6 text-matte/50">
               {CONSOLE.map((line, i) => (
                 <div key={line} className={`console-line ${progress > 0.55 && i >= 2 ? "text-gold" : ""}`}>
                   {line}
@@ -210,7 +221,7 @@ export function AssistPane() {
         </div>
       </section>
 
-      <section id="request" className="border-t border-matte/10 px-5 py-24 md:px-10">
+      <section id="request" className="border-t border-black px-5 py-24 md:px-10">
         <div className="mx-auto grid max-w-[1200px] gap-16 md:grid-cols-2">
           <div>
             <h2 className="font-display text-[clamp(2.2rem,4vw,3.6rem)] leading-[0.95]">

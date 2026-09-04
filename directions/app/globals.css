@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme inline {
   --color-gold: #c4a574;
@@ -37,6 +38,14 @@ body {
   filter: brightness(1.06);
 }
 
+.progress-dot {
+  box-shadow: 0 0 10px 3px rgba(196, 165, 116, 0.7);
+}
+
+.seam-black {
+  border-color: #000;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -53,9 +62,19 @@ body {
   .signal-line,
   .signal-related,
   [data-parallax],
-  .hub-row a {
+  [data-depth],
+  .hub-row a,
+  .intro-beat,
+  .progress-dot {
     filter: none !important;
     transform: none !important;
     opacity: 1 !important;
+    box-shadow: none !important;
+  }
+
+  .live-gradient,
+  .progress-dot {
+    background-size: 100% 100% !important;
+    background-position: 0 0 !important;
   }
 }

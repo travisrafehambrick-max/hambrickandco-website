@@ -41,12 +41,24 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 Where a line is the attention carrier (Society Hall rail, Solid Proof playhead, hub rail):
 
 - Ease: `cubic-bezier(.22, 1, .36, 1)` (`aisEase`)
-- Reveals 0.5–1.1s (default 0.85s)
+- Reveals 0.7–1.1s (default 0.9s), rise 18px
 - Top progress line is the attention carrier — metallic gold, never cyan
 - Reveal = blur→sharp + rise + opacity; related lines stagger 80ms
 - The rail leads the intro, then scrubs left→full across the pin
 - `prefers-reduced-motion` strips transitions, parallax, opacity, and transforms
 - Hover = slight lift / brighten only — no bounce
+
+## AIAS live pass (final additions)
+
+- Weighted Lenis-style scroll, same AIS ease
+- Page-position bar + glowing gold dot (cyan on AIS → gold here)
+- Parallax: far ~.31, mid ~.17, device ~.20, foreground fixed
+- Intro copy brightens when centered, dims to ~22% off-center
+- Four outcome cards sticky-stack on Society Hall: incoming climbs; prior scale ~.95 + darken
+- Recurring call phone auto-crossfades 4.5s — never scroll-scrubbed
+- CTA lift 1px + soft gold glow
+- Reduced-motion: transitions / parallax off; reveals immediate; gradients freeze
+- Steal: one phone/call carrier; centered-beat; stacked outcomes; black seams; gold only on progress / active / recovered
 
 ---
 

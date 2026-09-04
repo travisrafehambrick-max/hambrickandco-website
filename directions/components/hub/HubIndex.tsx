@@ -3,9 +3,11 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { AREA, DIRECTIONS, EMAIL, PHONE, PHONE_HREF, WEDGE } from "@/lib/facts";
-import { AIS_REVEAL, AIS_STAGGER, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, AIS_STAGGER, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
+import { CallPhone } from "@/components/shared/CallPhone";
 
 export function HubIndex() {
   const root = useRef<HTMLDivElement>(null);
@@ -18,18 +20,20 @@ export function HubIndex() {
       if (reduced) {
         gsap.set(line.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
         gsap.set(".hub-row", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
+        if (root.current) freezeAiasLive(root.current);
         return;
       }
+      if (root.current) bindAiasLive(root.current);
       gsap.set(line.current, { scaleX: 0, transformOrigin: "left center" });
       const tl = gsap.timeline({ defaults: { ease: aisEase } });
       tl.fromTo(
         line.current,
-        { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0 },
+        { scaleX: 0, filter: "blur(6px)", y: AIS_RISE, autoAlpha: 0 },
         { scaleX: 1, filter: "blur(0px)", y: 0, autoAlpha: 1, duration: AIS_REVEAL },
       ).fromTo(
         ".hub-row",
-        { y: 10, filter: "blur(6px)", autoAlpha: 0 },
-        { y: 0, filter: "blur(0px)", autoAlpha: 1, stagger: AIS_STAGGER, duration: 0.7 },
+        { y: AIS_RISE, filter: "blur(6px)", autoAlpha: 0 },
+        { y: 0, filter: "blur(0px)", autoAlpha: 1, stagger: AIS_STAGGER, duration: 0.85 },
         AIS_STAGGER,
       );
     },
@@ -38,7 +42,7 @@ export function HubIndex() {
 
   return (
     <div ref={root} className="min-h-screen bg-ink text-matte">
-      <header className="sticky top-0 z-30 border-b border-matte/10 bg-ink">
+      <header className="sticky top-0 z-30 border-b border-black bg-ink">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-5">
           <Wordmark tone="dark" kicker="Directions" />
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-matte/45 md:block">{WEDGE}</p>
@@ -53,14 +57,18 @@ export function HubIndex() {
           <br />
           One recovery.
         </h1>
-        <p className="mt-8 max-w-lg font-sans text-[16px] leading-relaxed text-matte/65">
+        <p className="intro-beat mt-8 max-w-lg font-sans text-[16px] leading-relaxed text-matte/65">
           Hambrick &amp; Co. — AI automation. {WEDGE}. {AREA}. These routes are stacked Next / R3F / GSAP drafts.
           Production hambrickco.com stays on the static root.
         </p>
 
-        <ol className="mt-20">
+        <div className="mt-12">
+          <CallPhone compact />
+        </div>
+
+        <ol className="mt-16">
           {DIRECTIONS.map((d) => (
-            <li key={d.slug} className="hub-row signal-related border-t border-matte/10">
+            <li key={d.slug} className="hub-row signal-related border-t border-black">
               <Link
                 href={`/${d.slug}`}
                 className="group grid grid-cols-[3rem_1fr] items-baseline gap-4 py-7 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.1fr)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"

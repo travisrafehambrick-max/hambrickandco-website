@@ -40,6 +40,7 @@ Same paths on http://localhost:3000/.
 - Next.js 15 App Router, React 19, TypeScript
 - Three.js via `@react-three/fiber` (`frameloop="demand"` — no idle wobble)
 - GSAP + ScrollTrigger + `@gsap/react`
+- Lenis (weighted scroll, AIS ease) — off under reduced-motion
 - Tailwind v4 tokens only: gold / matte / ink
 - No Framer Motion
 - No Higgsfield assets

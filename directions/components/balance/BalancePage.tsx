@@ -2,7 +2,8 @@
 
 import { useRef, useState } from "react";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
-import { EASE, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_RISE, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
+import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -21,15 +22,22 @@ export function BalancePage() {
       if (reduced === null) return;
 
       if (reduced) {
-        gsap.set(slip.current, { x: 0, y: 0 });
+        gsap.set(slip.current, { x: 0, y: 0, filter: "none" });
+        if (root.current) freezeAiasLive(root.current);
         setProgress(1);
         setFace("recovered");
         return;
       }
 
-      const intro = gsap.timeline({ defaults: { ease: EASE } });
+      if (root.current) bindAiasLive(root.current);
+
+      const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
-        .fromTo(slip.current, { x: -48, rotate: -3 }, { x: -8, rotate: -1.2, duration: 0.7 })
+        .fromTo(
+          slip.current,
+          { x: -48, y: AIS_RISE, rotate: -3, filter: "blur(6px)" },
+          { x: -8, y: 0, rotate: -1.2, filter: "blur(0px)", duration: AIS_REVEAL },
+        )
         .add(() => setFace("recovered"), 0.45)
         .to({}, { duration: STILLNESS });
       intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.32));
@@ -83,6 +91,9 @@ export function BalancePage() {
             <br />
             One object.
           </h1>
+          <p className="intro-beat mt-6 max-w-sm font-sans text-[15px] text-ink/55">
+            The slip is the current. The object stays put.
+          </p>
         </div>
         <article
           ref={slip}
@@ -111,7 +122,7 @@ export function BalancePage() {
 
       <section className="balance-pin">
         <div className="relative mx-auto min-h-[100svh] max-w-[1100px]">
-          <div className="absolute inset-0">
+          <div data-depth="device" className="absolute inset-0">
             <ObjectSlot progress={progress} />
           </div>
           <p className="absolute bottom-8 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/35">
@@ -139,7 +150,7 @@ export function BalancePage() {
         </div>
       </section>
 
-      <section id="ask" className="border-t border-ink/10 px-6 py-24">
+      <section id="ask" className="border-t border-ink px-6 py-24">
         <div className="mx-auto grid max-w-[1100px] gap-16 md:grid-cols-2">
           <div>
             <h2 className="font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-[0.95]">

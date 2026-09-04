@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
+import { LiveChrome } from "@/components/shared/LiveChrome";
 import "./globals.css";
 
 const instrument = Instrument_Serif({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${instrument.variable} ${hanken.variable} ${plex.variable} antialiased`}>
+        <LiveChrome />
         {children}
       </body>
     </html>
