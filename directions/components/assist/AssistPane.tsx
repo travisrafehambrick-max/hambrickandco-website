@@ -199,9 +199,9 @@ export function AssistPane() {
         </article>
       </section>
 
-      <section className="assist-pin border-t border-black bg-matte text-ink">
-        <div className="mx-auto grid max-w-[1280px] md:grid-cols-12">
-          <ol className="md:col-span-5">
+      <section className="assist-pin border-t border-black bg-matte pb-[18vh] text-ink">
+        <div className="mx-auto flex max-w-[1280px] flex-col md:flex-row">
+          <ol className="md:w-[42%]">
             {STEPS.map((s, i) => {
               const on = i === active;
               return (
@@ -227,7 +227,7 @@ export function AssistPane() {
               );
             })}
           </ol>
-          <aside className="assist-media order-first sticky top-[4.25rem] z-10 h-[46svh] border-b border-ink bg-matte md:order-none md:col-span-7 md:h-[calc(100svh-4.25rem)] md:border-b-0 md:border-l">
+          <aside className="assist-media order-first sticky top-[4.25rem] z-10 h-[46svh] w-full shrink-0 self-start border-b border-ink bg-matte md:order-none md:h-[calc(100svh-4.25rem)] md:w-[58%] md:border-b-0 md:border-l">
             <div className="flex h-full flex-col">
               <div className="min-h-0 flex-1">
                 <PeelSlot progress={progress} />
