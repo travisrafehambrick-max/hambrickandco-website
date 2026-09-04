@@ -129,15 +129,13 @@ body {
   flex-shrink: 0;
 }
 
-.brand-mark,
-.brand-lockup {
+.brand-mark {
   position: relative;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
-  padding: 0.3rem 0.68rem 0.3rem 0.42rem;
-  column-gap: 0.55rem;
+  padding: 0.3rem 0.68rem 0.3rem 0.56rem;
 }
 
 .brand-mark:focus-visible {
@@ -158,48 +156,6 @@ body {
   display: inline-flex;
   align-items: baseline;
   column-gap: 0.36em;
-}
-
-.brand-lockup__glyph {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  width: 1.875rem;
-  height: 1.875rem;
-  flex-shrink: 0;
-  color: #c4a574;
-}
-
-.logo-trace-mark {
-  position: relative;
-  display: inline-block;
-  flex-shrink: 0;
-  color: #c4a574;
-}
-
-.logo-trace-mark__svg {
-  display: block;
-  overflow: visible;
-}
-
-.logo-trace-mark__metal {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  -webkit-mask-image: url("/brand-trace-mask.svg");
-  mask-image: url("/brand-trace-mask.svg");
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.logo-trace-mark[data-phase="fadingFill"] .logo-trace-mark__metal,
-.logo-trace-mark[data-phase="done"] .logo-trace-mark__metal {
-  opacity: 1;
 }
 
 .brand-mark__name {
@@ -233,19 +189,6 @@ body {
   letter-spacing: 0.22em;
   line-height: 1;
   opacity: 0.78;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-trace-mark__loop,
-  .logo-trace-mark__close {
-    display: none;
-  }
-
-  .logo-trace-mark__fills,
-  .logo-trace-mark__metal {
-    opacity: 1 !important;
-    animation: none !important;
-  }
 }
 
 .metal-rim-cta {
