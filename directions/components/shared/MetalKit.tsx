@@ -89,7 +89,6 @@ export function GoldMetalBar({ className = "" }: { className?: string }) {
 GoldMetalBar.displayName = "GoldMetalBar";
 
 export { HeroMetalPlate };
-HeroMetalPlate.displayName = "HeroMetalPlate";
 
 export function MetalRoute({
   progress = 0.4,
