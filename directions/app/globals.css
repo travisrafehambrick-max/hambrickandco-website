@@ -25,8 +25,36 @@ body {
   color: #121212;
 }
 
+.hub-row a {
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hub-row a:hover,
+.hub-row a:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .signal-line,
+  .signal-related,
+  [data-parallax] {
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }

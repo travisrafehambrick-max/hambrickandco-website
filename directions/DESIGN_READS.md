@@ -36,6 +36,18 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 4. **Balance Object / Ballance** — restraint; the slip is UI that behaves (GSAP only — no Framer Motion).
 5. **Assist Pane / SiteAssist** — sticky diagnostic band; the verb flip *is* the revival. Phone peel stays the carrier.
 
+## AIS hard numbers (progress / signal line carriers)
+
+Where a line is the attention carrier (Society Hall rail, Solid Proof playhead, hub rail):
+
+- Ease: `cubic-bezier(.22, 1, .36, 1)` (`aisEase`)
+- Reveals 0.5–1.1s (default 0.85s)
+- Top progress line is the attention carrier — metallic gold, never cyan
+- Reveal = blur→sharp + rise + opacity; related lines stagger 80ms
+- The rail leads the intro, then scrubs left→full across the pin
+- `prefers-reduced-motion` strips transitions, parallax, opacity, and transforms
+- Hover = slight lift / brighten only — no bounce
+
 ---
 
 ### 01 Society Hall — gold signal line

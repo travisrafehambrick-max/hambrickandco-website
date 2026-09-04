@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AREA, CTA_FLOW, EMAIL, PHONE, PHONE_HREF, WEDGE } from "@/lib/facts";
-import { EASE_OUT, LINEAR, STILLNESS, ScrollTrigger, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_STAGGER, LINEAR, STILLNESS, ScrollTrigger, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -23,6 +23,7 @@ const THESES = [
 export function SocietyHall() {
   const root = useRef<HTMLDivElement>(null);
   const line = useRef<SVGPathElement>(null);
+  const rail = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [liveThesis, setLiveThesis] = useState(0);
@@ -37,21 +38,44 @@ export function SocietyHall() {
       gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
 
       if (reduced) {
-        gsap.set(path, { strokeDashoffset: 0, stroke: "#C4A574" });
-        gsap.set(".hall-missed", { autoAlpha: 0.35 });
-        gsap.set(".hall-recovered", { autoAlpha: 1 });
-        gsap.set(".thesis-row", { autoAlpha: 1, x: 0 });
+        gsap.set(path, { strokeDashoffset: 0, stroke: "#C4A574", filter: "none", y: 0, autoAlpha: 1 });
+        gsap.set(rail.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
+        gsap.set(".hall-recovered", { autoAlpha: 1, y: 0, filter: "none" });
+        gsap.set(".thesis-row", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
         setProgress(1);
         setLiveThesis(THESES.length - 1);
         setLane("stage");
         return;
       }
 
-      const intro = gsap.timeline({ defaults: { ease: EASE_OUT } });
+      gsap.set(rail.current, { scaleX: 0, transformOrigin: "left center" });
+
+      const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
-        .fromTo(path, { strokeDashoffset: len, stroke: "#F5F5F5" }, { strokeDashoffset: len * 0.62, duration: 0.85 })
-        .to(path, { stroke: "#C4A574", duration: 0.28 }, "<0.45")
-        .fromTo(".hall-recovered", { autoAlpha: 0.15 }, { autoAlpha: 1, duration: 0.4 }, "<")
+        .fromTo(
+          rail.current,
+          { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0 },
+          { scaleX: 0.42, filter: "blur(0px)", y: 0, autoAlpha: 1, duration: AIS_REVEAL },
+        )
+        .fromTo(
+          path,
+          { strokeDashoffset: len, stroke: "#F5F5F5", filter: "blur(8px)", y: 12, autoAlpha: 0 },
+          {
+            strokeDashoffset: len * 0.55,
+            stroke: "#C4A574",
+            filter: "blur(0px)",
+            y: 0,
+            autoAlpha: 1,
+            duration: AIS_REVEAL,
+          },
+          AIS_STAGGER,
+        )
+        .fromTo(
+          ".hall-recovered",
+          { autoAlpha: 0, y: 10, filter: "blur(6px)" },
+          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7 },
+          AIS_STAGGER * 2,
+        )
         .to({}, { duration: STILLNESS });
 
       intro.eventCallback("onUpdate", () => {
@@ -71,7 +95,8 @@ export function SocietyHall() {
       });
 
       chapter
-        .to(path, { strokeDashoffset: 0, stroke: "#C4A574", duration: 0.7 })
+        .to(rail.current, { scaleX: 1, duration: 0.7 }, 0)
+        .to(path, { strokeDashoffset: 0, stroke: "#C4A574", duration: 0.7 }, 0)
         .to(
           {},
           {
@@ -84,7 +109,7 @@ export function SocietyHall() {
           },
           0,
         )
-        .fromTo(".thesis-row", { x: -28 }, { x: 0, stagger: 0.08, duration: 0.5 }, 0.05)
+        .fromTo(".thesis-row", { x: -28 }, { x: 0, stagger: AIS_STAGGER, duration: 0.5 }, 0.05)
         .to({}, { duration: 0.22 });
 
       ScrollTrigger.create({
@@ -137,6 +162,7 @@ export function SocietyHall() {
           </nav>
           <LiveButton href="#pledge">{CTA_FLOW}</LiveButton>
         </div>
+        <span ref={rail} aria-hidden className="signal-line block h-px origin-left bg-gold" />
       </header>
 
       <svg className="pointer-events-none fixed inset-x-0 top-[28%] z-20 h-24 w-full" viewBox="0 0 1200 80" fill="none" aria-hidden>
@@ -163,7 +189,7 @@ export function SocietyHall() {
           </p>
         </div>
         <div className="md:col-span-5 md:justify-self-end md:text-right">
-          <p className="hall-recovered font-display italic text-[clamp(2rem,4vw,3.4rem)] leading-none text-gold">
+          <p className="hall-recovered signal-related font-display italic text-[clamp(2rem,4vw,3.4rem)] leading-none text-gold">
             Recovered.
           </p>
           <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-matte/50">14:04 · first reply out</p>

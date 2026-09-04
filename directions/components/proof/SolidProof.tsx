@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, WEDGE } from "@/lib/facts";
-import { EASE, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_STAGGER, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -28,20 +28,35 @@ export function SolidProof() {
       if (reduced === null) return;
 
       if (reduced) {
-        gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0 });
-        gsap.set(".board-ticket", { x: 0, autoAlpha: 1 });
-        gsap.set(playhead.current, { scaleX: 1, backgroundColor: "#C4A574" });
+        gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0, filter: "none" });
+        gsap.set(".board-ticket", { x: 0, autoAlpha: 1, filter: "none" });
+        gsap.set(playhead.current, { scaleX: 1, backgroundColor: "#C4A574", filter: "none", y: 0, autoAlpha: 1 });
         setProgress(1);
         return;
       }
 
-      gsap.set(playhead.current, { scaleX: 0, transformOrigin: "left center", backgroundColor: "#F5F5F5" });
+      gsap.set(playhead.current, { scaleX: 0, transformOrigin: "left center" });
 
-      const intro = gsap.timeline({ defaults: { ease: EASE } });
+      const intro = gsap.timeline({ defaults: { ease: aisEase } });
       intro
-        .fromTo(".ticket-pair .dead-face", { autoAlpha: 1 }, { autoAlpha: 0.4, duration: 0.4 })
-        .fromTo(".ticket-pair .live-face", { autoAlpha: 0.2, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.55 }, 0.15)
-        .to(playhead.current, { scaleX: 0.28, backgroundColor: "#C4A574", duration: 0.5 }, 0.1)
+        .fromTo(
+          playhead.current,
+          { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0, backgroundColor: "#F5F5F5" },
+          {
+            scaleX: 0.36,
+            filter: "blur(0px)",
+            y: 0,
+            autoAlpha: 1,
+            backgroundColor: "#C4A574",
+            duration: AIS_REVEAL,
+          },
+        )
+        .fromTo(
+          ".ticket-pair .live-face",
+          { autoAlpha: 0.15, y: 10, filter: "blur(6px)" },
+          { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.7 },
+          AIS_STAGGER,
+        )
         .to({}, { duration: STILLNESS });
 
       intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.28));
@@ -87,11 +102,7 @@ export function SolidProof() {
             {CTA_AUDIT}
           </LiveButton>
         </div>
-        <span
-          ref={playhead}
-          aria-hidden
-          className="block h-px origin-left bg-ink/20"
-        />
+        <span ref={playhead} aria-hidden className="signal-line block h-px origin-left bg-gold" />
       </header>
 
       <section className="mx-auto grid min-h-[100svh] max-w-[1280px] grid-cols-1 items-stretch gap-0 px-5 py-10 md:grid-cols-12 md:px-8">

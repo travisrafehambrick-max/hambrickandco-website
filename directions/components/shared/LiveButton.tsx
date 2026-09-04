@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { EASE_OUT, gsap, useGSAP } from "@/lib/register-gsap";
+import { aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 
 type Props = {
   href: string;
@@ -20,12 +20,18 @@ export function LiveButton({ href, children, tone = "gold", external }: Props) {
       const el = ref.current;
       const bar = line.current;
       if (!el || !bar) return;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       gsap.set(bar, { scaleX: 0, transformOrigin: "left center" });
+      if (reduce) return;
 
-      const enter = () =>
-        gsap.to(bar, { scaleX: 1, duration: 0.32, ease: EASE_OUT, overwrite: "auto" });
-      const leave = () =>
-        gsap.to(bar, { scaleX: 0, duration: 0.28, ease: EASE_OUT, overwrite: "auto" });
+      const enter = () => {
+        gsap.to(el, { y: -2, filter: "brightness(1.08)", duration: 0.32, ease: aisEase, overwrite: "auto" });
+        gsap.to(bar, { scaleX: 1, duration: 0.32, ease: aisEase, overwrite: "auto" });
+      };
+      const leave = () => {
+        gsap.to(el, { y: 0, filter: "brightness(1)", duration: 0.28, ease: aisEase, overwrite: "auto" });
+        gsap.to(bar, { scaleX: 0, duration: 0.28, ease: aisEase, overwrite: "auto" });
+      };
 
       el.addEventListener("pointerenter", enter);
       el.addEventListener("pointerleave", leave);

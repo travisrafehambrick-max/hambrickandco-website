@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { AREA, DIRECTIONS, EMAIL, PHONE, PHONE_HREF, WEDGE } from "@/lib/facts";
-import { EASE, EASE_OUT, gsap, useGSAP } from "@/lib/register-gsap";
+import { AIS_REVEAL, AIS_STAGGER, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 
@@ -16,17 +16,21 @@ export function HubIndex() {
     () => {
       if (reduced === null) return;
       if (reduced) {
-        gsap.set(line.current, { scaleX: 1 });
-        gsap.set(".hub-row", { autoAlpha: 1, x: 0 });
+        gsap.set(line.current, { scaleX: 1, filter: "none", y: 0, autoAlpha: 1 });
+        gsap.set(".hub-row", { autoAlpha: 1, x: 0, y: 0, filter: "none" });
         return;
       }
       gsap.set(line.current, { scaleX: 0, transformOrigin: "left center" });
-      const tl = gsap.timeline({ defaults: { ease: EASE } });
-      tl.to(line.current, { scaleX: 1, duration: 0.9, ease: EASE_OUT }).fromTo(
+      const tl = gsap.timeline({ defaults: { ease: aisEase } });
+      tl.fromTo(
+        line.current,
+        { scaleX: 0, filter: "blur(6px)", y: 6, autoAlpha: 0 },
+        { scaleX: 1, filter: "blur(0px)", y: 0, autoAlpha: 1, duration: AIS_REVEAL },
+      ).fromTo(
         ".hub-row",
-        { x: -20 },
-        { x: 0, stagger: 0.07, duration: 0.45 },
-        0.15,
+        { y: 10, filter: "blur(6px)", autoAlpha: 0 },
+        { y: 0, filter: "blur(0px)", autoAlpha: 1, stagger: AIS_STAGGER, duration: 0.7 },
+        AIS_STAGGER,
       );
     },
     { scope: root, dependencies: [reduced], revertOnUpdate: true },
@@ -39,7 +43,7 @@ export function HubIndex() {
           <Wordmark tone="dark" kicker="Directions" />
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-matte/45 md:block">{WEDGE}</p>
         </div>
-        <span ref={line} aria-hidden className="block h-px origin-left bg-gold" />
+        <span ref={line} aria-hidden className="signal-line block h-px origin-left bg-gold" />
       </header>
 
       <main className="mx-auto max-w-[1200px] px-6 py-16 md:py-24">
@@ -56,7 +60,7 @@ export function HubIndex() {
 
         <ol className="mt-20">
           {DIRECTIONS.map((d) => (
-            <li key={d.slug} className="hub-row border-t border-matte/10">
+            <li key={d.slug} className="hub-row signal-related border-t border-matte/10">
               <Link
                 href={`/${d.slug}`}
                 className="group grid grid-cols-[3rem_1fr] items-baseline gap-4 py-7 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.1fr)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
