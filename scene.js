@@ -66,7 +66,7 @@ function paintScreen(mode) {
   ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
   ctx.fillStyle = "#FBFBF9";
   ctx.font = "600 34px Arial, sans-serif";
-  ctx.fillText(after ? "recovered enquiry" : "missed enquiry", 54, 86);
+  ctx.fillText(after ? "illustration · recovered" : "illustration · missed", 54, 86);
   ctx.fillStyle = "#7F838A";
   ctx.font = "24px Arial, sans-serif";
   ctx.fillText("10:42", 54, 132);

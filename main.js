@@ -53,7 +53,7 @@
     beforePane.hidden = after;
     afterPane.hidden = !after;
     if (urlbar) {
-      urlbar.textContent = after ? "sample / recovered enquiry" : "sample / missed enquiry";
+      urlbar.textContent = after ? "illustration / recovered enquiry" : "illustration / missed enquiry";
     }
     if (beforeBtn && afterBtn) {
       beforeBtn.setAttribute("aria-pressed", after ? "false" : "true");

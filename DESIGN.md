@@ -89,8 +89,8 @@ Target 60fps on a laptop: cap pixel ratio, pause offscreen, dispose on teardown.
 ## Page map (same bones as the live site)
 
 1. **Nav** — Hambrick & Co. / What we do / How it works / Proof / About / Contact. CTA: Ask for a look. Never "See the price."
-2. **Hero** — "Someone called. & Nobody called back." Territory, not "growth partner." Enquiry browser with Without us / With us. Sample timeline, not a client.
-3. **What we do** — The Look, the unanswered-call text, the estimate follow-up. No dollar amounts. No "starting at."
+2. **Hero** — "Someone called. & Nobody called back." Territory is Charlottesville and a 40-mile radius, not Crozet and not "growth partner." Enquiry browser with Without us / With us. Illustration only — no customer names.
+3. **What we do** — One offer: the unanswered-call text and the estimate follow-up. The free look is how we sell, not a second product. No dollar amounts. No "starting at."
 4. **How it works** — look first, written quote after. Numbered steps plus the phone / ticket scene.
 5. **Proof** — no case studies yet. Do not invent scores, logos, or a research run.
 6. **About** — Travis Hambrick. Charlottesville, Virginia and a 40-mile radius. The `&` is you.
