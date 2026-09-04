@@ -104,7 +104,6 @@ export function AssistPane() {
 
       if (reduced) {
         gsap.set(".assist-display", { autoAlpha: 1, y: 0, filter: "none" });
-        gsap.set(".assist-panel", { autoAlpha: 1, y: 0, filter: "none" });
         goStep(STEPS.length - 1, true);
         paintHeader(false, true);
         return;
@@ -149,20 +148,6 @@ export function AssistPane() {
         end: "bottom bottom",
         onToggle: (self) => paintHeader(self.isActive),
       });
-
-      gsap.fromTo(
-        ".assist-panel",
-        { y: AIS_RISE, filter: "blur(6px)", autoAlpha: 0 },
-        {
-          y: 0,
-          filter: "blur(0px)",
-          autoAlpha: 1,
-          duration: 0.8,
-          ease: aisEase,
-          stagger: AIS_STAGGER,
-          scrollTrigger: { trigger: ".assist-convert", start: "top 72%" },
-        },
-      );
 
       return () => {
         releaseMarks.forEach((fn) => fn());
@@ -246,10 +231,10 @@ export function AssistPane() {
                 <PeelSlot progress={progress} />
                 <div className="pointer-events-none absolute inset-x-4 top-[10%] z-10 md:inset-x-8">
                   <div className={`assist-glass max-w-md px-5 py-4 ${step.live ? "assist-glass--live" : ""}`}>
-                    <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+                    <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
                       {step.live ? <GoldMetalMark /> : <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-ink/20" />}
                       <span className={step.live ? "metal-text" : "text-ink/45"}>{step.verb}</span>
-                    </p>
+                    </div>
                     <p className="mt-3 font-display text-[clamp(1.2rem,2.2vw,1.65rem)] leading-[1.15]">{step.line}</p>
                   </div>
                 </div>
@@ -301,10 +286,10 @@ export function AssistPane() {
                 </li>
               ))}
             </ol>
-            <p className="assist-panel mt-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em]">
+            <div className="assist-panel mt-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em]">
               <GoldMetalMark />
               <span className="metal-text">{OFFER_WEDGE}</span>
-            </p>
+            </div>
           </div>
         </section>
 
