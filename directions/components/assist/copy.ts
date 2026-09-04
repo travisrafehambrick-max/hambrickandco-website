@@ -1,6 +1,7 @@
 /**
- * CANONICAL for this Assist Pane pass (hero / problem / offer stack / proof / CTA).
- * Harcourt text — use verbatim. Do not rewrite into a gallery or process-meta.
+ * CANONICAL — Harcourt is the ONLY copy for this raise.
+ * Ignore any Sterling copy pack. Do not remix.
+ * Hero / problem / offer stack / proof / CTA: verbatim only.
  * Stonefield Landscaping is named proof of work only. No invented quotes.
  */
 export const HERO_HEADLINE =
