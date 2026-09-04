@@ -1,0 +1,12 @@
+hambrickandco-website PR #8
+directions/ metal-parity
+cond-close-2
+MetalRimCTA
+GoldMetalBar
+HeroMetalPlate
+MetalRoute
+GoldMetalMark
+MeshStandardMaterial
+@react-three/fiber
+magnetic <=20px
+parent fcd206e

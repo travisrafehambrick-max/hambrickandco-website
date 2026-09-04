@@ -8,6 +8,7 @@ import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
 import { GateSlot } from "@/components/shared/CanvasSlot";
+import { GoldMetalMark } from "@/components/shared/MetalKit";
 
 const CONTROL = 0.45;
 
@@ -60,7 +61,7 @@ function ChapterStill({ mark, live }: { mark: string; live: boolean }) {
   );
 }
 
-function GoldMark() {
+function DashMark() {
   return <span aria-hidden className="metal-rule inline-block h-px w-8 shrink-0" />;
 }
 
@@ -175,7 +176,7 @@ export function SignatureReel() {
             still.
           </h1>
           <p className="mt-8 flex items-center gap-3 font-display italic text-[clamp(2rem,4vw,3.4rem)] leading-none">
-            <GoldMark />
+            <GoldMetalMark />
             <span className="metal-text">Recovered still.</span>
           </p>
           <p className="mt-6 max-w-sm font-sans text-[15px] text-matte/55">
@@ -191,7 +192,7 @@ export function SignatureReel() {
                 }
                 className="reel-calm flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-matte/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
               >
-                <GoldMark />
+                <DashMark />
                 {c.n}
               </button>
             ))}
@@ -244,7 +245,7 @@ export function SignatureReel() {
                 </div>
                 <div className="flex flex-col justify-center px-6 py-16 md:col-span-6 md:px-12">
                   <p className="flex items-center gap-3">
-                    <GoldMark />
+                    <DashMark />
                     <span className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">{c.n}</span>
                   </p>
                   <h2 className="mt-5 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] text-matte">
@@ -262,7 +263,7 @@ export function SignatureReel() {
         <div className="mx-auto grid max-w-[1440px] gap-16 md:grid-cols-12">
           <div className="md:col-span-6">
             <p className="flex items-center gap-3">
-              <GoldMark />
+              <DashMark />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">Colophon</span>
             </p>
             <h2 className="mt-4 font-display text-[clamp(2.4rem,5vw,4rem)] leading-[0.95] text-matte">

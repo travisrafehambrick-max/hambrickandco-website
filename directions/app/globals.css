@@ -95,6 +95,44 @@ body {
   box-shadow: 0 0 10px 3px rgba(196, 165, 116, 0.45);
 }
 
+.gold-metal-bar {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.gold-metal-mark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.metal-rim-cta {
+  position: relative;
+}
+
+.metal-cta__rim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+}
+
+.metal-parity-cta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+
 @keyframes metal-sheen {
   from {
     background-position: 0% 50%;

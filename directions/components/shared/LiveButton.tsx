@@ -5,6 +5,8 @@ import { useRef } from "react";
 import { aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { bindMagnetic } from "@/lib/bind-magnetic";
 
+export { MetalRimCTA } from "@/components/shared/MetalKit";
+
 type Props = {
   href: string;
   children: React.ReactNode;

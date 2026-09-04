@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/register-gsap";
+import { GoldMetalBar } from "@/components/shared/MetalKit";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /** Gold page-position bar + glowing dot. Cyan on AIS → metallic gold here. */
@@ -52,6 +53,7 @@ export function PageProgress() {
       aria-valuemax={100}
     >
       <span className="absolute inset-0 bg-matte/10" />
+      <GoldMetalBar />
       <span ref={fill} className="metal-rule absolute inset-y-0 left-0 w-full origin-left" />
       <span
         ref={dot}

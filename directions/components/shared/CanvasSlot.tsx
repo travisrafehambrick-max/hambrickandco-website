@@ -1,29 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const GoldFilament = dynamic(
-  () => import("@/components/society/GoldFilament").then((m) => m.GoldFilament),
-  { ssr: false },
-);
-const TicketScene = dynamic(
-  () => import("@/components/proof/TicketScene").then((m) => m.TicketScene),
-  { ssr: false },
-);
-const ProofRibbon = dynamic(
-  () => import("@/components/proof/TicketScene").then((m) => m.ProofRibbon),
-  { ssr: false },
-);
-const FilmGate = dynamic(() => import("@/components/reel/FilmGate").then((m) => m.FilmGate), {
-  ssr: false,
-});
-const SoftObject = dynamic(
-  () => import("@/components/balance/SoftObject").then((m) => m.SoftObject),
-  { ssr: false },
-);
-const PeelSheet = dynamic(() => import("@/components/assist/PeelSheet").then((m) => m.PeelSheet), {
-  ssr: false,
-});
+import { PeelSheet } from "@/components/assist/PeelSheet";
+import { SoftObject } from "@/components/balance/SoftObject";
+import { TicketScene } from "@/components/proof/TicketScene";
+import { FilmGate } from "@/components/reel/FilmGate";
+import { MetalRoute } from "@/components/shared/MetalKit";
+import { GoldFilament } from "@/components/society/GoldFilament";
 
 export function FilamentSlot({ progress }: { progress: number }) {
   return <GoldFilament progress={progress} />;
@@ -33,7 +15,7 @@ export function TicketSlot({ progress }: { progress: number }) {
 }
 
 export function RibbonSlot({ progress }: { progress: number }) {
-  return <ProofRibbon progress={progress} />;
+  return <MetalRoute progress={progress} />;
 }
 export function GateSlot({ progress }: { progress: number }) {
   return <FilmGate progress={progress} />;
