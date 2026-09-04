@@ -3,6 +3,8 @@
 **Skill lock:** taste V2 only — `design-taste-frontend` (`design-taste-frontend/SKILL.md`).
 Do not use `design-taste-frontend-v1` or `taste-skill-v1`. Impeccable on every route.
 
+Travis picked **Assist Pane** as the hambrickco.com direction. It is not finished. `/` is the client-facing conversion homepage (same page as `/assist-pane`). The other four halls are parked.
+
 Next.js + React (TypeScript) + React Three Fiber + GSAP/ScrollTrigger.
 
 This folder is a **separate app**. It does not replace the production static site at the repo root (`index.html` → hambrickco.com). Do not point Netlify production at this directory.
@@ -20,12 +22,13 @@ Then:
 
 | Route | URL |
 | --- | --- |
-| Hub | http://localhost:3000/ |
-| Society Hall | http://localhost:3000/society-hall |
-| Solid Proof | http://localhost:3000/solid-proof |
-| Signature Reel | http://localhost:3000/signature-reel |
-| Balance Object | http://localhost:3000/balance-object |
-| Assist Pane | http://localhost:3000/assist-pane |
+| Conversion homepage (Assist Pane) | http://localhost:3000/ |
+| Assist Pane (same page) | http://localhost:3000/assist-pane |
+| Parked drafts index | http://localhost:3000/drafts |
+| Society Hall (parked) | http://localhost:3000/society-hall |
+| Solid Proof (parked) | http://localhost:3000/solid-proof |
+| Signature Reel (parked) | http://localhost:3000/signature-reel |
+| Balance Object (parked) | http://localhost:3000/balance-object |
 
 Production-like:
 

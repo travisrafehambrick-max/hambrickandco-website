@@ -1,5 +1,8 @@
-import { HubIndex } from "@/components/hub/HubIndex";
+import { AssistPane } from "@/components/assist/AssistPane";
+import { assistMetadata } from "@/components/assist/meta";
+
+export const metadata = assistMetadata;
 
 export default function Home() {
-  return <HubIndex />;
+  return <AssistPane />;
 }

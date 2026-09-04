@@ -18,4 +18,4 @@ python3 -m http.server 4173
 
 Then open `http://localhost:4173/`.
 
-Draft Next.js directions (not production) live in [`directions/`](directions/README.md). Preview with `cd directions && npm run dev` — do not point Netlify prod at that folder.
+Draft Next.js directions (not production) live in [`directions/`](directions/README.md). Preview with `cd directions && npm run dev` — localhost `/` is the Assist Pane conversion homepage. Do not point Netlify prod at that folder.

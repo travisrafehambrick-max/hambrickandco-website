@@ -22,7 +22,13 @@ function Sheet({ progress }: { progress: number }) {
   return (
     <mesh ref={mesh} position={[0, 0, 0]}>
       <planeGeometry args={[1.7, 2.3, 1, 1]} />
-      <meshStandardMaterial color="#2a2a2a" roughness={0.74} metalness={0.38} side={THREE.DoubleSide} />
+      <meshStandardMaterial
+        color="#2a2a2a"
+        roughness={0.74}
+        metalness={0.38}
+        envMapIntensity={0.28}
+        side={THREE.DoubleSide}
+      />
     </mesh>
   );
 }

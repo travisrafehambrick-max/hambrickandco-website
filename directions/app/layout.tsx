@@ -25,9 +25,12 @@ const plex = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hambrick & Co. — Draft directions",
+  title: {
+    default: "Hambrick & Co. — Lead Response & Estimate Recovery",
+    template: "%s",
+  },
   description:
-    "Five draft site directions for Hambrick & Co. Lead Response & Estimate Recovery. Not the live site.",
+    "Hambrick & Co installs the systems that catch leads, close follow-ups, and fill the calendar — for local businesses within 40 miles of Charlottesville.",
   robots: { index: false, follow: false },
 };
 

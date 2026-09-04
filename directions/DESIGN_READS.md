@@ -37,7 +37,7 @@ All five live inspo briefs are **closed**. Each direction keeps its own carrier.
 2. **Solid Proof / Solidroad** — ONE gold route/line as missed→callback→recovered. Sticky header inverts dark↔white by chapter. Gold only on progress/route/CTA; dead tickets matte. Full-screen ribbon carrier; slow crossfade on the beat label. Proof board breathes (opacity/blur, no ambient loop). Heavy ease-in-out (`power2.inOut`); left copy stable. No bounce. No invented counts.
 3. **Signature Reel / Austin Werner** — one gold orb through missed→recovered (statue→orb handoff mapped to our still + orb). Pin one full-viewport stage per chapter; scrub depth/scale/blur. Black holds between chapters; white type stays stable. Nav hide on scroll-down / show on scroll-up. Controls 0.3–0.7s ease-out. Gold markers before headings. Calm contact hover only. No invented counters.
 4. **Balance Object / Ballance** — first screen composed (no autoplay). One hero pebble with slower parallax than the copy. Hard black→white seam at the turning point. One tactile slip control; high stillness. No KPI count-ups. GSAP / ScrollTrigger / R3F only — no Framer Motion. Reduced-motion = recovered still.
-5. **Assist Pane / SiteAssist** — header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Module list left / media right; media swaps on scroll landmarks. Oversized type reveal; staggered job-type cards; discrete carousel OK. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`).
+5. **Assist Pane / SiteAssist** — **picked conversion homepage** (`/` and `/assist-pane`). Harcourt copy locked on hero / problem / offer / proof / close. Header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Hero + ask share the first desktop screen with the peel. Module list left / media right; media swaps on scroll landmarks. Glass notification on the peel; GoldMetalMark + MetalRimCTA for living gold. No job-type carousel. No process-meta. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`). Other four routes parked.
 
 ## AIS hard numbers (progress / signal line carriers)
 
@@ -143,20 +143,20 @@ Airy calm. Ballance live-scroll, closed — steal the stillness, never the count
 
 Carrier: the quote slip on the table. R3F is the pebble, hero only.
 
-### 05 Assist Pane — phone sheet peel
+### 05 Assist Pane — conversion homepage (picked)
 
-Split assist / console recovery thread. SiteAssist live-scroll, closed:
+Split assist / console recovery thread. SiteAssist live-scroll, closed. Harcourt conversion copy is locked verbatim. `/` serves this page; `/assist-pane` is the same. Other halls parked at their URLs + `/drafts`.
 
-- Sticky header morphs `#121212` → `#F5F5F5` on the white pin, back to black at `#request`. Gold only on the living step, the recovered word, and the CTA. No Assist kicker.
-- One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.28 / 0.38 / 0.7 / 1`. Stage 0 starts more open (~28% clip). Pin start `top 12%`. Not a continuous scrub.
-- Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
-- Intro is short so the peel (stage 0 / Missed) is in the first screenful.
-  No second 3D peel. No Stage NN / NN eyebrows.
-- Evidence is a discrete job-type carousel (shape of the work, not a case study), staggered in.
+- Sticky header morphs `#121212` → `#F5F5F5` on the white pin, back to black at `#request`. Gold only on the living step, Recovered, GoldMetalMark, and the CTA. No Assist kicker. No process-meta.
+- First desktop screenful: Harcourt hero + Talk to Travis / Request a recovery audit, peel at Missed (`0.28`). Mobile: header ask + pinned peel, then hero.
+- One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.28 / 0.38 / 0.7 / 1`. Pin start `top 12%`. Not a continuous scrub.
+- Glass notification on the peel (not soup). Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
+- Conversion bands after the pin: problem, offer stack (wedge live on 1–2), Stonefield named as proof of work only, close CTA. No prices, no fake quotes, Charlottesville not Crozet.
 - No `bindAiasLive` / no `data-depth` on this route.
 - Seams are hard black/white. Ease is `cubic-bezier(.22,1,.36,1)`.
+- `prefers-reduced-motion` → recovered peel (`1`), last landmark, static glass.
 
-Carrier: one phone notification sheet. R3F is that sheet, only in the pin.
+Carrier: one phone notification sheet. R3F is that sheet, only in the pin. Living gold is MeshStandard / rim, never flat `#C4A574`.
 
 ---
 
