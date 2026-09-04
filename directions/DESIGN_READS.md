@@ -31,8 +31,10 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 
 ## Winslow steal-list (live scroll → structure)
 
+All five live inspo briefs are **closed**. Each direction keeps its own carrier.
+
 1. **Society Hall / AIS** — sticky chrome; product stage *is* the recovery board; gold only on the active lane and live signal.
-2. **Solid Proof / Solidroad** — gold signal line scrubs missed→recovered across sticky chrome; tickets still the carrier.
+2. **Solid Proof / Solidroad** — ONE gold route/line as missed→callback→recovered. Sticky header inverts dark↔white by chapter. Gold only on progress/route/CTA; dead tickets matte. Full-screen ribbon carrier; slow crossfade on the beat label. Proof board breathes (opacity/blur, no ambient loop). Heavy ease-in-out (`power2.inOut`); left copy stable. No bounce. No invented counts.
 3. **Signature Reel / Austin Werner** — one gold orb through missed→recovered (statue→orb handoff mapped to our still + orb). Pin one full-viewport stage per chapter; scrub depth/scale/blur. Black holds between chapters; white type stays stable. Nav hide on scroll-down / show on scroll-up. Controls 0.3–0.7s ease-out. Gold markers before headings. Calm contact hover only. No invented counters.
 4. **Balance Object / Ballance** — first screen composed (no autoplay). One hero pebble with slower parallax than the copy. Hard black→white seam at the turning point. One tactile slip control; high stillness. No KPI count-ups. GSAP / ScrollTrigger / R3F only — no Framer Motion. Reduced-motion = recovered still.
 5. **Assist Pane / SiteAssist** — header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Module list left / media right; media swaps on scroll landmarks. Oversized type reveal; staggered job-type cards; discrete carousel OK. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`).
@@ -73,17 +75,34 @@ No Higgsfield.
 
 ### 01 Society Hall — gold signal line
 
-Kinetic manifesto / membership energy. A dark hall of theses, not a SaaS landing.
-The carrier is a gold filament that draws left→forward through ledger seams.
-First screen: dead hairline under “The lead went quiet.” already igniting toward
-“Recovered.” Structure: hall → thesis roll → pledge. R3F is the filament volume.
+Kinetic manifesto / membership energy. AIS live-scroll, closed on this hall:
+sticky chrome; the product stage *is* the recovery board; gold on the active
+lane, the rail, and Recovered. Carrier is a gold filament (not Solid Proof’s
+straight route). First screen: dead type under “The lead went quiet.” already
+igniting toward “Recovered.” Structure: hall → thesis roll → stacked outcomes
+→ pledge. R3F is the filament volume. Call phone auto-crossfades — never
+scroll-scrubbed. `prefers-reduced-motion` → recovered rail, last thesis.
 
-### 02 Solid Proof — board tickets dead→alive
+### 02 Solid Proof — gold route
 
-Product-proof strip. A working board, not a manifesto. Carrier: tickets that
-turn from matte-dead to gold-live as the strip scrubs. First screen: a dead
-ticket and a live ticket already on stage. Structure: pair → pinned board →
-asymmetric proof notes. R3F is shallow ticket planes.
+Product-proof strip. Solidroad live-scroll, closed — steal the route, not a
+second gold object:
+
+- ONE gold route: the header playhead and one R3F ribbon share the same
+  `progress` (missed → callback → recovered). No hero ribbon. No 3D ticket
+  stack on this route.
+- Sticky header inverts dark↔white by chapter (`power2.inOut`, 0.75s).
+- Gold only on the route, live ticket marks, and the CTA. Dead states stay matte.
+  No Proof kicker.
+- Full-screen ribbon in the pin. Beat label slow-fades. Left copy is stable
+  (no opacity/y scrub on the heading).
+- Proof board breathes once on enter (blur→sharp, stagger 80ms). No ambient loop.
+- Heavy ease-in-out. No bounce. No `bindAiasLive`.
+- First screen composed: dead ticket + live ticket already on stage; playhead
+  already at `0.22`.
+- `prefers-reduced-motion` → recovered, playhead full, header dark.
+
+Carrier: the gold route. R3F is that ribbon, pin only.
 
 ### 03 Signature Reel — chapter still mid-pin
 

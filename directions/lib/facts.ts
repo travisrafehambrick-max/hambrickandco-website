@@ -31,7 +31,7 @@ export const DIRECTIONS = [
     slug: "solid-proof",
     name: "Solid Proof",
     carrier: "Board tickets dead→alive",
-    line: "Product-proof strip. Dead tickets stay matte. Live ones carry gold.",
+    line: "One gold route. Tickets stay matte until the line arrives.",
   },
   {
     n: "03",
