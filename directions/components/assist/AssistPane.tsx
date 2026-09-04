@@ -13,33 +13,25 @@ import { bindMagnetic } from "@/lib/bind-magnetic";
 const STEPS = [
   {
     verb: "Missed",
-    time: "14:02",
     line: "Can you still do the estimate this week?",
-    caption: "2h 14m on the lock screen",
     peel: 0.14,
     live: false,
   },
   {
     verb: "Alert",
-    time: "14:02",
     line: "Sheet sits on the lock screen.",
-    caption: "Nobody marked it",
     peel: 0.38,
     live: false,
   },
   {
     verb: "Callback",
-    time: "14:04",
     line: "Yes — we can hold Thursday morning. Confirm the address?",
-    caption: "First reply out",
     peel: 0.7,
     live: true,
   },
   {
     verb: "Recovered",
-    time: "14:06",
     line: "Same street. After 9 is fine.",
-    caption: "Estimate hold · Thursday",
     peel: 1,
     live: true,
   },
@@ -193,9 +185,11 @@ export function AssistPane() {
           One sheet. Four landmarks. {AREA}.
         </p>
         <article className="assist-sheet mt-12 w-[min(280px,80%)] border border-black bg-matte p-5 text-ink">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/40">14:02 · Missed</p>
-          <p className="mt-3 font-display text-2xl leading-tight">2h 14m on the lock screen</p>
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] metal-text">14:04 · first reply out</p>
+          <p className="font-display text-2xl leading-tight">Missed</p>
+          <p className="mt-3 font-sans text-[14px] text-ink/60">2h 14m on the lock screen</p>
+          <p className="mt-4 font-display text-2xl leading-tight">
+            <span className="metal-text">Recovered</span>
+          </p>
         </article>
       </section>
 
@@ -217,7 +211,7 @@ export function AssistPane() {
                     className="assist-mark max-w-md text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
                   >
                     <span className={`font-mono text-[10px] uppercase tracking-[0.2em] ${on ? "metal-text" : "text-ink/35"}`}>
-                      {s.time} · {s.verb}
+                      {s.verb}
                     </span>
                     <span className={`mt-5 block font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.02] ${on ? "text-ink" : "text-ink/40"}`}>
                       {s.line}
@@ -233,9 +227,7 @@ export function AssistPane() {
                 <PeelSlot progress={progress} />
               </div>
               <p className="border-t border-ink px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em]">
-                <span className={step.live ? "metal-text" : "text-ink/45"}>
-                  {step.verb} · {step.caption}
-                </span>
+                <span className={step.live ? "metal-text" : "text-ink/45"}>{step.verb}</span>
               </p>
             </div>
           </aside>
@@ -265,7 +257,7 @@ export function AssistPane() {
                     }`}
                   >
                     <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${featured ? "metal-text" : "text-ink/40"}`}>
-                      {card.n} · {card.trade}
+                      {card.trade}
                     </p>
                     <p className="mt-6 font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.1]">{card.line}</p>
                     {featured ? <span aria-hidden className="metal-rule mt-8 block h-px w-16" /> : null}

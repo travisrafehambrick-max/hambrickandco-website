@@ -162,8 +162,12 @@ export function BalancePage() {
           <p className="mt-10 max-w-md font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.05]">
             The field goes still. The object keeps the slower current.
           </p>
-          <p className="mt-10 max-w-sm font-sans text-[15px] text-ink/55">
-            No count-ups. No invented hours or percentages. The work is a reply that lands — write{" "}
+          <p className="mt-10 max-w-md font-sans text-[15px] text-ink/55">
+            No fake KPIs. No partner badges. Just the tactile quiet of a recovery that held its
+            balance.
+          </p>
+          <p className="mt-6 max-w-sm font-sans text-[15px] text-ink/55">
+            Write{" "}
             <a className="metal-text" href={`mailto:${EMAIL}`}>
               {EMAIL}
             </a>
