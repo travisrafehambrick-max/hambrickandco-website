@@ -151,7 +151,7 @@ Split assist / console recovery thread. SiteAssist live-scroll, closed. Harcourt
 - First desktop screenful: Harcourt hero + Talk to Travis / Request a recovery audit, peel at Missed (`0.28`). Mobile: header ask + pinned peel, then hero.
 - One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.28 / 0.38 / 0.7 / 1`. Pin start `top 12%`. Not a continuous scrub.
 - Glass notification on the peel (not soup). Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
-- Conversion bands after the pin: problem, offer stack (wedge live on 1–2), Stonefield named as proof of work only, close CTA. No prices, no fake quotes, Charlottesville not Crozet.
+- Conversion bands after the pin: problem, offer stack (wedge live on 1–2), proof as felt math (no named client), close CTA. No prices, no fake quotes, Charlottesville not Crozet.
 - No `bindAiasLive` / no `data-depth` on this route.
 - Seams are hard black/white. Ease is `cubic-bezier(.22,1,.36,1)`.
 - `prefers-reduced-motion` → recovered peel (`1`), last landmark, static glass.

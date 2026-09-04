@@ -2,7 +2,7 @@
  * CANONICAL — Harcourt is the ONLY copy for this raise.
  * Ignore any Sterling copy pack. Do not remix.
  * Hero / problem / offer stack / proof / CTA: verbatim only.
- * Stonefield Landscaping is named proof of work only. No invented quotes.
+ * Named case studies stay off until a real install can stand behind them.
  */
 export const HERO_HEADLINE =
   "Every missed call and unanswered estimate is money walking out the door.";
@@ -63,9 +63,27 @@ export const OFFER_STACK = [
 
 export const OFFER_WEDGE = "First wedge: Lead Response & Estimate Recovery.";
 
-export const PROOF_BODY =
-  "Live with local operators — including Stonefield Landscaping — where the work is catching revenue that used to slip through, not adding another dashboard.";
+export const PROOF_EYEBROW = "PROOF";
 
-export const PROOF_TRAVIS = "Travis is your human bridge: setup, handoff, and final say.";
+export const PROOF_LEAD =
+  "Here’s the math most local shops already feel:";
+
+export const PROOF_BEATS = [
+  "One after-hours call that never gets a callback.",
+  "One estimate that sits while someone else answers first.",
+  "One no-show that burns a crew day.",
+] as const;
+
+export const PROOF_MATH_CLOSE =
+  "That’s not “leads.” That’s jobs you already paid to generate — walking out.";
+
+export const PROOF_BODY =
+  "Hambrick & Co plugs the leak in order: respond → recover the estimate → protect the book → ask for the review → clear the inbox noise. First wedge for most shops in the Charlottesville 40-mile radius: Lead Response & Estimate Recovery.";
+
+export const PROOF_TRAVIS =
+  "Travis is the human bridge — setup, handoff, final say. You deal with a person, not a portal.";
+
+export const PROOF_NOTE =
+  "Named case studies stay off until a real install can stand behind them.";
 
 export const CLOSE_HEADLINE = "If leads and estimates are leaking, let's plug the expensive ones first.";

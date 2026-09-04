@@ -24,7 +24,12 @@ import {
   PROBLEM_CLOSE,
   PROBLEM_LEAD,
   PROBLEM_LEAKS,
+  PROOF_BEATS,
   PROOF_BODY,
+  PROOF_EYEBROW,
+  PROOF_LEAD,
+  PROOF_MATH_CLOSE,
+  PROOF_NOTE,
   PROOF_TRAVIS,
 } from "@/components/assist/copy";
 
@@ -296,8 +301,19 @@ export function AssistPane() {
         <section id="proof" className="border-t border-ink">
           <div className="assist-panel mx-auto max-w-[1280px] px-5 py-20 md:px-8 md:py-28">
             <div className="assist-glass assist-glass--live max-w-3xl px-6 py-10 md:px-10 md:py-14">
-              <p className="font-display text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.08]">{PROOF_BODY}</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/45">{PROOF_EYEBROW}</p>
+              <h2 className="mt-4 font-display text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[1.08]">{PROOF_LEAD}</h2>
+              <ul className="mt-8 grid gap-3">
+                {PROOF_BEATS.map((beat) => (
+                  <li key={beat} className="assist-glass px-5 py-4 font-sans text-[16px] leading-relaxed text-ink/80 md:px-6 md:py-5">
+                    {beat}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-10 font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.12]">{PROOF_MATH_CLOSE}</p>
+              <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/80">{PROOF_BODY}</p>
               <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/70">{PROOF_TRAVIS}</p>
+              <p className="mt-6 max-w-xl font-sans text-[14px] leading-relaxed text-ink/45">{PROOF_NOTE}</p>
             </div>
           </div>
         </section>
