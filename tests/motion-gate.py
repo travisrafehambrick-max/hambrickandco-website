@@ -29,5 +29,6 @@ check("no idle pointer tilt", "pointermove" not in scene)
 check("lazy Three import", "IntersectionObserver" in scene and "import(THREE_URL)" in scene)
 check("reduced motion uses booked fallback", 'showFallback("after")' in scene)
 check("locked progress does not force after", "if (locked)" in scene)
+check("reduced-motion change tears down WebGL", "reduceMotion.addEventListener" in scene and "teardownWebGL" in scene)
 
 sys.exit(fail)

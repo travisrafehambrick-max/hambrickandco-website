@@ -52,6 +52,20 @@ let onProgress = function (progress, locked) {
   if (progress > 0.62) showFallback("after");
   else if (progress < 0.28) showFallback("before");
 };
+let boot = null;
+let teardownWebGL = function () {};
+
+function useBookedStill() {
+  teardownWebGL();
+  teardownWebGL = function () {};
+  if (boot) {
+    boot.disconnect();
+    boot = null;
+  }
+  onMode = showFallback;
+  onProgress = function () {};
+  showFallback("after");
+}
 
 window.addEventListener("hbc:timeline-mode", function (event) {
   const mode = event.detail;
@@ -63,23 +77,35 @@ window.addEventListener("hbc:process-progress", function (event) {
   onProgress(Number(detail.progress) || 0, Boolean(detail.locked));
 });
 
+reduceMotion.addEventListener("change", function () {
+  if (reduceMotion.matches) useBookedStill();
+});
+
 if (!stage || !canvas) {
   showFallback("after");
 } else if (reduceMotion.matches) {
-  showFallback("after");
-  onProgress = function () {};
+  useBookedStill();
 } else if (!canUseWebGL()) {
   showFallback("before");
 } else {
   showFallback("before");
   let started = false;
-  const boot = new IntersectionObserver(
+  boot = new IntersectionObserver(
     function (entries) {
       if (started || !entries.some(function (entry) { return entry.isIntersecting; })) return;
       started = true;
       boot.disconnect();
+      boot = null;
+      if (reduceMotion.matches) {
+        useBookedStill();
+        return;
+      }
       import(THREE_URL)
         .then(function (THREE) {
+          if (reduceMotion.matches) {
+            useBookedStill();
+            return;
+          }
           initPhone(THREE);
         })
         .catch(function () {
@@ -367,18 +393,15 @@ function initPhone(THREE) {
     else kick();
   };
 
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden && state.frame) {
-      cancelAnimationFrame(state.frame);
-      state.frame = 0;
-    } else if (state.visible) kick();
-  });
-
-  window.addEventListener("pagehide", function () {
+  function disposeWebGL() {
+    if (state.dead) return;
     state.dead = true;
     if (state.frame) cancelAnimationFrame(state.frame);
+    state.frame = 0;
     observer.disconnect();
     resizeObserver.disconnect();
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("pagehide", disposeWebGL);
     screenTexture?.dispose();
     scene.traverse(function (obj) {
       if (obj.geometry) obj.geometry.dispose();
@@ -388,5 +411,18 @@ function initPhone(THREE) {
       }
     });
     renderer.dispose();
-  });
+    onMode = showFallback;
+    onProgress = function () {};
+  }
+
+  function onVisibility() {
+    if (document.hidden && state.frame) {
+      cancelAnimationFrame(state.frame);
+      state.frame = 0;
+    } else if (state.visible) kick();
+  }
+
+  document.addEventListener("visibilitychange", onVisibility);
+  window.addEventListener("pagehide", disposeWebGL);
+  teardownWebGL = disposeWebGL;
 }

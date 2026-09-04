@@ -40,6 +40,7 @@ check("banned marketing verbs", r"\b(seamless|elevate|empower|unlock)\b")
 check("AI-powered headline", r"AI-powered|AI employee")
 check("invented research scores", r"297 businesses")
 check("websites as a second offer", r"(?i)sites for local businesses|we still build websites")
+check("unvalidated seconds claim", r"(?i)within seconds")
 
 need("hello@ email", r"hello@hambrickco.com")
 need("phone", r"\(434\) 260-0823")
