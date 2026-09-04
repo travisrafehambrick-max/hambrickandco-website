@@ -29,7 +29,6 @@ import {
   PROOF_EYEBROW,
   PROOF_LEAD,
   PROOF_MATH_CLOSE,
-  PROOF_NOTE,
   PROOF_TRAVIS,
 } from "@/components/assist/copy";
 
@@ -313,7 +312,6 @@ export function AssistPane() {
               <p className="mt-10 font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-[1.12]">{PROOF_MATH_CLOSE}</p>
               <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/80">{PROOF_BODY}</p>
               <p className="mt-8 max-w-xl font-sans text-[16px] leading-relaxed text-ink/70">{PROOF_TRAVIS}</p>
-              <p className="mt-6 max-w-xl font-sans text-[14px] leading-relaxed text-ink/45">{PROOF_NOTE}</p>
             </div>
           </div>
         </section>
