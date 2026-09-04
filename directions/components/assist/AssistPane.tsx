@@ -51,6 +51,7 @@ export function AssistPane() {
         .fromTo(".assist-msg.live", { autoAlpha: 0.15 }, { autoAlpha: 0.85, duration: 0.45 }, 0.25)
         .to({}, { duration: STILLNESS });
       intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.35));
+      intro.eventCallback("onComplete", () => setActive(2));
 
       const pin = gsap.timeline({
         defaults: { ease: LINEAR },
@@ -94,6 +95,28 @@ export function AssistPane() {
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/45">Console</span>
             <LiveButton href="#request">{CTA_AUDIT}</LiveButton>
           </div>
+        </div>
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center justify-between gap-2 border-t border-matte/10 px-5 py-2 md:px-8"
+        >
+          {(["Missed", "Alert", "Callback", "Recovered"] as const).map((verb, i) => {
+            const on = i === active;
+            const live = on && (verb === "Callback" || verb === "Recovered");
+            return (
+              <button
+                key={verb}
+                type="button"
+                onClick={() => setActive(i)}
+                className={`font-mono text-[10px] uppercase tracking-[0.18em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${
+                  live ? "text-gold" : on ? "text-matte" : "text-matte/35"
+                }`}
+              >
+                {verb}
+              </button>
+            );
+          })}
         </div>
       </header>
 

@@ -18,6 +18,7 @@ const TICKETS = [
 
 export function SolidProof() {
   const root = useRef<HTMLDivElement>(null);
+  const playhead = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [open, setOpen] = useState(0);
@@ -29,14 +30,18 @@ export function SolidProof() {
       if (reduced) {
         gsap.set(".ticket-pair .live-face", { autoAlpha: 1, x: 0 });
         gsap.set(".board-ticket", { x: 0, autoAlpha: 1 });
+        gsap.set(playhead.current, { scaleX: 1, backgroundColor: "#C4A574" });
         setProgress(1);
         return;
       }
+
+      gsap.set(playhead.current, { scaleX: 0, transformOrigin: "left center", backgroundColor: "#F5F5F5" });
 
       const intro = gsap.timeline({ defaults: { ease: EASE } });
       intro
         .fromTo(".ticket-pair .dead-face", { autoAlpha: 1 }, { autoAlpha: 0.4, duration: 0.4 })
         .fromTo(".ticket-pair .live-face", { autoAlpha: 0.2, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.55 }, 0.15)
+        .to(playhead.current, { scaleX: 0.28, backgroundColor: "#C4A574", duration: 0.5 }, 0.1)
         .to({}, { duration: STILLNESS });
 
       intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.28));
@@ -53,6 +58,7 @@ export function SolidProof() {
       });
 
       pin
+        .to(playhead.current, { scaleX: 1, backgroundColor: "#C4A574", duration: 0.8 })
         .to(
           {},
           {
@@ -61,6 +67,7 @@ export function SolidProof() {
               setProgress(0.28 + this.progress() * 0.72);
             },
           },
+          0,
         )
         .fromTo(".board-ticket", { x: -36 }, { x: 0, stagger: 0.1, duration: 0.5 }, 0)
         .to({}, { duration: 0.2 });
@@ -80,6 +87,11 @@ export function SolidProof() {
             {CTA_AUDIT}
           </LiveButton>
         </div>
+        <span
+          ref={playhead}
+          aria-hidden
+          className="block h-px origin-left bg-ink/20"
+        />
       </header>
 
       <section className="mx-auto grid min-h-[100svh] max-w-[1280px] grid-cols-1 items-stretch gap-0 px-5 py-10 md:grid-cols-12 md:px-8">

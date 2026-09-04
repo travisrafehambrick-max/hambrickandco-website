@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AREA, CTA_FLOW, EMAIL, PHONE, PHONE_HREF, WEDGE } from "@/lib/facts";
-import { EASE_OUT, LINEAR, STILLNESS, gsap, useGSAP } from "@/lib/register-gsap";
+import { EASE_OUT, LINEAR, STILLNESS, ScrollTrigger, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
@@ -26,6 +26,7 @@ export function SocietyHall() {
   const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [liveThesis, setLiveThesis] = useState(0);
+  const [lane, setLane] = useState<"hall" | "stage" | "pledge">("hall");
 
   useGSAP(
     () => {
@@ -42,6 +43,7 @@ export function SocietyHall() {
         gsap.set(".thesis-row", { autoAlpha: 1, x: 0 });
         setProgress(1);
         setLiveThesis(THESES.length - 1);
+        setLane("stage");
         return;
       }
 
@@ -85,6 +87,22 @@ export function SocietyHall() {
         .fromTo(".thesis-row", { x: -28 }, { x: 0, stagger: 0.08, duration: 0.5 }, 0.05)
         .to({}, { duration: 0.22 });
 
+      ScrollTrigger.create({
+        trigger: ".hall-pin",
+        start: "top 20%",
+        end: "bottom top",
+        onToggle: (self) => {
+          if (self.isActive) setLane("stage");
+        },
+        onLeaveBack: () => setLane("hall"),
+      });
+      ScrollTrigger.create({
+        trigger: "#pledge",
+        start: "top 45%",
+        onEnter: () => setLane("pledge"),
+        onLeaveBack: () => setLane("stage"),
+      });
+
       return () => {
         intro.kill();
       };
@@ -94,18 +112,27 @@ export function SocietyHall() {
 
   return (
     <div ref={root} className="bg-ink text-matte min-h-screen">
-      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink/90 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 border-b border-matte/10 bg-ink">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-4 md:px-10">
           <Wordmark tone="dark" kicker="Hall" />
-          <nav className="hidden gap-6 font-mono text-[10px] uppercase tracking-[0.2em] text-matte/55 md:flex">
-            <a href="#ledger" className="hover:text-gold">
-              Ledger
-            </a>
-            <a href="#pledge" className="hover:text-gold">
-              Pledge
-            </a>
-            <Link href="/" className="hover:text-gold">
-              All directions
+          <nav className="hidden gap-8 font-mono text-[10px] uppercase tracking-[0.2em] md:flex">
+            {(
+              [
+                ["hall", "Hall", "#top"],
+                ["stage", "Stage", "#stage"],
+                ["pledge", "Pledge", "#pledge"],
+              ] as const
+            ).map(([id, label, href]) => (
+              <a
+                key={id}
+                href={href}
+                className={lane === id ? "text-gold" : "text-matte/45 hover:text-matte"}
+              >
+                {label}
+              </a>
+            ))}
+            <Link href="/" className="text-matte/45 hover:text-matte">
+              Index
             </Link>
           </nav>
           <LiveButton href="#pledge">{CTA_FLOW}</LiveButton>
@@ -122,9 +149,9 @@ export function SocietyHall() {
         />
       </svg>
 
-      <section className="relative mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 items-end gap-10 px-5 pb-16 pt-10 md:grid-cols-12 md:px-10">
+      <section id="top" className="relative mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 items-end gap-10 px-5 pb-16 pt-10 md:grid-cols-12 md:px-10">
         <div className="md:col-span-7">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">01 — Society Hall</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/40">01 — Society Hall</p>
           <h1 className="mt-6 font-display text-[clamp(3.2rem,9vw,8.4rem)] leading-[0.86] tracking-[-0.03em]">
             The lead
             <br />
@@ -146,7 +173,7 @@ export function SocietyHall() {
         </div>
       </section>
 
-      <section className="hall-pin relative border-t border-matte/10">
+      <section id="stage" className="hall-pin relative border-t border-matte/10">
         <div className="mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 md:grid-cols-12">
           <div className="relative md:col-span-5 border-r border-matte/10">
             <div className="h-[42vh] md:h-full">
@@ -156,8 +183,10 @@ export function SocietyHall() {
               Live
             </p>
           </div>
-          <div id="ledger" className="md:col-span-7 px-5 py-10 md:px-12 md:py-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/45">Ledger seams</p>
+          <div className="md:col-span-7 px-5 py-10 md:px-12 md:py-16">
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/45">
+              Recovery board
+            </p>
             <ol className="mt-8">
               {THESES.map((row, i) => {
                 const live = i <= liveThesis;

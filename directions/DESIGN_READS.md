@@ -28,6 +28,14 @@ partner-pitch language, Crozet-centering, Higgsfield spend.
 Doctrine: one current (LEFT → forward). Ledger seams before authoring.
 Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 
+## Winslow steal-list (live scroll → structure)
+
+1. **Society Hall / AIS** — sticky chrome; product stage *is* the recovery board; gold only on the active lane and live signal.
+2. **Solid Proof / Solidroad** — gold signal line scrubs missed→recovered across sticky chrome; tickets still the carrier.
+3. **Signature Reel / Austin Werner** — one metallic orb as the sole 3D; rotation hands off mid-motion. Chapter still stays the DOM carrier.
+4. **Balance Object / Ballance** — restraint; the slip is UI that behaves (GSAP only — no Framer Motion).
+5. **Assist Pane / SiteAssist** — sticky diagnostic band; the verb flip *is* the revival. Phone peel stays the carrier.
+
 ---
 
 ### 01 Society Hall — gold signal line
