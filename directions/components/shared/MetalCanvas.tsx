@@ -8,7 +8,6 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 function MetalRig({ staticFrame = false }: { staticFrame?: boolean }) {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
-  const camera = useThree((s) => s.camera);
   const invalidate = useThree((s) => s.invalidate);
 
   useEffect(() => {
@@ -21,24 +20,16 @@ function MetalRig({ staticFrame = false }: { staticFrame?: boolean }) {
     const env = pmrem.fromScene(room, 0.04).texture;
     scene.environment = env;
     room.dispose();
-    if (staticFrame) {
-      gl.render(scene, camera);
-      const id = requestAnimationFrame(() => gl.render(scene, camera));
-      return () => {
-        cancelAnimationFrame(id);
-        scene.environment = null;
-        env.dispose();
-        pmrem.dispose();
-      };
-    }
     invalidate();
+    const id = staticFrame ? requestAnimationFrame(() => invalidate()) : 0;
 
     return () => {
+      if (id) cancelAnimationFrame(id);
       scene.environment = null;
       env.dispose();
       pmrem.dispose();
     };
-  }, [gl, scene, camera, invalidate, staticFrame]);
+  }, [gl, scene, invalidate, staticFrame]);
 
   return (
     <>
@@ -82,10 +73,10 @@ export function HeroMetalPlate({ children, camera, staticFrame = false }: Props)
   return (
     <div ref={host} className="h-full w-full">
       <Canvas
-        frameloop={freeze ? "never" : on ? "demand" : "never"}
-        dpr={[1, 1.75]}
+        frameloop={on ? "demand" : "never"}
+        dpr={[1, 2]}
         camera={{ position: camera?.position ?? [0, 0.1, 3.4], fov: camera?.fov ?? 32 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, preserveDrawingBuffer: freeze }}
         onCreated={({ gl }) => {
           gl.setClearColor(0x000000, 0);
           gl.toneMapping = THREE.ACESFilmicToneMapping;

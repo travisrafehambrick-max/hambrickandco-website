@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { GoldMetalAnd } from "@/components/shared/MetalKit";
+import { GoldMetalAnd, GoldMetalRim } from "@/components/shared/MetalKit";
 
 type Tone = "dark" | "light";
 
@@ -10,9 +10,12 @@ export function BrandMark({ tone = "dark", href = "/" }: { tone?: Tone; href?: s
 
   return (
     <Link href={href} className={`brand-mark ${ink}`} aria-label="Hambrick & Co.">
-      <span className="brand-mark__name">Hambrick</span>
-      <GoldMetalAnd />
-      <span className="brand-mark__house">Co.</span>
+      <GoldMetalRim />
+      <span className="brand-mark__lockup">
+        <span className="brand-mark__name">Hambrick</span>
+        <GoldMetalAnd />
+        <span className="brand-mark__house">Co.</span>
+      </span>
     </Link>
   );
 }

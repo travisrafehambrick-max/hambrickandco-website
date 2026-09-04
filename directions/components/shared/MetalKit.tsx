@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { MeshStandardMaterial } from "three";
 import { bindMagnetic } from "@/lib/bind-magnetic";
 import { applyLiveMetal, applyMetal } from "@/lib/metal";
-import { makeAmpersandGeometry } from "@/lib/ampersand";
 import { HeroMetalPlate, MetalCanvas } from "@/components/shared/MetalCanvas";
 import { ProofRibbon } from "@/components/proof/TicketScene";
 
@@ -16,6 +15,7 @@ export const METAL_SIGNATURES = [
   "MetalRoute",
   "GoldMetalMark",
   "GoldMetalAnd",
+  "GoldMetalRim",
 ] as const;
 
 function GoldBarMesh({ live = true }: { live?: boolean }) {
@@ -43,12 +43,10 @@ function GoldMarkMesh() {
   );
 }
 
-function AmpersandMesh() {
-  const geom = useMemo(() => makeAmpersandGeometry(), []);
-  useEffect(() => () => geom.dispose(), [geom]);
-
+function AndPlateMesh() {
   return (
-    <mesh geometry={geom} rotation={[-0.18, 0.48, 0.05]}>
+    <mesh rotation={[-0.42, 0.62, 0.1]}>
+      <boxGeometry args={[2.6, 1.55, 0.28]} />
       <meshStandardMaterial
         ref={(m: MeshStandardMaterial | null) => {
           if (m) applyLiveMetal(m);
@@ -141,19 +139,30 @@ GoldMetalMark.displayName = "GoldMetalMark";
 export function GoldMetalAnd() {
   return (
     <span className="gold-metal-and" data-metal="GoldMetalAnd" aria-hidden>
-      <MetalCanvas staticFrame camera={{ position: [0.08, 0.02, 2.05], fov: 24 }}>
-        <AmpersandMesh />
+      <MetalCanvas staticFrame camera={{ position: [0.15, 0.08, 2.2], fov: 28 }}>
+        <AndPlateMesh />
       </MetalCanvas>
     </span>
   );
 }
 GoldMetalAnd.displayName = "GoldMetalAnd";
 
+export function GoldMetalRim() {
+  return (
+    <span className="brand-mark__rim" data-metal="GoldMetalRim" aria-hidden>
+      <MetalCanvas staticFrame camera={{ position: [0, 0, 2.2], fov: 28 }}>
+        <GoldBarMesh />
+      </MetalCanvas>
+    </span>
+  );
+}
+GoldMetalRim.displayName = "GoldMetalRim";
+
 export function MetalParityAnchor() {
   return (
     <span hidden data-metal-signatures={METAL_SIGNATURES.join(",")}>
       MetalRimCTA GoldMetalBar HeroMetalPlate MetalRoute GoldMetalMark GoldMetalAnd
-      MeshStandardMaterial @react-three/fiber magnetic
+      GoldMetalRim MeshStandardMaterial @react-three/fiber magnetic
     </span>
   );
 }

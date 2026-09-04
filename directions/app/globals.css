@@ -130,11 +130,12 @@ body {
 }
 
 .brand-mark {
+  position: relative;
   display: inline-flex;
-  align-items: baseline;
-  column-gap: 0.4em;
+  align-items: center;
   text-decoration: none;
   color: inherit;
+  padding: 0.3rem 0.68rem 0.3rem 0.56rem;
 }
 
 .brand-mark:focus-visible {
@@ -142,27 +143,50 @@ body {
   outline-offset: 4px;
 }
 
+.brand-mark__rim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.brand-mark__lockup {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  column-gap: 0.36em;
+}
+
 .brand-mark__name {
   font-family: var(--font-instrument), ui-serif, serif;
-  font-size: 1.12rem;
-  letter-spacing: -0.042em;
+  font-size: 1.14rem;
+  letter-spacing: -0.046em;
   line-height: 1;
 }
 
 .gold-metal-and {
   display: inline-block;
-  width: 1.38rem;
-  height: 1.72rem;
-  margin-block: -0.28rem;
-  translate: 0 0.28em;
+  width: 1.58rem;
+  height: 1.98rem;
+  margin-block: -0.36rem;
+  translate: 0 0.34em;
   flex-shrink: 0;
   pointer-events: none;
+  -webkit-mask-image: url("/brand-and-mask.svg");
+  mask-image: url("/brand-and-mask.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .brand-mark__house {
   font-family: var(--font-instrument), ui-serif, serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   line-height: 1;
 }
 
