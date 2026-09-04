@@ -1,5 +1,6 @@
 "use client";
 
+import { HeroStory } from "@/components/assist/HeroStory";
 import { PeelSheet } from "@/components/assist/PeelSheet";
 import { SoftObject } from "@/components/balance/SoftObject";
 import { TicketScene } from "@/components/proof/TicketScene";
@@ -23,6 +24,13 @@ export function GateSlot({ progress }: { progress: number }) {
 export function ObjectSlot({ progress }: { progress: number }) {
   return <SoftObject progress={progress} />;
 }
-export function PeelSlot({ progress }: { progress: number }) {
-  return <PeelSheet progress={progress} />;
+export function PeelSlot({ progress, step = 0 }: { progress: number; step?: number }) {
+  return (
+    <div className="peel-slot">
+      <HeroStory step={step} />
+      <div className="peel-slot__accent" aria-hidden>
+        <PeelSheet progress={progress} />
+      </div>
+    </div>
+  );
 }

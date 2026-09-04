@@ -232,7 +232,7 @@ export function AssistPane() {
           <aside className="assist-media order-first sticky top-[4.25rem] z-10 h-[46svh] w-full shrink-0 self-start border-b border-ink bg-matte md:order-none md:h-[calc(100svh-4.25rem)] md:w-[58%] md:border-b-0 md:border-l">
             <div className="relative flex h-full flex-col">
               <div className="relative min-h-0 flex-1">
-                <PeelSlot progress={progress} />
+                <PeelSlot progress={progress} step={active} />
                 <div className="pointer-events-none absolute inset-x-4 top-[10%] z-10 md:inset-x-8">
                   <div className={`assist-glass max-w-md px-5 py-4 ${step.live ? "assist-glass--live" : ""}`}>
                     <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
