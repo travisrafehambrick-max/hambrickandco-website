@@ -50,3 +50,11 @@ Same paths on http://localhost:3000/.
 ## Optional Netlify draft
 
 Only if Travis asks: treat `directions/` as the site base for a **draft** deploy. Never change production publish of the static root.
+
+Static export (for Netlify Drop / a dedicated draft host — not `next start`):
+
+```bash
+DIRECTIONS_EXPORT=1 npm run build
+```
+
+That writes `directions/out/`. Drop that folder, not the Next source tree.
