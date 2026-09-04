@@ -71,8 +71,8 @@ Use it:
 - SplitText (or an equivalent split) on the hero headline. Words or masked lines. Not a character scramble.
 - Before/after enquiry timeline: rows land, the state line flips, the toggle pill slides.
 - Buttons, links, and fields: hover, focus, press. The arrow moves because the control is live.
-- Process steps light as you scroll. The WebGL phone and job ticket follow that progress.
-- Section-to-section eases: once, staggered, short. Timelines, not a bag of `from` tweens with delays.
+- Process steps light as you scroll. The WebGL phone and job ticket follow that progress, unless the visitor has locked Without us / With us.
+- Do not fade every section in with the same y/stagger. That is decoration. Motion stays on story-bearing beats only.
 
 Honor `prefers-reduced-motion`: no SplitText, no scroll-tied 3D, no entrance motion. Static phone fallback. No Lottie. No looped hero video.
 

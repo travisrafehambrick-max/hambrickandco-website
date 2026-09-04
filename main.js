@@ -175,7 +175,7 @@
 
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: reduce)", function () {
-      gsap.set(".reveal-item, .enquiry-row, .flip-word", { autoAlpha: 1, y: 0, clearProps: "transform" });
+      gsap.set(".enquiry-row, .flip-word", { autoAlpha: 1, y: 0, clearProps: "transform" });
     });
 
     mm.add("(prefers-reduced-motion: no-preference)", function () {
@@ -198,23 +198,6 @@
         });
       }
 
-      gsap.utils.toArray(".reveal-section").forEach(function (section) {
-        const items = section.querySelectorAll(".reveal-item");
-        if (!items.length) return;
-        gsap.from(items, {
-          y: 22,
-          autoAlpha: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 78%",
-            once: true,
-          },
-        });
-      });
-
       const steps = gsap.utils.toArray(".proc-step");
       if (typeof ScrollTrigger !== "undefined" && steps.length) {
         ScrollTrigger.create({
@@ -227,7 +210,13 @@
               step.classList.toggle("is-live", i <= index);
             });
             window.dispatchEvent(
-              new CustomEvent("hbc:process-progress", { detail: self.progress })
+              new CustomEvent("hbc:process-progress", {
+                detail: {
+                  progress: self.progress,
+                  locked: Boolean(demo && demo.dataset.locked),
+                  mode: demo ? demo.dataset.mode : "before",
+                },
+              })
             );
           },
         });

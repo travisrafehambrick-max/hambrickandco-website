@@ -336,7 +336,7 @@ if (!stage || !canvas || reduceMotion.matches || !canUseWebGL()) {
         screenMaterial.map = next;
         screenMaterial.needsUpdate = true;
       }
-      if (mode === "after") applyTicket(1);
+      applyTicket(mode === "after" ? 1 : 0);
     }
 
     function loop() {
@@ -395,8 +395,14 @@ if (!stage || !canvas || reduceMotion.matches || !canUseWebGL()) {
     });
 
     window.addEventListener("hbc:process-progress", function (event) {
-      const progress = Number(event.detail) || 0;
+      const detail = event.detail;
+      const locked = Boolean(detail && typeof detail === "object" ? detail.locked : false);
+      const progress = Number(detail && typeof detail === "object" ? detail.progress : detail) || 0;
       state.progress = progress;
+      if (locked) {
+        applyTicket(state.mode === "after" ? 1 : 0);
+        return;
+      }
       applyTicket(progress);
       if (progress > 0.62 && state.mode !== "after") applyMode("after");
       if (progress < 0.28 && state.mode !== "before") applyMode("before");
