@@ -15,7 +15,11 @@ Do not publish to Netlify or connect a custom domain unless Travis asks.
 From this directory:
 
 ```bash
-python3 -m http.server 4173
+npm run preview
 ```
 
-Then open `http://localhost:4173/`.
+or `npx serve .`, or `python3 -m http.server 4173`.
+
+Then open `http://localhost:3000/` (serve) or `http://localhost:4173/` (python).
+
+Draft 3 direction studies live under [`variants/`](variants/index.html). They are preview-only and do not replace the live page.

@@ -1,0 +1,268 @@
+:root {
+  --black: #121212;
+  --white: #f5f5f5;
+  --gold: #c4a574;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Hanken Grotesk", sans-serif;
+  min-height: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+aside {
+  border-right: 1px solid var(--gold);
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mark,
+h1,
+h2 {
+  font-weight: 500;
+}
+
+.mark i,
+header p i {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.aside-kicker,
+.aside-meta,
+.lane,
+.chip,
+.caption,
+.note,
+ol span,
+footer {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+aside nav {
+  display: grid;
+  gap: 10px;
+}
+
+aside nav a {
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 1px solid transparent;
+}
+
+aside nav a.on,
+aside nav a:hover {
+  border-bottom-color: var(--gold);
+}
+
+.aside-meta {
+  margin-top: auto;
+}
+
+.stage {
+  padding: 0 28px 48px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  min-height: 72px;
+  border-bottom: 1px solid var(--gold);
+}
+
+.switch {
+  display: flex;
+  border: 1px solid var(--gold);
+}
+
+.switch button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+  font: 500 13px/1 "Hanken Grotesk", sans-serif;
+  cursor: pointer;
+}
+
+.switch button[aria-pressed="true"] {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  margin: 28px 0 12px;
+  min-height: calc(100vh - 220px);
+}
+
+.ticket {
+  background: var(--black);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticket h1,
+.ticket h2 {
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.05;
+}
+
+.chip {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 6px 8px;
+  border: 1px solid var(--white);
+  color: var(--white);
+}
+
+.board[data-state="live"] .chip {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.board[data-state="dead"] .ticket {
+  opacity: 0.72;
+}
+
+.board[data-state="live"] .ticket {
+  opacity: 1;
+}
+
+.caption {
+  margin-bottom: 56px;
+}
+
+#offer,
+#flow,
+#about,
+#contact {
+  padding: 36px 0 8px;
+  border-top: 1px solid var(--gold);
+}
+
+.cols,
+ol,
+form {
+  display: grid;
+  gap: 16px;
+}
+
+.cols {
+  grid-template-columns: 1fr 1fr;
+  margin: 16px 0;
+}
+
+ol {
+  list-style: none;
+  margin: 16px 0 8px;
+}
+
+ol li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gold);
+}
+
+.btn {
+  min-height: 44px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: var(--black);
+  font: 500 14px/1 "Hanken Grotesk", sans-serif;
+  cursor: pointer;
+  padding: 0 16px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
+input,
+textarea {
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--gold);
+  padding: 10px;
+  font: 16px/1.4 "Hanken Grotesk", sans-serif;
+}
+
+.confirm {
+  color: var(--gold);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gold);
+  text-transform: none;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    position: relative;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .board,
+  .cols {
+    grid-template-columns: 1fr;
+  }
+
+  .board {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board[data-state="dead"] .ticket,
+  .board[data-state="live"] .ticket {
+    opacity: 1;
+  }
+}

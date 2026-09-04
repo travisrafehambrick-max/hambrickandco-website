@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metallic Diagnostic · Hambrick &amp; Co</title>
+  <meta name="description" content="One phone. Diagnosis to recovery. Hambrick &amp; Co looks first, free. Charlottesville.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Hanken+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="wrap bar">
+      <a class="wordmark" href="#machine">Hambrick <i>&amp;</i> Co</a>
+      <a class="btn commit" href="#contact">Request a recovery audit</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="machine" id="machine">
+      <div class="wrap split">
+        <div class="copy">
+          <p class="kicker">Diagnostic · one object · illustration</p>
+          <h1>The phone already knows the miss.</h1>
+          <p class="lede" id="diag-copy">Unread call. Estimate sitting. Scroll peels the dead sheet off the recovered thread.</p>
+          <p class="status" id="diag-status">State: missed</p>
+          <a class="btn commit" href="#offer">See the recovery flow</a>
+        </div>
+        <div class="stage" id="phone-stage">
+          <canvas id="phone-canvas"></canvas>
+          <div class="fallback" id="phone-fallback">
+            <div class="handset" id="fallback-phone" data-mode="before">
+              <p class="fb-kicker">Illustration</p>
+              <p class="fb-title" id="fallback-title">Missed call</p>
+              <p class="fb-copy" id="fallback-copy">Quote sitting. Nobody called back.</p>
+              <p class="fb-state" id="fallback-state">No reply. No booking.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="offer">
+      <div class="wrap">
+        <h2>Lead Response and Estimate Recovery</h2>
+        <p>An unanswered call gets a text that knows the shop, asks what the job is, offers a booking, and puts it in front of the owner. Every unanswered estimate gets a timed, job-specific follow-up that stops the moment they reply.</p>
+        <p>We look first, free. Quote in writing after. Landscaping, HVAC, plumbing, electrical first. Charlottesville, Virginia and a forty-mile radius.</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <h2>Travis Hambrick</h2>
+        <p>Working label: Hambrick &amp; Co. No case studies yet. This object is an illustration, not a client device.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <h2>Request a recovery audit</h2>
+        <p><a class="commit" href="mailto:hello@hambrickco.com">hello@hambrickco.com</a> · <a class="commit" href="tel:+14342600823">(434) 260-0823</a></p>
+        <form id="lead-form" action="mailto:hello@hambrickco.com" method="post" enctype="text/plain">
+          <label>Your name <input id="name" name="name" required autocomplete="name"></label>
+          <label>Business name <input id="biz" name="business" required autocomplete="organization"></label>
+          <label>Email or phone <input id="reach" name="contact" required></label>
+          <label>How do enquiries reach you now? <textarea id="enquiries" name="enquiries" rows="3"></textarea></label>
+          <button class="btn commit" type="submit">Open in your email app</button>
+          <p class="note">Nothing is sent from this page. Your mail app opens addressed to hello@hambrickco.com.</p>
+          <p class="confirm" id="form-confirm" hidden>Your email app should open with hello@hambrickco.com addressed. If it does not, write that address yourself.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap bar">
+      <a href="../index.html">All five directions</a>
+      <span>Preview only</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="main.js"></script>
+  <script type="module" src="scene.js"></script>
+</body>
+</html>

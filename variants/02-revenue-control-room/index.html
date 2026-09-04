@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revenue Control Room · Hambrick &amp; Co</title>
+  <meta name="description" content="A control room for missed calls and dead estimates. Hambrick &amp; Co looks first, free.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <p class="mark">Hambrick <i>&amp;</i> Co</p>
+      <p class="aside-kicker">Control room · illustration</p>
+      <nav>
+        <a href="#board" class="on">Board</a>
+        <a href="#offer">Offer</a>
+        <a href="#flow">Flow</a>
+        <a href="#contact">Audit</a>
+      </nav>
+      <p class="aside-meta">Cville · 40-mile radius</p>
+    </aside>
+
+    <div class="stage">
+      <header>
+        <p>Lead Response <i>&amp;</i> Estimate Recovery</p>
+        <div class="switch" role="group" aria-label="Story state">
+          <button type="button" id="btn-dead" aria-pressed="true">Without us</button>
+          <button type="button" id="btn-live" aria-pressed="false">With us</button>
+        </div>
+      </header>
+
+      <section id="board" class="board" data-state="dead" aria-live="polite">
+        <article class="ticket" data-lane="call">
+          <p class="lane">Call line</p>
+          <h1 id="call-title">Missed call</h1>
+          <p id="call-copy">Tue 10:42 · they rang about the quote. Voicemail sitting.</p>
+          <p class="chip" id="call-chip">No reply</p>
+        </article>
+        <article class="ticket" data-lane="estimate">
+          <p class="lane">Estimate</p>
+          <h2 id="est-title">Quote sitting</h2>
+          <p id="est-copy">Deck repair sent Monday. No follow-up scheduled.</p>
+          <p class="chip" id="est-chip">Dead thread</p>
+        </article>
+        <article class="ticket" data-lane="owner">
+          <p class="lane">Owner</p>
+          <h2 id="own-title">Not in the thread</h2>
+          <p id="own-copy">On a roof. The call did not reach the phone that books work.</p>
+          <p class="chip" id="own-chip">Out of loop</p>
+        </article>
+      </section>
+      <p class="caption">Illustration. Not a client, not a score, not a dashboard of revenue.</p>
+
+      <section id="offer">
+        <h2>What the board is watching</h2>
+        <div class="cols">
+          <p>An unanswered call gets a text that knows the shop, asks what the job is, offers a booking, and puts it in front of the owner.</p>
+          <p>Every unanswered estimate gets a timed, job-specific follow-up that stops the moment they reply.</p>
+        </div>
+        <p>We look first, free. Quote in writing after. Landscaping, HVAC, plumbing, electrical first.</p>
+      </section>
+
+      <section id="flow">
+        <h2>How a recovery audit runs</h2>
+        <ol>
+          <li><span>01</span> You show us how enquiries arrive.</li>
+          <li><span>02</span> We find the leak, free.</li>
+          <li><span>03</span> Written quote — or we stop.</li>
+          <li><span>04</span> You approve the language. It goes to work.</li>
+        </ol>
+      </section>
+
+      <section id="about">
+        <h2>Travis Hambrick</h2>
+        <p>Family name, working label. Charlottesville, Virginia and a forty-mile radius. No case studies yet. This board will not invent them.</p>
+      </section>
+
+      <section id="contact">
+        <h2>Request a recovery audit</h2>
+        <p><a class="commit" href="mailto:hello@hambrickco.com">hello@hambrickco.com</a> · <a class="commit" href="tel:+14342600823">(434) 260-0823</a></p>
+        <form id="lead-form" action="mailto:hello@hambrickco.com" method="post" enctype="text/plain">
+          <label>Your name <input id="name" name="name" required autocomplete="name"></label>
+          <label>Business name <input id="biz" name="business" required autocomplete="organization"></label>
+          <label>Email or phone <input id="reach" name="contact" required></label>
+          <label>How do enquiries reach you now? <textarea id="enquiries" name="enquiries" rows="3"></textarea></label>
+          <button class="btn commit" type="submit">Open in your email app</button>
+          <p class="note">Nothing is sent from this page. Your mail app opens addressed to hello@hambrickco.com.</p>
+          <p class="confirm" id="form-confirm" hidden>Your email app should open with hello@hambrickco.com addressed. If it does not, write that address yourself.</p>
+        </form>
+      </section>
+
+      <footer>
+        <a href="../index.html">All five directions</a>
+        <span>Preview only</span>
+      </footer>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
