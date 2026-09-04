@@ -2,13 +2,12 @@ hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
 parked halls
-BrandLockup
-LogoTraceMark 16834
-GoldMetalTrace
+MetalRim living-gold wordmark lockup
 GoldMetalAnd
 GoldMetalRim
 MeshStandardMaterial
+no 16834 Logo Trace Loader
 no 12197 Hover Brand Logo
 magnetic <=20px
-tip 2c1030f
-parent 63c8aac
+tip 968a369
+parent 6dd93af
