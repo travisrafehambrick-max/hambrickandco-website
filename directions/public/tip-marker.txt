@@ -2,13 +2,11 @@ hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
 parked halls
-MetalRimCTA
-GoldMetalBar
-HeroMetalPlate
-MetalRoute
-GoldMetalMark
+MetalRim living-gold wordmark lockup
+GoldMetalAnd
+GoldMetalRim
 MeshStandardMaterial
-@react-three/fiber
+no 16834 Logo Trace Loader
 magnetic <=20px
-tip 74e4e1d
-parent 7f8bc03
+tip b3e33e6
+parent 8f164f1
