@@ -1,6 +1,6 @@
 (function () {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const path = document.getElementById("signal-path");
+  const bar = document.getElementById("signal-bar");
   const dead = document.getElementById("line-dead");
   const live = document.getElementById("line-live");
   const form = document.getElementById("lead-form");
@@ -9,7 +9,7 @@
 
   function recovered() {
     document.body.classList.add("is-recovered");
-    if (path) path.style.strokeDashoffset = "0";
+    if (bar) bar.style.transform = "scaleX(1)";
     if (dead) {
       dead.style.opacity = "0.22";
       dead.style.textDecoration = "line-through";
@@ -37,23 +37,23 @@
   }
 
   function playSignal() {
-    if (!hasGsap || !path || !dead || !live) {
+    if (!hasGsap || !bar || !dead || !live) {
       recovered();
       return;
     }
-    const length = path.getTotalLength();
-    gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+    gsap.set(bar, { scaleX: 0.12, transformOrigin: "left center" });
     gsap.set(live, { autoAlpha: 0, position: "absolute" });
     gsap.set(dead, { autoAlpha: 1 });
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    tl.to(path, { strokeDashoffset: 0, duration: 0.9 }, 0.15);
-    tl.to(dead, { autoAlpha: 0.22, duration: 0.28 }, 0.7);
+    tl.to(bar, { scaleX: 1, duration: 0.8 }, 0.12);
+    tl.to(dead, { autoAlpha: 0.22, duration: 0.24 }, 0.62);
     tl.add(function () {
       dead.style.textDecoration = "line-through";
       dead.style.textDecorationColor = "#c4a574";
     });
-    tl.fromTo(live, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.32, position: "static" }, 0.82);
+    tl.fromTo(live, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.28 }, 0.74);
     tl.add(function () {
+      live.style.position = "static";
       document.body.classList.add("is-recovered");
     });
   }

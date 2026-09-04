@@ -22,3 +22,15 @@ npm run preview
 ```
 
 Then open `http://localhost:3000/variants/`.
+
+## Public preview (not live hambrickco.com)
+
+**Preview (open in browser):** https://hambrick-d3-gallery-7cc90b.tiiny.site/
+
+- https://hambrick-d3-gallery-7cc90b.tiiny.site/01-recovery-signal/
+- https://hambrick-d3-gallery-7cc90b.tiiny.site/02-revenue-control-room/
+- https://hambrick-d3-gallery-7cc90b.tiiny.site/03-jobsite-film/
+- https://hambrick-d3-gallery-7cc90b.tiiny.site/04-crafted-local-luxury/
+- https://hambrick-d3-gallery-7cc90b.tiiny.site/05-metallic-diagnostic/
+
+This is a separate static host. It is not hambrickco.com and not Netlify production.

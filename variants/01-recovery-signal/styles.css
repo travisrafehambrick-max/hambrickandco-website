@@ -157,24 +157,24 @@ body.is-recovered .line .live {
   position: static;
 }
 
-.signal {
-  display: block;
+.signal-track {
   width: 100%;
-  height: 28px;
-  margin: 18px 0;
+  height: 8px;
+  margin: 22px 0 20px;
+  background: transparent;
 }
 
-.signal path {
-  fill: none;
-  stroke: var(--gold);
-  stroke-width: 3;
-  stroke-linecap: square;
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
+.signal-bar {
+  display: block;
+  height: 8px;
+  width: 100%;
+  background: var(--gold);
+  transform: scaleX(0.12);
+  transform-origin: left center;
 }
 
-body.is-recovered .signal path {
-  stroke-dashoffset: 0;
+body.is-recovered .signal-bar {
+  transform: scaleX(1);
 }
 
 .territory {
@@ -279,8 +279,8 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .signal path {
-    stroke-dashoffset: 0;
+  .signal-bar {
+    transform: scaleX(1);
   }
 
   .line .dead {

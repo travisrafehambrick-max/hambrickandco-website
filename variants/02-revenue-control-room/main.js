@@ -43,23 +43,20 @@
 
   function setState(state, animate) {
     if (!board) return;
-    if (!animate || !hasGsap || reduce.matches) {
-      write(state);
-      return;
-    }
+    write(state);
+    if (!animate || !hasGsap || reduce.matches) return;
     const tickets = board.querySelectorAll(".ticket");
-    const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.2 } });
-    if (state === "live") {
-      tl.to(tickets, { autoAlpha: 1, y: 0, stagger: 0.06 });
-      tl.add(function () {
-        write("live");
-      }, 0);
-    } else {
-      tl.add(function () {
-        write("dead");
-      }, 0);
-      tl.to(tickets, { autoAlpha: 0.72, y: 0, stagger: 0.04, duration: 0.16 });
-    }
+    gsap.fromTo(
+      tickets,
+      { autoAlpha: state === "live" ? 0.7 : 1 },
+      {
+        autoAlpha: state === "live" ? 1 : 0.72,
+        duration: 0.18,
+        stagger: 0.05,
+        ease: "power2.out",
+        overwrite: true,
+      }
+    );
   }
 
   if (deadBtn) {
