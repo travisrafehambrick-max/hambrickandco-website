@@ -1,8 +1,8 @@
-import { aisEase, gsap } from "@/lib/register-gsap";
+import { EASE, gsap } from "@/lib/register-gsap";
 
 const MAX_PULL = 20;
 
-/** Magnetic pull ≤20px, then spring settle. GSAP only. */
+/** Magnetic pull ≤20px. Heavy ease-in-out settle — no spring, no bounce. */
 export function bindMagnetic(el: HTMLElement, max = MAX_PULL) {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return () => {};
@@ -16,7 +16,7 @@ export function bindMagnetic(el: HTMLElement, max = MAX_PULL) {
     const dist = Math.hypot(dx, dy) || 1;
     const reach = Math.max(r.width, r.height) * 0.9 + 36;
     if (dist > reach) {
-      gsap.to(el, { x: 0, y: 0, duration: 0.42, ease: aisEase, overwrite: "auto" });
+      gsap.to(el, { x: 0, y: 0, duration: 0.55, ease: EASE, overwrite: "auto" });
       return;
     }
     const t = 1 - dist / reach;
@@ -24,14 +24,14 @@ export function bindMagnetic(el: HTMLElement, max = MAX_PULL) {
     gsap.to(el, {
       x: (dx / dist) * pull,
       y: (dy / dist) * pull,
-      duration: 0.18,
-      ease: aisEase,
+      duration: 0.22,
+      ease: EASE,
       overwrite: "auto",
     });
   };
 
   const settle = () => {
-    gsap.to(el, { x: 0, y: 0, duration: 0.48, ease: aisEase, overwrite: "auto" });
+    gsap.to(el, { x: 0, y: 0, duration: 0.55, ease: EASE, overwrite: "auto" });
   };
 
   el.addEventListener("pointermove", move);
