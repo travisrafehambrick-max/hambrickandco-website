@@ -45,7 +45,7 @@ export const DIRECTIONS = [
     slug: "balance-object",
     name: "Balance Object",
     carrier: "Quote slip",
-    line: "Airy field. One soft object. A paper slip is the current.",
+    line: "Composed field. One pebble lags the copy. The seam is the turn.",
   },
   {
     n: "05",

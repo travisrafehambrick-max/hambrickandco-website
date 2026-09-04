@@ -3,74 +3,92 @@
 import { useRef, useState } from "react";
 import { bindMagnetic } from "@/lib/bind-magnetic";
 import { AREA, CTA_AUDIT, CTA_FLOW, EMAIL, PHONE, PHONE_HREF } from "@/lib/facts";
-import { AIS_REVEAL, AIS_RISE, LINEAR, STILLNESS, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
-import { bindAiasLive, freezeAiasLive } from "@/lib/bind-aias-live";
+import { ScrollTrigger, aisEase, gsap, useGSAP } from "@/lib/register-gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { Wordmark } from "@/components/shared/Wordmark";
 import { LiveButton } from "@/components/shared/LiveButton";
 import { AuditForm } from "@/components/shared/AuditForm";
 import { ObjectSlot } from "@/components/shared/CanvasSlot";
 
+/** Object lags the copy — slower parallax, not a second scrub story. */
+const CARRIER_Y = 28;
+const COPY_Y = 86;
+
 export function BalancePage() {
   const root = useRef<HTMLDivElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const carrier = useRef<HTMLDivElement>(null);
+  const copy = useRef<HTMLDivElement>(null);
   const slip = useRef<HTMLElement>(null);
   const turn = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0.48);
   const [face, setFace] = useState<"missed" | "recovered">("missed");
+  const [ink, setInk] = useState(true);
+
+  const turnSlip = () => {
+    if (reduced) {
+      setFace("recovered");
+      setProgress(1);
+      return;
+    }
+    setFace((f) => (f === "missed" ? "recovered" : "missed"));
+    const el = slip.current;
+    if (!el) return;
+    gsap.fromTo(
+      el,
+      { autoAlpha: 0.72 },
+      { autoAlpha: 1, duration: 0.7, ease: aisEase, overwrite: "auto" },
+    );
+  };
 
   useGSAP(
     () => {
       if (reduced === null) return;
 
+      const paintHeader = (dark: boolean, immediate = false) => {
+        setInk(dark);
+        const el = header.current;
+        if (!el) return;
+        gsap.to(el, {
+          backgroundColor: dark ? "#121212" : "#F5F5F5",
+          color: dark ? "#F5F5F5" : "#121212",
+          duration: immediate ? 0 : 0.55,
+          ease: aisEase,
+          overwrite: "auto",
+        });
+      };
+
       if (reduced) {
-        gsap.set(slip.current, { x: 0, y: 0, filter: "none" });
-        if (root.current) freezeAiasLive(root.current);
+        gsap.set([carrier.current, copy.current, slip.current], { y: 0, filter: "none", autoAlpha: 1 });
         setProgress(1);
         setFace("recovered");
+        paintHeader(true, true);
         return;
       }
 
-      if (root.current) bindAiasLive(root.current);
       const releaseTurn = turn.current ? bindMagnetic(turn.current, 16) : undefined;
+      paintHeader(true, true);
 
-      const intro = gsap.timeline({ defaults: { ease: aisEase } });
-      intro
-        .fromTo(
-          slip.current,
-          { x: -48, y: AIS_RISE, rotate: -3, filter: "blur(6px)" },
-          { x: -8, y: 0, rotate: -1.2, filter: "blur(0px)", duration: AIS_REVEAL },
-        )
-        .add(() => setFace("recovered"), 0.45)
-        .to({}, { duration: STILLNESS });
-      intro.eventCallback("onUpdate", () => setProgress(intro.progress() * 0.32));
-
-      const pin = gsap.timeline({
-        defaults: { ease: LINEAR },
-        scrollTrigger: {
-          trigger: ".balance-pin",
-          start: "top top",
-          end: "+=100%",
-          pin: true,
-          scrub: 0.75,
+      ScrollTrigger.create({
+        trigger: ".balance-hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.2,
+        onUpdate: (self) => {
+          const t = self.progress;
+          if (carrier.current) gsap.set(carrier.current, { y: t * CARRIER_Y });
+          if (copy.current) gsap.set(copy.current, { y: t * -COPY_Y });
+          setProgress(0.48 + t * 0.4);
         },
       });
 
-      pin
-        .to(slip.current, { x: 72, y: 10, rotate: 0, duration: 0.8 })
-        .to(
-          {},
-          {
-            duration: 0.8,
-            onUpdate() {
-              const p = 0.32 + this.progress() * 0.68;
-              setProgress(p);
-              setFace(p > 0.45 ? "recovered" : "missed");
-            },
-          },
-          0,
-        )
-        .to({}, { duration: 0.2 });
+      ScrollTrigger.create({
+        trigger: ".balance-turn",
+        start: "top 12%",
+        onEnter: () => paintHeader(false),
+        onLeaveBack: () => paintHeader(true),
+      });
 
       return () => {
         releaseTurn?.();
@@ -80,76 +98,72 @@ export function BalancePage() {
   );
 
   return (
-    <div ref={root} className="min-h-screen bg-matte text-ink">
-      <header className="sticky top-0 z-40">
+    <div ref={root} className="min-h-screen bg-ink text-matte">
+      <header
+        ref={header}
+        className={`sticky top-0 z-40 border-b ${ink ? "border-black bg-ink text-matte" : "border-ink bg-matte text-ink"}`}
+      >
         <div className="mx-auto flex max-w-[1100px] items-center justify-between px-6 py-6">
-          <Wordmark tone="light" />
-          <LiveButton href="#ask" tone="ghost-dark">
-            {CTA_AUDIT}
-          </LiveButton>
+          <Wordmark tone={ink ? "dark" : "light"} />
+          <LiveButton href="#ask">{CTA_AUDIT}</LiveButton>
         </div>
       </header>
 
-      <section className="relative mx-auto flex min-h-[100svh] max-w-[1100px] flex-col justify-between px-6 pb-16 pt-4">
-        <div className="pointer-events-none absolute inset-x-0 top-[18%] h-[42vh]">
-          <ObjectSlot progress={Math.max(progress, 0.4)} />
-        </div>
-        <div className="relative z-10">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-ink/40">04 — Balance Object</p>
-          <h1 className="mt-8 max-w-xl font-display text-[clamp(2.6rem,6vw,4.8rem)] leading-[0.95]">
-            A quiet field.
-            <br />
-            One object.
-          </h1>
-          <p className="intro-beat mt-6 max-w-sm font-sans text-[15px] text-ink/55">
-            The slip is the current. The object stays put.
-          </p>
-        </div>
-        <article
-          ref={slip}
-          className="relative z-10 w-[min(100%,340px)] border border-ink/15 bg-matte p-6 shadow-[8px_12px_0_0_#12121208]"
+      <section className="balance-hero relative min-h-[100svh] overflow-hidden">
+        <div
+          ref={carrier}
+          className="balance-carrier pointer-events-none absolute inset-x-0 top-[12%] h-[56vh]"
         >
-          <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${face === "recovered" ? "metal-text" : "text-ink/40"}`}>
-            {face === "recovered" ? "Recovered" : "Missed"}
-          </p>
-          <p className="mt-6 font-display text-[1.65rem] leading-snug">
-            {face === "missed"
-              ? "We sent the number. Nobody wrote back."
-              : "The estimate came back before the truck left."}
-          </p>
-          <button
-            ref={turn}
-            type="button"
-            onClick={() => setFace((f) => (f === "missed" ? "recovered" : "missed"))}
-            className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] metal-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
-          >
-            Turn the slip
-          </button>
-        </article>
-        <p className="max-w-xs font-sans text-[14px] text-ink/50">
-          Two faces of one slip. {AREA}.
-        </p>
-      </section>
+          <ObjectSlot progress={progress} />
+        </div>
 
-      <section className="balance-pin">
-        <div className="relative mx-auto min-h-[100svh] max-w-[1100px]">
-          <div data-depth="device" className="absolute inset-0">
-            <ObjectSlot progress={progress} />
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1100px] flex-col justify-between px-6 pb-28 pt-8">
+          <div ref={copy} className="balance-copy max-w-xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-matte/40">Quiet field</p>
+            <h1 className="mt-8 font-display text-[clamp(3.2rem,9vw,6.4rem)] leading-[0.82] tracking-[-0.03em]">
+              A quiet
+              <br />
+              field.
+            </h1>
+            <p className="mt-8 font-display italic text-[clamp(2rem,4vw,3.2rem)] leading-none">
+              <span className="metal-text">Recovered.</span>
+            </p>
+            <p className="mt-6 max-w-sm font-sans text-[15px] text-matte/55">
+              One object. The slip is already on the table. {AREA}.
+            </p>
           </div>
-          <p className="absolute bottom-8 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/35">
-            One object. The slip is the current.
-          </p>
+
+          <article
+            ref={slip}
+            className="relative z-10 w-[min(100%,340px)] border border-black bg-matte p-6 text-ink"
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">Missed</p>
+            <p className="mt-4 font-display text-[1.55rem] leading-snug">
+              We sent the number. Nobody wrote back.
+            </p>
+            <p className={`mt-5 font-mono text-[10px] uppercase tracking-[0.16em] ${face === "recovered" ? "metal-text" : "text-ink/35"}`}>
+              Recovered · the estimate came back before the truck left
+            </p>
+            <button
+              ref={turn}
+              type="button"
+              onClick={turnSlip}
+              className="mt-6 font-mono text-[10px] uppercase tracking-[0.18em] metal-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+            >
+              Turn the slip
+            </button>
+          </article>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-6 py-28">
-        <div className="max-w-md">
-          <p className="font-display text-[clamp(1.8rem,3vw,2.4rem)] leading-snug">
-            No fake KPIs. No partner badges. Just the tactile quiet of a recovery that held its
-            balance.
+      <section className="balance-turn border-t border-black bg-matte text-ink">
+        <div className="mx-auto min-h-[88svh] max-w-[1100px] px-6 py-28">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/35">Turning point</p>
+          <p className="mt-10 max-w-md font-display text-[clamp(2rem,4.2vw,3.4rem)] leading-[1.05]">
+            The field goes still. The object keeps the slower current.
           </p>
-          <p className="mt-6 font-sans text-[15px] text-ink/55">
-            Hambrick &amp; Co. works the quiet hours between a missed inbound and a reply that lands.{" "}
+          <p className="mt-10 max-w-sm font-sans text-[15px] text-ink/55">
+            No count-ups. No invented hours or percentages. The work is a reply that lands — write{" "}
             <a className="metal-text" href={`mailto:${EMAIL}`}>
               {EMAIL}
             </a>
@@ -157,20 +171,19 @@ export function BalancePage() {
             <a className="metal-text" href={PHONE_HREF}>
               {PHONE}
             </a>
+            .
           </p>
         </div>
       </section>
 
-      <section id="ask" className="border-t border-ink px-6 py-24">
-        <div className="mx-auto grid max-w-[1100px] gap-16 md:grid-cols-2">
+      <section id="ask" className="border-t border-ink bg-matte text-ink">
+        <div className="mx-auto grid max-w-[1100px] gap-16 px-6 py-24 md:grid-cols-2">
           <div>
             <h2 className="font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-[0.95]">
               Request a recovery audit.
             </h2>
             <div className="mt-8">
-              <LiveButton href={`mailto:${EMAIL}`} tone="gold">
-                {CTA_FLOW}
-              </LiveButton>
+              <LiveButton href={`mailto:${EMAIL}`}>{CTA_FLOW}</LiveButton>
             </div>
           </div>
           <AuditForm tone="light" />

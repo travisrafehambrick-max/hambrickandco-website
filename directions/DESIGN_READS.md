@@ -34,7 +34,7 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 1. **Society Hall / AIS** — sticky chrome; product stage *is* the recovery board; gold only on the active lane and live signal.
 2. **Solid Proof / Solidroad** — gold signal line scrubs missed→recovered across sticky chrome; tickets still the carrier.
 3. **Signature Reel / Austin Werner** — one metallic orb as the sole 3D; rotation hands off mid-motion. Chapter still stays the DOM carrier.
-4. **Balance Object / Ballance** — restraint; the slip is UI that behaves (GSAP only — no Framer Motion).
+4. **Balance Object / Ballance** — first screen composed (no autoplay). One hero pebble with slower parallax than the copy. Hard black→white seam at the turning point. One tactile slip control; high stillness. No KPI count-ups. GSAP / ScrollTrigger / R3F only — no Framer Motion. Reduced-motion = recovered still.
 5. **Assist Pane / SiteAssist** — header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Module list left / media right; media swaps on scroll landmarks. Oversized type reveal; staggered job-type cards; discrete carousel OK. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`).
 
 ## AIS hard numbers (progress / signal line carriers)
@@ -93,9 +93,17 @@ First screen: missed still vs recovered still as a spread. R3F is a film gate.
 
 ### 04 Balance Object — quote slip
 
-Airy calm. Almost empty matte white. One soft R3F object (pebble/lens, not a
-chrome planet). Carrier: a paper quote slip that travels left→forward.
-First screen: the slip already showing missed quote / recovered estimate.
+Airy calm. Ballance live-scroll, closed — steal the stillness, never the counters:
+
+- First screen is composed on paint. No load timeline, no autoplay flip, no idle spin.
+- One hero carrier: the R3F pebble. It parallax-lags the copy (`scrub: 1.2`, ~28px vs ~86px). No `bindAiasLive`. No second 3D object after the seam.
+- Hard `#121212` → `#F5F5F5` seam at the turning point (`border-t border-black`). Header morphs with that seam. Gold only on recovered type, the turn control, and the CTA.
+- One tactile control (“Turn the slip”). After a turn, stillness (`STILLNESS`) — do not chain more motion.
+- No KPI count-ups, no invented %, hours, or 10x. Truth only: area, email, phone, the missed/recovered sentences.
+- GSAP / ScrollTrigger / R3F only. No Framer Motion.
+- `prefers-reduced-motion` → recovered still, progress `1`, parallax off.
+
+Carrier: the quote slip on the table. R3F is the pebble, hero only.
 
 ### 05 Assist Pane — phone sheet peel
 
