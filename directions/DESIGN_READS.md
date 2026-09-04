@@ -9,7 +9,7 @@ Gold is a living signal, never a wash. Dead states stay matte.
 
 Banned: Inter-only, three equal feature cards, purple AI mesh, glassmorphism soup,
 idle wobble, bounce/elastic/breathe loops, Framer Motion, fake customers, prices,
-growth-partner language, Crozet-centering, Higgsfield spend.
+partner-pitch language, Crozet-centering, Higgsfield spend.
 
 ## Cross-site laws (every route)
 

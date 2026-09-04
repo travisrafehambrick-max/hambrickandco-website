@@ -123,7 +123,8 @@ export function BalancePage() {
       <section className="mx-auto max-w-[1100px] px-6 py-28">
         <div className="max-w-md">
           <p className="font-display text-[clamp(1.8rem,3vw,2.4rem)] leading-snug">
-            Lead response and estimate recovery, written like a person. Not a product launch.
+            No fake KPIs. No partner badges. Just the tactile quiet of a recovery that held its
+            balance.
           </p>
           <p className="mt-6 font-sans text-[15px] text-ink/55">
             Hambrick &amp; Co. works the quiet hours between a missed inbound and a reply that lands.{" "}

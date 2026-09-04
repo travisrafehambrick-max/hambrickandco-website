@@ -10,10 +10,10 @@ import { AuditForm } from "@/components/shared/AuditForm";
 import { PeelSlot } from "@/components/shared/CanvasSlot";
 
 const THREAD = [
-  { t: "14:02", who: "Inbound", text: "Can you still do the estimate this week?", state: "missed" as const },
-  { t: "14:02", who: "Line", text: "Missed. Sheet sits on the lock screen.", state: "missed" as const },
-  { t: "14:04", who: "Recovery", text: "Yes — we can hold Thursday morning. Confirm the address?", state: "live" as const },
-  { t: "14:06", who: "Inbound", text: "Same street. After 9 is fine.", state: "live" as const },
+  { t: "14:02", who: "Missed", text: "Can you still do the estimate this week?", state: "missed" as const },
+  { t: "14:02", who: "Alert", text: "Sheet sits on the lock screen.", state: "missed" as const },
+  { t: "14:04", who: "Callback", text: "Yes — we can hold Thursday morning. Confirm the address?", state: "live" as const },
+  { t: "14:06", who: "Recovered", text: "Same street. After 9 is fine.", state: "live" as const },
 ];
 
 const CONSOLE = [
@@ -99,7 +99,7 @@ export function AssistPane() {
 
       <section className="grid min-h-[100svh] md:grid-cols-2">
         <div className="flex flex-col justify-end border-b border-matte/10 px-5 py-12 md:border-b-0 md:border-r md:px-8">
-          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">05 — Assist Pane</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-matte/40">Missed</p>
           <h1 className="mt-5 font-display text-[clamp(2.8rem,6vw,5rem)] leading-[0.9]">
             Missed
             <br />
@@ -131,13 +131,14 @@ export function AssistPane() {
           <article
             ref={sheet}
             style={{ transformStyle: "preserve-3d", perspective: 800 }}
-            className="absolute left-0 top-10 z-10 w-[min(240px,68%)] origin-top -translate-x-1/2 border border-ink/10 bg-matte p-4 text-ink max-md:left-auto max-md:right-5 max-md:translate-x-0"
+            className="absolute left-0 top-10 z-10 w-[min(240px,68%)] origin-top -translate-x-1/2 border border-ink/10 bg-matte p-5 text-ink max-md:left-auto max-md:right-5 max-md:translate-x-0"
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/40">Phone sheet</p>
-            <p className="mt-3 font-display text-xl leading-tight">
-              {progress > 0.4 ? "Estimate hold · Thursday" : "Missed · 2h 14m"}
+            <p className="font-display text-xl leading-tight">
+              {progress > 0.4 ? "Recovered" : "Missed"}
             </p>
-            <p className="mt-2 font-sans text-[12px] text-ink/50">Carrier · peel left → forward</p>
+            <p className="mt-2 font-sans text-[14px] text-ink/60">
+              {progress > 0.4 ? "Estimate hold · Thursday" : "2h 14m on the lock screen"}
+            </p>
           </article>
         </div>
       </section>
@@ -151,7 +152,7 @@ export function AssistPane() {
           </div>
           <div className="px-5 py-10 md:px-10">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/40">
-              Recovery thread · {AREA}
+              {AREA}
             </p>
             <ol className="mt-8 space-y-3">
               {THREAD.map((m, i) => {
