@@ -1,10 +1,9 @@
 hambrickandco-website PR #8
 directions/ Assist Pane conversion homepage
 Harcourt ONLY — ignore Sterling
-parked halls
+Harcourt PROOF revise 2026-09-04 CoS canonical
 proof felt math — no named client
 no Stonefield
 MetalRim living-gold wordmark lockup
-magnetic <=20px
-tip de245ff
-parent 7e92b41
+tip 2393931
+parent 2c99bea
