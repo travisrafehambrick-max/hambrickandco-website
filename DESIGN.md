@@ -1,6 +1,14 @@
 # Design
 
-Status: **approved to build.** Dark-cinematic second pass. This file is the live direction.
+Status: **Assist Pane picked (draft, not live).** Travis chose Assist Pane as the hambrickco.com direction. It is not finished. Purpose = get a client; marketing is primary.
+
+The conversion homepage is `directions/` — served at `/` and `/assist-pane`. Harcourt is the ONLY copy for this raise (ignore any Sterling pack; do not remix). Society Hall, Solid Proof, Signature Reel, and Balance Object are parked (no churn). Do not publish over production hambrickco.com / Netlify prod. No Higgsfield.
+
+Static root (`index.html`) remains the live bones until Travis asks to publish.
+
+---
+
+Status (static bones, still approved, not the active draft): dark-cinematic second pass.
 
 Live site today: [hambrickco.com](https://hambrickco.com/) may still show the old web-design pitch or the first pearl-metal draft. Keep the **bones**. Change the materials and the motion.
 

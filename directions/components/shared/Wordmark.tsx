@@ -1,0 +1,27 @@
+import Link from "next/link";
+
+type Tone = "dark" | "light" | "current";
+
+export function Wordmark({
+  tone = "dark",
+  href = "/",
+  kicker,
+}: {
+  tone?: Tone;
+  href?: string;
+  kicker?: string;
+}) {
+  const ink = tone === "current" ? "text-current" : tone === "dark" ? "text-matte" : "text-ink";
+  return (
+    <Link href={href} className={`group inline-flex items-baseline gap-3 ${ink}`}>
+      <span className="font-display text-[1.15rem] leading-none tracking-tight">
+        Hambrick <em className="metal-text font-display italic">{"&"}</em> Co.
+      </span>
+      {kicker ? (
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">
+          {kicker}
+        </span>
+      ) : null}
+    </Link>
+  );
+}

@@ -1,0 +1,8 @@
+# Draft site only. Never set hambrickco.com production to this folder.
+[build]
+  command = "DIRECTIONS_EXPORT=1 npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+  DIRECTIONS_EXPORT = "1"

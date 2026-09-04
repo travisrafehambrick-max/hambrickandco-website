@@ -1,0 +1,9 @@
+hambrickandco-website PR #8
+directions/ Assist Pane conversion homepage
+Harcourt ONLY — ignore Sterling
+CRO: Stop the leak — talk to Travis
+OFFER_WEDGE start here
+PROOF_SETUP no software day one
+BrandMark + hero stills + money-math untouched
+tip 0c5da72
+parent 256b375

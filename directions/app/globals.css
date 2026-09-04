@@ -1,0 +1,327 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme inline {
+  --color-gold: #c4a574;
+  --color-matte: #f5f5f5;
+  --color-ink: #121212;
+  --font-display: var(--font-instrument);
+  --font-sans: var(--font-hanken);
+  --font-mono: var(--font-plex);
+}
+
+html,
+body {
+  background: #121212;
+  color: #f5f5f5;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-hanken), sans-serif;
+}
+
+::selection {
+  background: #c4a574;
+  color: #121212;
+}
+
+.hub-row a {
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hub-row a:hover,
+.hub-row a:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.metal-text {
+  background-image: linear-gradient(
+    118deg,
+    #6e5a3a 0%,
+    #f3eee4 16%,
+    #c4a574 38%,
+    #8a7350 58%,
+    #e8d5b0 78%,
+    #c4a574 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: metal-sheen 7s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+}
+
+.metal-rule {
+  background-image: linear-gradient(
+    90deg,
+    #6e5a3a 0%,
+    #f3eee4 28%,
+    #c4a574 52%,
+    #8a7350 78%,
+    #e8d5b0 100%
+  );
+  background-color: transparent;
+}
+
+.metal-cta {
+  color: #f5f5f5;
+  background:
+    linear-gradient(#161616, #161616) padding-box,
+    linear-gradient(125deg, #6e5a3a, #f3eee4 35%, #c4a574 55%, #8a7350) border-box;
+  border: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(243, 238, 228, 0.28);
+}
+
+.metal-cta-ghost,
+.metal-cta.metal-cta--ghost {
+  color: inherit;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(125deg, #6e5a3a, #f3eee4 40%, #c4a574) border-box;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.assist-glass {
+  background: rgba(245, 245, 245, 0.52);
+  backdrop-filter: blur(18px) saturate(1.28);
+  -webkit-backdrop-filter: blur(18px) saturate(1.28);
+  border: 1px solid rgba(243, 238, 228, 0.46);
+  box-shadow:
+    0 12px 36px rgba(18, 18, 18, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.assist-glass--live {
+  box-shadow:
+    0 12px 36px rgba(18, 18, 18, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 0 0 1px rgba(196, 165, 116, 0.38);
+}
+
+.metal-edge {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--metal-fill, #121212), var(--metal-fill, #121212)) padding-box,
+    linear-gradient(125deg, #6e5a3a, #f3eee4 40%, #c4a574 70%, #8a7350) border-box;
+}
+
+.progress-dot {
+  background-image: radial-gradient(circle at 30% 28%, #f3eee4, #c4a574 55%, #6e5a3a);
+  box-shadow: 0 0 10px 3px rgba(196, 165, 116, 0.45);
+}
+
+.gold-metal-bar {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.gold-metal-mark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.peel-slot {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #121212;
+}
+
+.hero-story,
+.hero-story__frame {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-story__frame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-story__frame:first-child,
+.hero-story__frame.is-on {
+  opacity: 1;
+}
+
+.hero-story:has(.hero-story__frame.is-on:not(:first-child)) .hero-story__frame:first-child:not(.is-on) {
+  opacity: 0;
+}
+
+.peel-slot__accent {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 16%;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
+.brand-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.3rem 0.68rem 0.3rem 0.56rem;
+}
+
+.brand-mark:focus-visible {
+  outline: 1px solid #c4a574;
+  outline-offset: 4px;
+}
+
+.brand-mark__rim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.brand-mark__lockup {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: baseline;
+  column-gap: 0.36em;
+}
+
+.brand-mark__name {
+  font-family: var(--font-instrument), ui-serif, serif;
+  font-size: 1.18rem;
+  letter-spacing: -0.052em;
+  line-height: 1;
+}
+
+.gold-metal-and {
+  display: inline-block;
+  width: 1.58rem;
+  height: 1.98rem;
+  margin-block: -0.36rem;
+  translate: 0 0.34em;
+  flex-shrink: 0;
+  pointer-events: none;
+  -webkit-mask-image: url("/brand-and-mask.svg");
+  mask-image: url("/brand-and-mask.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.brand-mark__house {
+  font-family: var(--font-instrument), ui-serif, serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  opacity: 0.78;
+}
+
+.metal-rim-cta {
+  position: relative;
+}
+
+.metal-cta__rim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+}
+
+.metal-parity-cta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  pointer-events: none;
+}
+
+@keyframes metal-sheen {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+.seam-black {
+  border-color: #000;
+}
+
+.reel-calm {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reel-calm:hover,
+.reel-calm:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .signal-line,
+  .signal-related,
+  [data-parallax],
+  [data-depth],
+  .hub-row a,
+  .intro-beat,
+  .progress-dot {
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+  }
+
+  .live-gradient,
+  .progress-dot,
+  .metal-text,
+  .metal-rule {
+    animation: none !important;
+    background-size: 100% 100% !important;
+    background-position: 40% 50% !important;
+  }
+
+  .assist-glass,
+  .assist-glass--live {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(245, 245, 245, 0.94) !important;
+  }
+
+  .hero-story__frame {
+    transition: none !important;
+  }
+}
