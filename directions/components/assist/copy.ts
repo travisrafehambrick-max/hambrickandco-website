@@ -1,4 +1,8 @@
-/** Harcourt conversion copy — locked verbatim. Do not paraphrase. */
+/**
+ * CANONICAL for this Assist Pane pass (hero / problem / offer stack / proof / CTA).
+ * Harcourt text — use verbatim. Do not rewrite into a gallery or process-meta.
+ * Stonefield Landscaping is named proof of work only. No invented quotes.
+ */
 export const HERO_HEADLINE =
   "Every missed call and unanswered estimate is money walking out the door.";
 
