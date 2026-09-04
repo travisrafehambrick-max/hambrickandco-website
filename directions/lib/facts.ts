@@ -30,8 +30,8 @@ export const DIRECTIONS = [
     n: "02",
     slug: "solid-proof",
     name: "Solid Proof",
-    carrier: "Board tickets dead→alive",
-    line: "One gold route. Tickets stay matte until the line arrives.",
+    carrier: "Gold route",
+    line: "One gold line. Missed → callback → recovered. Dead tickets stay matte.",
   },
   {
     n: "03",

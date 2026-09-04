@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-type Tone = "dark" | "light";
+type Tone = "dark" | "light" | "current";
 
 export function Wordmark({
   tone = "dark",
@@ -11,7 +11,7 @@ export function Wordmark({
   href?: string;
   kicker?: string;
 }) {
-  const ink = tone === "dark" ? "text-matte" : "text-ink";
+  const ink = tone === "current" ? "text-current" : tone === "dark" ? "text-matte" : "text-ink";
   return (
     <Link href={href} className={`group inline-flex items-baseline gap-3 ${ink}`}>
       <span className="font-display text-[1.15rem] leading-none tracking-tight">

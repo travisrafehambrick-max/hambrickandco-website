@@ -61,26 +61,48 @@ export function SolidProof() {
       if (reduced === null) return;
 
       const paintHeader = (dark: boolean, immediate = false) => {
-        setInk(dark);
         const el = header.current;
         if (!el) return;
+        const inkTo = dark ? "#121212" : "#F5F5F5";
+        const typeTo = dark ? "#F5F5F5" : "#121212";
+        if (immediate) {
+          setInk(dark);
+          gsap.set(el, { backgroundColor: inkTo, color: typeTo });
+          return;
+        }
+        let flipped = false;
         gsap.to(el, {
-          backgroundColor: dark ? "#121212" : "#F5F5F5",
-          color: dark ? "#F5F5F5" : "#121212",
-          duration: immediate ? 0 : 0.75,
+          backgroundColor: inkTo,
+          color: typeTo,
+          duration: 0.75,
           ease: EASE,
           overwrite: "auto",
+          onUpdate() {
+            if (!flipped && this.progress() >= 0.48) {
+              flipped = true;
+              setInk(dark);
+            }
+          },
         });
+      };
+
+      const revealBeat = () => {
+        gsap.fromTo(
+          ".proof-verb, .proof-line",
+          { autoAlpha: 0, filter: "blur(8px)" },
+          { autoAlpha: 1, filter: "blur(0px)", duration: 0.75, ease: EASE, overwrite: "auto" },
+        );
       };
 
       let lastBeat = 0;
       const applyBeat = (p: number) => {
         setProgress(p);
         const next = beatAt(p);
-        setBeat(next);
         if (next !== lastBeat) {
           lastBeat = next;
+          setBeat(next);
           paintHeader(BEATS[next].ink);
+          requestAnimationFrame(() => requestAnimationFrame(revealBeat));
         }
         gsap.set(playhead.current, { scaleX: p, transformOrigin: "left center" });
       };
@@ -94,6 +116,7 @@ export function SolidProof() {
       }
 
       gsap.set(playhead.current, { scaleX: 0.22, transformOrigin: "left center" });
+      gsap.set(".proof-verb, .proof-line", { autoAlpha: 1, filter: "none" });
       paintHeader(true, true);
 
       const pin = gsap.timeline({
@@ -101,7 +124,7 @@ export function SolidProof() {
         scrollTrigger: {
           trigger: ".proof-pin",
           start: "top top",
-          end: "+=120%",
+          end: "+=180%",
           pin: true,
           scrub: 0.85,
         },
@@ -132,10 +155,17 @@ export function SolidProof() {
       );
 
       ScrollTrigger.create({
-        trigger: "#audit",
+        trigger: ".proof-board",
         start: "top 28%",
         onEnter: () => paintHeader(false),
         onLeaveBack: () => paintHeader(true),
+      });
+
+      ScrollTrigger.create({
+        trigger: "#audit",
+        start: "top 28%",
+        onEnter: () => paintHeader(false),
+        onLeaveBack: () => paintHeader(false),
       });
     },
     { scope: root, dependencies: [reduced], revertOnUpdate: true },
@@ -144,14 +174,19 @@ export function SolidProof() {
   const current = BEATS[beat];
 
   return (
-    <div ref={root} className="min-h-screen bg-ink text-matte">
+    <div
+      ref={root}
+      className="min-h-screen bg-ink text-matte"
+      data-beat={current.id}
+      data-ink={ink ? "dark" : "light"}
+    >
       <header
         ref={header}
-        className={`sticky top-0 z-40 border-b ${ink ? "border-black bg-ink text-matte" : "border-ink bg-matte text-ink"}`}
+        className={`sticky top-0 z-40 border-b bg-ink text-matte ${ink ? "border-black" : "border-ink"}`}
       >
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-3 md:px-8">
-          <Wordmark tone={ink ? "dark" : "light"} />
-          <p className={`hidden font-mono text-[10px] uppercase tracking-[0.2em] md:block ${ink ? "text-matte/40" : "text-ink/40"}`}>
+          <Wordmark tone="current" />
+          <p className="hidden font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 md:block">
             {current.verb}
           </p>
           <LiveButton href="#audit">{CTA_AUDIT}</LiveButton>
@@ -188,8 +223,8 @@ export function SolidProof() {
       <section className="proof-pin border-t border-black bg-ink">
         <div className="mx-auto grid min-h-[100svh] max-w-[1280px] md:grid-cols-12">
           <div className="proof-copy flex flex-col justify-center px-5 py-16 md:col-span-5 md:px-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] metal-text">{current.verb}</p>
-            <p className="mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] leading-[1.05] text-matte">
+            <p className="proof-verb font-mono text-[10px] uppercase tracking-[0.22em] metal-text">{current.verb}</p>
+            <p className="proof-line mt-6 font-display text-[clamp(2rem,4vw,3.4rem)] leading-[1.05] text-matte">
               {current.line}
             </p>
             <p className="mt-8 max-w-sm font-sans text-[15px] text-matte/55">
