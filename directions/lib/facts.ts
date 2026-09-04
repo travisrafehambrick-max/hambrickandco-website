@@ -52,6 +52,6 @@ export const DIRECTIONS = [
     slug: "assist-pane",
     name: "Assist Pane",
     carrier: "Phone sheet peel",
-    line: "Split assist / console. The sheet peels missed into recovered.",
+    line: "List left, one sheet right. Landmarks swap the peel.",
   },
 ] as const;

@@ -20,6 +20,7 @@ partner-pitch language, Crozet-centering, Higgsfield spend.
 1. First screenful already performs the missed→recovered beat.
 2. One carrier across seams — no crossfades.
 3. Scroll scrubs a story; sections do not fade in one by one.
+   Assist is the exception: one pinned media carrier, discrete landmark swaps, no continuous scrub.
 4. Sticky chrome + one pinned chapter (~1 viewport) then release.
 5. Gold only on living signal.
 6. No idle wobble.
@@ -34,7 +35,7 @@ Cut mid-motion. Stillness-before-climax 0.3–0.75s on the recovered beat.
 2. **Solid Proof / Solidroad** — gold signal line scrubs missed→recovered across sticky chrome; tickets still the carrier.
 3. **Signature Reel / Austin Werner** — one metallic orb as the sole 3D; rotation hands off mid-motion. Chapter still stays the DOM carrier.
 4. **Balance Object / Ballance** — restraint; the slip is UI that behaves (GSAP only — no Framer Motion).
-5. **Assist Pane / SiteAssist** — sticky diagnostic band; the verb flip *is* the revival. Phone peel stays the carrier.
+5. **Assist Pane / SiteAssist** — header morphs black→white (gold only on active step + CTA). Pin one peel for missed→alert→callback→recovered. Module list left / media right; media swaps on scroll landmarks. Oversized type reveal; staggered job-type cards; discrete carousel OK. No heavy parallax. Clear black/white seams. Weighted ease-out (`aisEase`).
 
 ## AIS hard numbers (progress / signal line carriers)
 
@@ -98,9 +99,17 @@ First screen: the slip already showing missed quote / recovered estimate.
 
 ### 05 Assist Pane — phone sheet peel
 
-Split assist / console recovery thread. Left is the human thread, right is the
-machine console. Carrier: a phone notification sheet that peels missed→recovered.
-First screen: peel already mid-story. R3F is the peeling sheet.
+Split assist / console recovery thread. SiteAssist live-scroll, closed:
+
+- Sticky header morphs `#121212` → `#F5F5F5` on the white pin, back to black at `#request`. Gold only on the living step, the recovered word, and the CTA. No Assist kicker.
+- One media carrier, pinned. Four landmarks (Missed / Alert / Callback / Recovered) tween the peel to `0.14 / 0.38 / 0.7 / 1`. Not a continuous scrub.
+- Module list left / sticky media right. On a narrow viewport the same carrier pins above the list.
+- Hero is oversized type (“Missed thread.” / metal “Recovered.”) plus a DOM lock-screen sheet already mid-story. No second 3D peel in the hero.
+- Evidence is a discrete job-type carousel (shape of the work, not a case study), staggered in.
+- No `bindAiasLive` / no `data-depth` on this route.
+- Seams are hard black/white. Ease is `cubic-bezier(.22,1,.36,1)`.
+
+Carrier: one phone notification sheet. R3F is that sheet, only in the pin.
 
 ---
 
