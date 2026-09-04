@@ -88,8 +88,8 @@ export function BalancePage() {
           ref={slip}
           className="relative z-10 w-[min(100%,340px)] border border-ink/15 bg-matte p-6 shadow-[8px_12px_0_0_#12121208]"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/40">
-            Carrier · quote slip · {face === "recovered" ? "recovered" : "missed"}
+          <p className={`font-mono text-[10px] uppercase tracking-[0.2em] ${face === "recovered" ? "text-gold" : "text-ink/40"}`}>
+            {face === "recovered" ? "Recovered" : "Missed"}
           </p>
           <p className="mt-6 font-display text-[1.65rem] leading-snug">
             {face === "missed"
@@ -105,7 +105,7 @@ export function BalancePage() {
           </button>
         </article>
         <p className="max-w-xs font-sans text-[14px] text-ink/50">
-          First screen already holds both faces of the slip. Gold only when the line is recovered. {AREA}.
+          Two faces of one slip. {AREA}.
         </p>
       </section>
 
@@ -115,7 +115,7 @@ export function BalancePage() {
             <ObjectSlot progress={progress} />
           </div>
           <p className="absolute bottom-8 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/35">
-            Object turns only with the scrub. No idle motion.
+            One object. The slip is the current.
           </p>
         </div>
       </section>

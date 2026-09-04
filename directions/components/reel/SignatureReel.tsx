@@ -171,7 +171,7 @@ export function SignatureReel() {
               </figcaption>
             </figure>
             <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.2em] text-matte/40">
-              Carrier · chapter still
+              Still holds
             </p>
           </div>
           <div className="flex flex-col justify-center gap-16 px-6 py-16 md:col-span-6 md:px-16">

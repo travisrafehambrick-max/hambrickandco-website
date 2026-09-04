@@ -91,8 +91,7 @@ export function SolidProof() {
             <span className="text-gold">Live board.</span>
           </h1>
           <p className="mt-6 max-w-sm font-sans text-[16px] leading-relaxed text-ink/65">
-            {WEDGE} as a working strip — not a speech. First screen already holds both states. Gold only after a
-            ticket comes back.
+            {WEDGE} as a working strip — not a speech. Gold only after a ticket comes back.
           </p>
         </div>
         <div className="ticket-pair grid grid-cols-2 gap-4 py-10 md:col-span-7 md:pl-10">
@@ -118,7 +117,7 @@ export function SolidProof() {
           </div>
           <div className="md:col-span-7 px-5 py-10 md:px-10">
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-matte/40">
-              Carrier · tickets dead → alive
+              Dead to live
             </p>
             <div className="mt-8 grid gap-3">
               {TICKETS.map((t, i) => {

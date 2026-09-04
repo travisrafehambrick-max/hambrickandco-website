@@ -1,5 +1,9 @@
 # Design reads — five draft directions
 
+**Travis skill lock:** `design-taste-frontend` **V2 only** (`design-taste-frontend/SKILL.md`).
+Do **not** use `design-taste-frontend-v1` or `taste-skill-v1`.
+Craft gate on every route: taste V2 + impeccable (hierarchy, type, spacing, motion purpose, a11y).
+
 Taste V2 + Winslow motion laws. Written **before** UI authoring.
 Inspo studied for pattern, not clone: AIS hall energy, Solidroad product strip,
 Austin Werner editorial stills, Ballance airy object, SiteAssist split pane.

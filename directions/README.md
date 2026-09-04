@@ -1,5 +1,8 @@
 # Draft directions (not live)
 
+**Skill lock:** taste V2 only — `design-taste-frontend` (`design-taste-frontend/SKILL.md`).
+Do not use `design-taste-frontend-v1` or `taste-skill-v1`. Impeccable on every route.
+
 Next.js + React (TypeScript) + React Three Fiber + GSAP/ScrollTrigger.
 
 This folder is a **separate app**. It does not replace the production static site at the repo root (`index.html` → hambrickco.com). Do not point Netlify production at this directory.

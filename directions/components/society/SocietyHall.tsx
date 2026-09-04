@@ -131,8 +131,8 @@ export function SocietyHall() {
             went quiet.
           </h1>
           <p className="hall-missed mt-8 max-w-md font-sans text-[17px] leading-relaxed text-matte/70">
-            Missed at 14:02. A voicemail, an estimate left open, a shop that did not write back. First screen of the
-            hall — the current is already moving left to recovered.
+            Missed at 14:02. A voicemail, an estimate left open, a shop that did not write back. The current is
+            already moving left.
           </p>
         </div>
         <div className="md:col-span-5 md:justify-self-end md:text-right">
@@ -152,8 +152,8 @@ export function SocietyHall() {
             <div className="h-[42vh] md:h-full">
               <FilamentSlot progress={progress} />
             </div>
-            <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-matte/40">
-              Carrier · gold signal line
+            <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+              Live
             </p>
           </div>
           <div id="ledger" className="md:col-span-7 px-5 py-10 md:px-12 md:py-16">
