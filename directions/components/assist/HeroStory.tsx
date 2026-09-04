@@ -7,7 +7,8 @@ const FRAMES = [
   { src: "/hero/booked.png", crop: "52% 28%" },
 ] as const;
 
-export function HeroStory({ step }: { step: number }) {
+/** Beat 0 (missed-call) is the primary / first-paint / reduced-motion frame. */
+export function HeroStory({ step = 0 }: { step?: number }) {
   const shown = Math.min(Math.max(step, 0), FRAMES.length - 1);
 
   return (

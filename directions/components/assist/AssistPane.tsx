@@ -108,7 +108,7 @@ export function AssistPane() {
 
       if (reduced) {
         gsap.set(".assist-display", { autoAlpha: 1, y: 0, filter: "none" });
-        goStep(STEPS.length - 1, true);
+        goStep(0, true);
         paintHeader(false, true);
         return;
       }

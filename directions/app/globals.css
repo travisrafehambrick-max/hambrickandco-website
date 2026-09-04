@@ -151,8 +151,13 @@ body {
   transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.hero-story__frame:first-child,
 .hero-story__frame.is-on {
   opacity: 1;
+}
+
+.hero-story:has(.hero-story__frame.is-on:not(:first-child)) .hero-story__frame:first-child:not(.is-on) {
+  opacity: 0;
 }
 
 .peel-slot__accent {
@@ -318,10 +323,5 @@ body {
 
   .hero-story__frame {
     transition: none !important;
-    opacity: 0 !important;
-  }
-
-  .hero-story__frame:last-child {
-    opacity: 1 !important;
   }
 }
